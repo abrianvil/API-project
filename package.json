@@ -20,5 +20,6 @@
   "bugs": {
     "url": "https://github.com/abrianvil/API-project/issues"
   },
-  "homepage": "https://github.com/abrianvil/API-project#readme"
+  "homepage": "https://github.com/abrianvil/API-project#readme",
+  "devDependencies": {}
 }
