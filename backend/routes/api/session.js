@@ -40,7 +40,7 @@ router.post('/', validateLogin, async (req, res, next) => {
     });
 });
 
-
+//login out
 router.delete('/', (_req, res) => {
     res.clearCookie('token');
     // res.clearCookie('XSRF-TOKEN');
