@@ -23,7 +23,7 @@ module.exports = {
         userId: 1,
         review: 'i was going to ask for a refund, but i am just happy i came out alive',
         stars: 0
-      },
+      }
     ], {})
 
   },
