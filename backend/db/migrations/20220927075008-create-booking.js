@@ -17,10 +17,10 @@ module.exports = {
         references:{model:'Users', key:'id'}
       },
       startDate: {
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       endDate: {
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
