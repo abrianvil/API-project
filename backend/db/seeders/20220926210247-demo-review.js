@@ -24,6 +24,24 @@ module.exports = {
         review: 'i was going to ask for a refund, but i am just happy i came out alive',
         stars: 0
       },
+      {
+        spotId: 2,
+        userId: 2,
+        review: 'stand in review from a famous reviewer',
+        stars: 3
+      },
+      {
+        spotId: 3,
+        userId: 5,
+        review: 'was it worth it? even after everything?',
+        stars: 4
+      },
+      {
+        spotId: 1,
+        userId: 3,
+        review: 'never gonna let you down...',
+        stars: 0
+      },
     ], {})
 
   },
