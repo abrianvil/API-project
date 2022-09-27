@@ -65,6 +65,25 @@ router.get('/:spotId', async (req, res, next) => {
 })
 
 
+// Create a Spot=====>Error handler missing
+router.post('/', async(req,res,next)=>{
+    const {address,city,state,country,lat,lng,name,description,price}=req.body
+    const newSpot= await Spot.create({
+        ownerId:req.user.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+    res.status(201)
+    res.json(newSpot)
+})
+
 // Get all Spots
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll({
@@ -92,6 +111,16 @@ router.get('/', async (req, res, next) => {
         delete spot.SpotImages
     })
 
+    spotList.forEach(spot=>{
+        let count=0
+        let sum=0
+        spot.Reviews.forEach(review=>{
+            count++
+            sum+=review.stars
+        })
+        spot.avgRating=sum/count
+        delete spot.Reviews
+    })
 
 
     res.status(200)
