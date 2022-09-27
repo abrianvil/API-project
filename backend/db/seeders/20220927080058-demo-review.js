@@ -23,6 +23,7 @@ module.exports = {
         userId: 1,
         review: 'i was going to ask for a refund, but i am just happy i came out alive',
         stars: 0
+<<<<<<< HEAD:backend/db/seeders/20220926210247-demo-review.js
       },
       {
         spotId: 2,
@@ -42,6 +43,9 @@ module.exports = {
         review: 'never gonna let you down...',
         stars: 0
       },
+=======
+      }
+>>>>>>> 8c53e66f5b6d155b4565af18d202c0797b2ebc08:backend/db/seeders/20220927080058-demo-review.js
     ], {})
 
   },
