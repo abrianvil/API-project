@@ -84,6 +84,8 @@ router.post('/', async(req,res,next)=>{
     res.json(newSpot)
 })
 
+
+
 // Get all Spots
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll({
