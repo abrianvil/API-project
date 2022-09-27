@@ -10,11 +10,11 @@ module.exports = {
       },
       spotId: {
         type: Sequelize.INTEGER,
-        references:{model:'Spots'}
+        references:{model:'Spots', key:'id'}
       },
       userId: {
         type: Sequelize.INTEGER,
-        references:{model:'Users'}
+        references:{model:'Users', key:'id'}
       },
       review: {
         type: Sequelize.STRING

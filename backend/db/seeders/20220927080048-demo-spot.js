@@ -71,7 +71,7 @@ module.exports = {
         name: 'The end',
         description: "you're done for, it is a wrap , oh and it is pitch black",
         price: 1.99
-      },
+      }
 
     ], {})
   },
