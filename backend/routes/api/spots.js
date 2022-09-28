@@ -55,13 +55,13 @@ router.get('/:spotId', async (req, res, next) => {
         res.status(200)
         res.json(result)
     } else {
-        res.status(404)
-        res.json(
-            {
-                message: "Spot couldn't be found",
-                statusCode: 404
-            }
-        )
+        const error = {
+            message: "Spot couldn't be found",
+            statusCode: 404
+        }
+
+        next(error)
+
     }
 })
 
@@ -100,7 +100,7 @@ const validateSpotData = [
 ];
 
 
-router.post('/',validateSpotData, async (req, res, next) => {
+router.post('/', validateSpotData, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const newSpot = await Spot.create({
         ownerId: req.user.id,
