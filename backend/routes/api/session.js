@@ -19,7 +19,7 @@ const validateLogin = [
     handleValidationErrors
   ];
 
-// Log in
+// Log in====>question? does the token val matches the cookie token
 router.post('/', validateLogin, async (req, res, next) => {
     const { credential, password } = req.body;
 
@@ -33,11 +33,12 @@ router.post('/', validateLogin, async (req, res, next) => {
         return next(err);
     }
 
-    await setTokenCookie(res, user);
-
-    return res.json({
-        user
-    });
+    let newToken=await setTokenCookie(res, user);
+    let result=user.toJSON()
+    result.token=newToken
+    return res.json(
+        result
+    );
 });
 
 //login out
@@ -58,7 +59,7 @@ router.get(
             return res.json(
                  user.toSafeObject()
             );
-        } else return res.json({});
+        } else return res.json({end:'no user'});
     }
 );
 
