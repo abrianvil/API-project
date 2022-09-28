@@ -2,6 +2,7 @@ const express = require('express');
 const { Spot, SpotImage, Review, User, sequelize } = require('../../db/models')
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation')
+const { check } = require('express-validator');
 const router = express.Router();
 
 
@@ -10,12 +11,40 @@ router.use(express.json());
 
 // Get all Spots owned by the Current User
 router.get('/current', requireAuth, async (req, res, next) => {
-    console.log(req.user.id)
+    // console.log(req.user.id)
     const ownerSpots = await Spot.findAll({
         where: { ownerId: req.user.id }
     })
     res.status(200)
     res.json(ownerSpots)
+})
+
+
+// Add an Image to a Spot based on the Spot's id===>inquire about the
+// statusCode not changing
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    const spot= await Spot.findByPk(req.params.spotId)
+    if(spot){
+    const { url, preview } = req.body
+    const image = await SpotImage.create({
+        spotId: req.params.spotId,
+        url,
+        preview
+    })
+    const data = image.toJSON()
+    delete data.spotId
+    delete data.updatedAt
+    delete data.createdAt
+
+    res.status(200)
+    res.json(data)
+}else{
+    const error={
+        message: "Spot couldn't be found",
+        statusCode: 404
+      }
+      next(error)
+}
 })
 
 
@@ -157,10 +186,10 @@ router.get('/', async (req, res, next) => {
         spot.avgRating = sum / count
         delete spot.Reviews
     })
-
+    let Spots = spotList
 
     res.status(200)
-    res.json(spotList)
+    res.json({ Spots })
 })
 
 
