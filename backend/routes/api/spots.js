@@ -115,6 +115,27 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     }
 })
 
+
+// Delete a Spot
+router.delete('/:spotId', async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId)
+    if (spot) {
+        await spot.destroy()
+        res.status(200)
+        res.json({
+            message: "Successfully deleted",
+            statusCode: 200
+        })
+    } else {
+        const error = {
+            message: "Spot couldn't be found",
+            statusCode: 404
+        }
+        next(error)
+    }
+})
+
+
 // Edit a Spot
 router.put('/:spotId', validateSpotData, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId)
