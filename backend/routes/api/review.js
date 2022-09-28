@@ -10,6 +10,10 @@ const router = express.Router();
 
 
 
+// Get all Reviews by a Spot's id
+
+// Get all Reviews of the Current User
+
 
 
 
