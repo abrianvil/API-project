@@ -40,9 +40,11 @@ router.post('/', validateSignup, async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;
     const result = await User.signup({ firstName, lastName, email, username, password });
 
-    await setTokenCookie(res, result);
+    let newToken=await setTokenCookie(res, result);
+    let user=result.toJSON()
+    user.token=newToken
 
-    return res.json(result);
+    return res.json(user);
 });
 
 
