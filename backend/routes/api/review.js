@@ -34,7 +34,8 @@ router.post('/:reviewId/images', async (req, res, next) => {
 })
 
 
-// Get all Reviews by a Spot's id
+
+
 
 // Get all Reviews of the Current User
 router.get('/current', async (req, res, next) => {
