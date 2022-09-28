@@ -81,12 +81,12 @@ const validateSpotData = [
     check('country')
         .exists({ checkFalsy: true })
         .withMessage("Country is required"),
-    check('lat')
-        .exists({ checkFalsy: true })
-        .withMessage("Latitude is not valid"),
-    check('lng')
-        .exists({ checkFalsy: true })
-        .withMessage("Longitude is not valid"),
+    // check('lat')
+    //     .exists({ checkFalsy: true })
+    //     .withMessage("Latitude is not valid"),
+    // check('lng')
+    //     .exists({ checkFalsy: true })
+    //     .withMessage("Longitude is not valid"),
     check('name')
         .exists({ checkFalsy: true })
         .withMessage("Name must be less than 50 characters"),
