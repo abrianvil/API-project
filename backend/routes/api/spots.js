@@ -13,38 +13,75 @@ router.use(express.json());
 router.get('/current', requireAuth, async (req, res, next) => {
     // console.log(req.user.id)
     const ownerSpots = await Spot.findAll({
-        where: { ownerId: req.user.id }
+        where: { ownerId: req.user.id },
+        include: [
+            {
+                model: Review
+            },
+            {
+                model: SpotImage
+            }
+        ]
     })
+    let Spots = []
+    ownerSpots.forEach(spot => {
+        Spots.push(spot.toJSON())
+    })
+    Spots.forEach(spot => {
+
+        spot.SpotImages.forEach(image => {
+
+            if (image.preview === true) {
+                spot.previewImage = image.url
+            }
+        })
+        if (!spot.previewImage) {
+            spot.previewImage = 'no preview image found'
+        }
+        delete spot.SpotImages
+
+    })
+    Spots.forEach(spot => {
+        let count = 0
+        let sum = 0
+        spot.Reviews.forEach(review => {
+            count++
+            sum += review.stars
+        })
+        spot.avgRating = sum / count
+        delete spot.Reviews
+    })
+
     res.status(200)
-    res.json(ownerSpots)
+    res.json({ Spots })
 })
 
 
 // Add an Image to a Spot based on the Spot's id===>inquire about the
 // statusCode not changing
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
-    const spot= await Spot.findByPk(req.params.spotId)
-    if(spot){
-    const { url, preview } = req.body
-    const image = await SpotImage.create({
-        spotId: req.params.spotId,
-        url,
-        preview
-    })
-    const data = image.toJSON()
-    delete data.spotId
-    delete data.updatedAt
-    delete data.createdAt
+    const spot = await Spot.findByPk(req.params.spotId)
+    if (spot) {
+        const { url, preview } = req.body
+        const image = await SpotImage.create({
+            spotId: req.params.spotId,
+            url,
+            preview
+        })
+        const data = image.toJSON()
+        delete data.spotId
+        delete data.updatedAt
+        delete data.createdAt
 
-    res.status(200)
-    res.json(data)
-}else{
-    const error={
-        message: "Spot couldn't be found",
-        statusCode: 404
-      }
-      next(error)
-}
+        res.status(200)
+        res.json(data)
+    } else {
+        const error = {
+            message: "Spot couldn't be found",
+            statusCode: 404
+        }
+        next(error)
+    }
 })
 
 
