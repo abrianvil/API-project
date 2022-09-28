@@ -8,6 +8,20 @@ const router = express.Router();
 
 
 
+
+const validateReviewData = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage("Review text is required"),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .withMessage("Stars must be an integer from 1 to 5"),
+    handleValidationErrors
+];
+
+
+
+
 // Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', async (req, res, next) => {
     if (await Review.findByPk(req.params.reviewId)) {
@@ -36,6 +50,25 @@ router.post('/:reviewId/images', async (req, res, next) => {
 
 
 
+// Edit a Review
+router.put('/:reviewId',validateReviewData, async (req, res, next) => {
+    const { review, stars } = req.body
+    const currReview = await Review.findByPk(req.params.reviewId)
+    if (currReview) {
+        currReview.update({
+            review,
+            stars
+        })
+        res.status(200)
+        res.json(currReview)
+    } else {
+
+            res.json("Review couldn't be found")
+            res.status(404)
+    }
+})
+
+
 
 // Get all Reviews of the Current User
 router.get('/current', async (req, res, next) => {
@@ -56,7 +89,7 @@ router.get('/current', async (req, res, next) => {
 
     for (let review of Reviews) {
         let getPreview = await SpotImage.findOne({
-            where: { [Op.and]: [{ spotId: review.Spot.id }, { preview: true }] }
+            where: { [Op.and]: [{ spotId: review.Spot.id }, { preview: true }]}
         })
         review.Spot.previewImage = getPreview.url
         delete review.Spot.description
