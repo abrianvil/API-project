@@ -51,7 +51,7 @@ router.post('/:reviewId/images', async (req, res, next) => {
 
 
 // Edit a Review
-router.put('/:reviewId',validateReviewData, async (req, res, next) => {
+router.put('/:reviewId', validateReviewData, async (req, res, next) => {
     const { review, stars } = req.body
     const currReview = await Review.findByPk(req.params.reviewId)
     if (currReview) {
@@ -63,8 +63,11 @@ router.put('/:reviewId',validateReviewData, async (req, res, next) => {
         res.json(currReview)
     } else {
 
-            res.json("Review couldn't be found")
-            res.status(404)
+        res.status(404)
+        res.json({
+            message: "Review couldn't be found",
+            statusCode: 404
+        })
     }
 })
 
@@ -89,7 +92,7 @@ router.get('/current', async (req, res, next) => {
 
     for (let review of Reviews) {
         let getPreview = await SpotImage.findOne({
-            where: { [Op.and]: [{ spotId: review.Spot.id }, { preview: true }]}
+            where: { [Op.and]: [{ spotId: review.Spot.id }, { preview: true }] }
         })
         review.Spot.previewImage = getPreview.url
         delete review.Spot.description
