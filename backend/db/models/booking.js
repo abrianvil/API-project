@@ -19,12 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     spotId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     startDate: {
-      type:DataTypes.DATE,
-      validate:{
-      
-      }
+      type:DataTypes.DATE
+
     },
-    endDate: DataTypes.DATE
+    endDate: {
+      type:DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'Booking',
