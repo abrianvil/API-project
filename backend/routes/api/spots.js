@@ -1,9 +1,9 @@
 const express = require('express');
-const { Spot, SpotImage, Review, ReviewImage, User, sequelize } = require('../../db/models')
+const { Spot, SpotImage, Review, ReviewImage, Booking, User, sequelize } = require('../../db/models')
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation')
 const { check } = require('express-validator');
-const { Op } = require('sequelize');
+const { Op, json } = require('sequelize');
 const router = express.Router();
 
 
@@ -102,12 +102,56 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 
 
+// Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', async (req, res, next) => {
+    const { startDate, endDate } = req.body
+    const spot = await Spot.findByPk(req.params.spotId)
+    // const reserved = await Booking.findOne({
+    //     where: { [Op.and]: [{ spotId: req.params.spotId}, { startDate:startDate}] }
+    // })
+    // console.log(reserved)
+    if (spot) {
+        // if (!reserved)
+        // {
+        const booked = await Booking.create({
+            spotId: parseInt(spot.id),
+            userId: parseInt(req.user.id),
+            startDate,
+            endDate
+        })
+        res.status(200)
+        res.json(booked)
+        // } else {
+        //     res.status(403)
+        //     res.json({
+        //         message: "Sorry, this spot is already booked for the specified dates",
+        //         statusCode: 403,
+        //         errors: {
+        //           startDate: "Start date conflicts with an existing booking",
+        //           endDate: "End date conflicts with an existing booking"
+        //         }
+        //       })
+        // }
+    } else {
+        res.status(404)
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+})
+
+
+
 // Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async (req, res, next) => {
     if (await Spot.findByPk(req.params.spotId)) {
         const Reviews = await Review.findAll({
             where: { spotId: parseInt(req.params.spotId) },
             include: [
+                {
+                    model:User
+                },
                 {
                     model: ReviewImage,
                     attributes: ['id', 'url']
@@ -117,12 +161,11 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
         res.status(200)
         res.json({ Reviews })
-    }else{
-        const err={
-            message: "Spot couldn't be found",
-            statusCode: 404
-          }
-          next(err)
+    } else {
+        res.status(404)
+          res.json ({ message: "Spot couldn't be found",
+            statusCode: 404})
+
     }
 })
 
@@ -148,18 +191,15 @@ router.post('/:spotId/reviews', validateReviewData, async (req, res, next) => {
             res.status(201)
             res.json(rev)
         } else {
-            const error = {
-                message: "User already has a review for this spot",
-                statusCode: 403
-            }
-            next(error)
+                res.status(403)
+                res.json({message: "User already has a review for this spot",
+                statusCode: 403})
+
         }
     } else {
-        const error = {
-            message: "Spot couldn't be found",
-            statusCode: 404
-        }
-        next(error)
+
+        res.status(404)
+        res.json({ message: "Spot couldn't be found", statusCode: 404 })
     }
 })
 
@@ -183,11 +223,10 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         res.status(200)
         res.json(data)
     } else {
-        const error = {
-            message: "Spot couldn't be found",
-            statusCode: 404
-        }
-        next(error)
+        res.status(404)
+            res.json({message: "Spot couldn't be found",
+            statusCode: 404})
+
     }
 })
 
@@ -232,11 +271,10 @@ router.put('/:spotId', validateSpotData, async (req, res, next) => {
         res.status(200)
         res.json(spot)
     } else {
-        const error = {
-            message: "Spot couldn't be found",
-            statusCode: 404
-        }
-        next(error)
+            res.status(404)
+           res.json({ message: "Spot couldn't be found",
+            statusCode: 404})
+
     }
 
 })
@@ -278,22 +316,16 @@ router.get('/:spotId', async (req, res, next) => {
         res.status(200)
         res.json(result)
     } else {
-        const error = {
-            message: "Spot couldn't be found",
-            statusCode: 404
-        }
+        res.status(404)
+           res.json({ message: "Spot couldn't be found",
+            statusCode: 404})
 
-        next(error)
 
     }
 })
 
 
 // Create a Spot=====>Error handler missing
-
-
-
-
 router.post('/', validateSpotData, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const newSpot = await Spot.create({

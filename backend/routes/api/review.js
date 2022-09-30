@@ -39,11 +39,10 @@ router.post('/:reviewId/images', async (req, res, next) => {
         res.status(200)
         res.json(data)
     } else {
-        const err = {
-            "message": "Review couldn't be found",
-            "statusCode": 404
-        }
-        next(err)
+        res.status(404)
+            res.json({message: "Review couldn't be found",
+            statusCode: 404})
+
     }
 })
 
