@@ -23,7 +23,7 @@ const validateReviewData = [
 
 
 // Add an Image to a Review based on the Review's id
-router.post('/:reviewId/images', async (req, res, next) => {
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     if (await Review.findByPk(req.params.reviewId)) {
         const { url } = req.body
         const imageReview = await ReviewImage.create({
@@ -52,7 +52,7 @@ router.post('/:reviewId/images', async (req, res, next) => {
 
 
 // Edit a Review
-router.put('/:reviewId', validateReviewData, async (req, res, next) => {
+router.put('/:reviewId', validateReviewData, requireAuth, async (req, res, next) => {
     const { review, stars } = req.body
     const currReview = await Review.findByPk(req.params.reviewId)
     if (currReview) {
@@ -75,7 +75,7 @@ router.put('/:reviewId', validateReviewData, async (req, res, next) => {
 
 
 // Get all Reviews of the Current User
-router.get('/current', async (req, res, next) => {
+router.get('/current', requireAuth, async (req, res, next) => {
     const allReviews = await Review.findAll({
         where: { userId: req.user.id },
         include: [
@@ -108,7 +108,7 @@ router.get('/current', async (req, res, next) => {
 
 
 // Delete a Review
-router.delete('/:reviewId', async (req, res, next) => {
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
     const review = await Review.findByPk(req.params.reviewId)
     if (review) {
         review.destroy()

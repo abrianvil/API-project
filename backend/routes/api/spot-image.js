@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 
-router.delete('/:imageId', async (req, res, next) => {
+router.delete('/:imageId',requireAuth, async (req, res, next) => {
     const image = await SpotImage.findByPk(req.params.imageId)
     if (image) {
         image.destroy()

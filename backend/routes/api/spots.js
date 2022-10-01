@@ -101,7 +101,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 })
 
 // Get all Bookings for a Spot based on the Spot's id
-router.get('/:spotId/bookings', async (req, res, async) => {
+router.get('/:spotId/bookings',requireAuth, async (req, res, async) => {
     const spot = await Spot.findByPk(req.params.spotId)
     if (spot) {
         if (spot.ownerId === req.user.id) {
@@ -129,7 +129,7 @@ router.get('/:spotId/bookings', async (req, res, async) => {
 })
 
 // Create a Booking from a Spot based on the Spot's id
-router.post('/:spotId/bookings', async (req, res, next) => {
+router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
     const { startDate, endDate } = req.body
     const spot = await Spot.findByPk(req.params.spotId)
     const newStartDate = new Date(startDate)
@@ -210,7 +210,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
 
 // Create a Review for a Spot based on the Spot's id
-router.post('/:spotId/reviews', validateReviewData, async (req, res, next) => {
+router.post('/:spotId/reviews', validateReviewData, requireAuth, async (req, res, next) => {
     if (await Spot.findByPk(req.params.spotId)) {
 
         const existedReview = await Review.findOne({
@@ -275,7 +275,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
 
 // Delete a Spot
-router.delete('/:spotId', async (req, res, next) => {
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId)
     if (spot) {
         await spot.destroy()
@@ -295,7 +295,7 @@ router.delete('/:spotId', async (req, res, next) => {
 
 
 // Edit a Spot
-router.put('/:spotId', validateSpotData, async (req, res, next) => {
+router.put('/:spotId', validateSpotData, requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId)
     if (spot) {
         const { address, city, state, country, lat, lng, name, description, price } = req.body
@@ -373,7 +373,7 @@ router.get('/:spotId', async (req, res, next) => {
 
 
 // Create a Spot=====>Error handler missing
-router.post('/', validateSpotData, async (req, res, next) => {
+router.post('/', validateSpotData, requireAuth, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const newSpot = await Spot.create({
         ownerId: req.user.id,
