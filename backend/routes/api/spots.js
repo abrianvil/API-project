@@ -92,7 +92,11 @@ router.get('/current', requireAuth, async (req, res, next) => {
             count++
             sum += review.stars
         })
-        spot.avgRating = sum / count
+        if (count === 0) {
+            spot.avgRating = 0
+        } else {
+            spot.avgRating = sum / count
+        }
         delete spot.Reviews
     })
 
@@ -101,7 +105,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 })
 
 // Get all Bookings for a Spot based on the Spot's id
-router.get('/:spotId/bookings',requireAuth, async (req, res, async) => {
+router.get('/:spotId/bookings', requireAuth, async (req, res, async) => {
     const spot = await Spot.findByPk(req.params.spotId)
     if (spot) {
         if (spot.ownerId === req.user.id) {
@@ -129,7 +133,7 @@ router.get('/:spotId/bookings',requireAuth, async (req, res, async) => {
 })
 
 // Create a Booking from a Spot based on the Spot's id
-router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
+router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { startDate, endDate } = req.body
     const spot = await Spot.findByPk(req.params.spotId)
     const newStartDate = new Date(startDate)
