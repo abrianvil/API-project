@@ -285,11 +285,11 @@ router.delete('/:spotId', async (req, res, next) => {
             statusCode: 200
         })
     } else {
-        const error = {
+        res.status(404)
+        res.json({
             message: "Spot couldn't be found",
             statusCode: 404
-        }
-        next(error)
+        })
     }
 })
 
@@ -395,11 +395,25 @@ router.post('/', validateSpotData, async (req, res, next) => {
 
 // Get all Spots
 router.get('/', async (req, res, next) => {
+    let pagination = {}
+    let page = req.query.page === undefined ? 1 : parseInt(req.query.page);
+    let size = req.query.size === undefined ? 20 : parseInt(req.query.size);
+
+    if (page > 10) page = 10
+    if (size > 20) page = 20
+    if (page >= 1 && size >= 1) {
+        pagination.limit = size;
+        pagination.offset = size * (page - 1);
+    }
+
+
     const spots = await Spot.findAll({
         include: [
             { model: SpotImage },
             { model: Review }
         ],
+        limit: pagination.limit,
+        offset: pagination.offset
     })
     let spotList = []
     spots.forEach(spot => {
@@ -433,7 +447,7 @@ router.get('/', async (req, res, next) => {
     let Spots = spotList
 
     res.status(200)
-    res.json({ Spots })
+    res.json({ Spots, size, page })
 })
 
 

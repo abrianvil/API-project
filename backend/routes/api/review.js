@@ -40,8 +40,10 @@ router.post('/:reviewId/images', async (req, res, next) => {
         res.json(data)
     } else {
         res.status(404)
-            res.json({message: "Review couldn't be found",
-            statusCode: 404})
+        res.json({
+            message: "Review couldn't be found",
+            statusCode: 404
+        })
 
     }
 })
@@ -103,6 +105,26 @@ router.get('/current', async (req, res, next) => {
     res.json({ Reviews })
 })
 
+
+
+// Delete a Review
+router.delete('/:reviewId', async (req, res, next) => {
+    const review = await Review.findByPk(req.params.reviewId)
+    if (review) {
+        review.destroy()
+        res.status(200)
+        res.json({
+            message: "Successfully deleted",
+            statusCode: 200
+        })
+    } else {
+        res.status(404)
+        res.json({
+            message: "Review couldn't be found",
+            statusCode: 404
+        })
+    }
+})
 
 
 
