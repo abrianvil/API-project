@@ -150,7 +150,20 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     }
 
     const reserved = await Booking.findOne({
-        where: { [Op.and]: [{ spotId: req.params.spotId }, { startDate: newStartDate }] }
+        // where: { [Op.and]: [{ spotId: req.params.spotId }, { startDate: newStartDate }] }
+        where: {
+            spotId: req.params.spotId, //[Op.and]: [
+            [Op.or]: [
+                {
+                   startDate: {
+                        [Op.between]: [newStartDate, newEndDate]
+                    },
+                    endDate: {
+                        [Op.between]: [newStartDate, newEndDate]
+                    }
+                }]
+        }
+
     })
     console.log(reserved)
     if (spot) {
@@ -356,9 +369,9 @@ router.get('/:spotId', async (req, res, next) => {
         })
 
         result.numReviews = count
-        if(count===0){
-            result.avgStarRating='spot has no reviews'
-        }else{
+        if (count === 0) {
+            result.avgStarRating = 'spot has no reviews'
+        } else {
 
             result.avgStarRating = sum / count
         }
@@ -450,9 +463,9 @@ router.get('/', async (req, res, next) => {
             count++
             sum += review.stars
         })
-        if(count===0){
-            spot.avgRating='spot has no reviews'
-        }else{
+        if (count === 0) {
+            spot.avgRating = 'spot has no reviews'
+        } else {
 
             spot.avgRating = sum / count
         }
