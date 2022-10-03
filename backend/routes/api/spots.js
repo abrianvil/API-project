@@ -145,23 +145,19 @@ router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
         })
     }
 
-    const reserved = await Booking.findOne({
-        where: { [Op.and]: [{ spotId: req.params.spotId }, { startDate: newStartDate }] }
+    // const reserved = await Booking.findOne({
+    //     where: { [Op.and]: [{ spotId: req.params.spotId }, { startDate: newStartDate }] }
+    // })
+
+    const reserved = await Booking.findAll({
+        where: { spotId: req.params.spotId}
     })
-    console.log(reserved)
-    if (spot) {
-        if (!reserved) {
-            const booked = await Booking.create({
-                spotId: parseInt(spot.id),
-                userId: parseInt(req.user.id),
-                startDate,
-                endDate
-            })
-            res.status(200)
-            res.json(booked)
-        } else {
+
+    // console.log(reserved)
+    for (let each of reserved){
+        if ((each.startDate<=newStartDate && each.endDate<=newEndDate)||(each.startDate<=newStartDate)||(each.endDate>=newEndDate)){
             res.status(403)
-            res.json({
+           return res.json({
                 message: "Sorry, this spot is already booked for the specified dates",
                 statusCode: 403,
                 errors: {
@@ -170,6 +166,29 @@ router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
                 }
             })
         }
+    }
+
+    if (spot) {
+        // if (!reserved) {
+            const booked = await Booking.create({
+                spotId: parseInt(spot.id),
+                userId: parseInt(req.user.id),
+                startDate,
+                endDate
+            })
+            res.status(200)
+            res.json(booked)
+        // } else {
+        //     res.status(403)
+        //     res.json({
+        //         message: "Sorry, this spot is already booked for the specified dates",
+        //         statusCode: 403,
+        //         errors: {
+        //             startDate: "Start date conflicts with an existing booking",
+        //             endDate: "End date conflicts with an existing booking"
+        //         }
+        //     })
+        // }
     } else {
         res.status(404)
         res.json({
