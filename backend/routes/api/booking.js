@@ -36,6 +36,8 @@ router.get('/current',requireAuth, async (req, res, next) => {
 
             delete booking.Spot.createdAt
             delete booking.Spot.updatedAt
+            delete booking.Spot.description
+
         })
     }
     res.status(200)

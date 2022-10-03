@@ -93,7 +93,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             sum += review.stars
         })
         if (count === 0) {
-            spot.avgRating = 0
+            spot.avgRating = 'spot has no reviews'
         } else {
             spot.avgRating = sum / count
         }
@@ -356,7 +356,12 @@ router.get('/:spotId', async (req, res, next) => {
         })
 
         result.numReviews = count
-        result.avgStarRating = sum / count
+        if(count===0){
+            result.avgStarRating='spot has no reviews'
+        }else{
+
+            result.avgStarRating = sum / count
+        }
         delete result.Reviews
 
         result.Owner = result.User
@@ -445,7 +450,12 @@ router.get('/', async (req, res, next) => {
             count++
             sum += review.stars
         })
-        spot.avgRating = sum / count
+        if(count===0){
+            spot.avgRating='spot has no reviews'
+        }else{
+
+            spot.avgRating = sum / count
+        }
         delete spot.Reviews
     })
     let Spots = spotList
