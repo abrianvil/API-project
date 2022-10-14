@@ -32,14 +32,15 @@ export const login = (user) => async (dispatch) => {
         }),
     });
     const data = await response.json();
-    dispatch(setUser(data.user));
+    dispatch(setUser(data));
+    console.log('data from login',data)
     return response;
 };
 
 export const restoreUser = () => async dispatch => {
     const response = await csrfFetch('/api/session');
     const data = await response.json();
-    dispatch(setUser(data.user));
+    dispatch(setUser(data));
     return response;
 };
 
@@ -50,7 +51,7 @@ const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
     let newState;
-    console.log('first test',action)
+    // console.log('first test', action)
     switch (action.type) {
         case SET_USER:
             newState = Object.assign({}, state);
