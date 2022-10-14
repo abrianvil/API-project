@@ -23,7 +23,6 @@ router.get('/current',requireAuth, async (req, res, next) => {
 
             attributes: [],
             include: { model: SpotImage, attributes: ['url'], where: { preview: true } }
-
         })
         let urlData = prev.toJSON()
         let img = urlData.SpotImages[0]
@@ -36,6 +35,8 @@ router.get('/current',requireAuth, async (req, res, next) => {
 
             delete booking.Spot.createdAt
             delete booking.Spot.updatedAt
+            delete booking.Spot.description
+
         })
     }
     res.status(200)

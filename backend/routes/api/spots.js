@@ -92,7 +92,11 @@ router.get('/current', requireAuth, async (req, res, next) => {
             count++
             sum += review.stars
         })
-        spot.avgRating = sum / count
+        if (count === 0) {
+            spot.avgRating = 'spot has no reviews'
+        } else {
+            spot.avgRating = sum / count
+        }
         delete spot.Reviews
     })
 
@@ -101,7 +105,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 })
 
 // Get all Bookings for a Spot based on the Spot's id
-router.get('/:spotId/bookings',requireAuth, async (req, res, async) => {
+router.get('/:spotId/bookings', requireAuth, async (req, res, async) => {
     const spot = await Spot.findByPk(req.params.spotId)
     if (spot) {
         if (spot.ownerId === req.user.id) {
@@ -129,7 +133,7 @@ router.get('/:spotId/bookings',requireAuth, async (req, res, async) => {
 })
 
 // Create a Booking from a Spot based on the Spot's id
-router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
+router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { startDate, endDate } = req.body
     const spot = await Spot.findByPk(req.params.spotId)
     const newStartDate = new Date(startDate)
@@ -145,12 +149,21 @@ router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
         })
     }
 
-    // const reserved = await Booking.findOne({
-    //     where: { [Op.and]: [{ spotId: req.params.spotId }, { startDate: newStartDate }] }
-    // })
+    const reserved = await Booking.findOne({
+        // where: { [Op.and]: [{ spotId: req.params.spotId }, { startDate: newStartDate }] }
+        where: {
+            spotId: req.params.spotId, //[Op.and]: [
+            [Op.or]: [
+                {
+                   startDate: {
+                        [Op.between]: [newStartDate, newEndDate]
+                    },
+                    endDate: {
+                        [Op.between]: [newStartDate, newEndDate]
+                    }
+                }]
+        }
 
-    const reserved = await Booking.findAll({
-        where: { spotId: req.params.spotId}
     })
 
     // console.log(reserved)
@@ -371,7 +384,12 @@ router.get('/:spotId', async (req, res, next) => {
         })
 
         result.numReviews = count
-        result.avgStarRating = sum / count
+        if (count === 0) {
+            result.avgStarRating = 'spot has no reviews'
+        } else {
+
+            result.avgStarRating = sum / count
+        }
         delete result.Reviews
 
         result.Owner = result.User
@@ -391,7 +409,7 @@ router.get('/:spotId', async (req, res, next) => {
 })
 
 
-// Create a Spot=====>Error handler missing
+// Create a Spot
 router.post('/', validateSpotData, requireAuth, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const newSpot = await Spot.create({
@@ -460,7 +478,12 @@ router.get('/', async (req, res, next) => {
             count++
             sum += review.stars
         })
-        spot.avgRating = sum / count
+        if (count === 0) {
+            spot.avgRating = 'spot has no reviews'
+        } else {
+
+            spot.avgRating = sum / count
+        }
         delete spot.Reviews
     })
     let Spots = spotList
