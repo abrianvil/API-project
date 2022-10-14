@@ -23,7 +23,6 @@ router.get('/current',requireAuth, async (req, res, next) => {
 
             attributes: [],
             include: { model: SpotImage, attributes: ['url'], where: { preview: true } }
-
         })
         let urlData = prev.toJSON()
         let img = urlData.SpotImages[0]

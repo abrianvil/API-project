@@ -394,7 +394,7 @@ router.get('/:spotId', async (req, res, next) => {
 })
 
 
-// Create a Spot=====>Error handler missing
+// Create a Spot
 router.post('/', validateSpotData, requireAuth, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const newSpot = await Spot.create({
