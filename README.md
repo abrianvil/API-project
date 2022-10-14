@@ -7,8 +7,8 @@
 - [Database Schema](https://github.com/abrianvil/API-project/wiki/Database-Schema)
 - [Api Routes](https://github.com/abrianvil/API-project/wiki/Api-Routes)
 - [Redux Store State Shape]()
-- [Feature List]()
-- [Frontend Routs]()
+- [Feature List](https://github.com/abrianvil/API-project/wiki/FeatureList)
+
 
 
 
