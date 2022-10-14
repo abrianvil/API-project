@@ -4,7 +4,7 @@
 
 Links to Project wiki
 
-- [Database Schema](https://choosealicense.com)
+- [Database Schema](https://github.com/abrianvil/API-project/wiki/Database-Schema)
 - [Api Routes](https://www.webpagefx.com/tools/emoji-cheat-sheet)
 - [Redux Store State Shape](https://flexbox.malven.co/)
 - [Feature List](https://grid.malven.co/)
