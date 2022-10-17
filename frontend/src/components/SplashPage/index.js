@@ -24,15 +24,16 @@ function SplashPage() {
                     <div className="pictureCard">
                         <nav >
                             <NavLink className="navEdit" key={spot.name} to={`/Spots/${spot.id}`}>
-                                <img src={`${spot.previewImage}`} alt={spot.name}></img>
-                              
-                                    <div className="namePrice">
-                                        <h3>{spot.name}</h3>
-                                        <h3>⭐{spot.avgRating}</h3>
-                                    </div>
+                                <div className="imgDiv">
+                                    <img src={`${spot.previewImage}`} alt={spot.name}></img>
+                                </div>
+                                <div className="namePrice">
+                                    <h3>{spot.name}</h3>
+                                    <h3>⭐{spot.avgRating}</h3>
+                                </div>
 
-                                    <h4>{spot.city}</h4>
-                                    <h4>${spot.price} night</h4>
+                                <h4>{spot.city}, {spot.state}</h4>
+                                <h4>${spot.price} night</h4>
 
                             </NavLink>
                         </nav>
