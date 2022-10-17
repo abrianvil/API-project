@@ -1,0 +1,48 @@
+.spotBox {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+    border: red solid 3px;
+    /* overflow-y: scroll; */
+ }
+
+.namePrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 200px;
+}
+
+.pictureCard {
+    height: 300px;
+    width: 300px;
+    margin-left: 40px;
+    margin-right: 40px;
+    /* margin-bottom: 40px; */
+}
+
+/* .spotBox{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    width: 200vh;
+} */
+
+img {
+    /* height: 250px;
+    width: 250px; */
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5%;
+}
+
+
+.imgDiv {
+    height: 250px;
+    width: 250px;
+}
+
+.navEdit {
+    text-decoration: none;
+    color: black;
+}
