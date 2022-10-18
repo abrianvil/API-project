@@ -9,10 +9,10 @@ import './SpotDetails.css'
 
 function ShowDetails() {
     const spotDetail = useSelector(state => state.spots.one)
-    const [errors,setErrors]= useState()
+    const [errors, setErrors] = useState()
     const { id } = useParams()
     const dispatch = useDispatch()
-    const history=useHistory()
+    const history = useHistory()
 
     // console.log('useSelector=====>',spotDetail)
     // console.log("single spot====>", id)
@@ -22,18 +22,18 @@ function ShowDetails() {
     }, [dispatch, id]);
 
 
-    const onDelete=async (e)=>{
+    const onDelete = async (e) => {
         e.preventDefault()
-        const test= dispatch(deleteASpot(parseInt(id))).catch(
+        const test = dispatch(deleteASpot(parseInt(id))).catch(
             async (res) => {
-              const data = await res.json();
-              if (data && data.errors) setErrors(data.errors);
-              console.log(res)
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+                console.log(res)
             }
-          );
-        if(test){
+        );
+        if (test) {
             history.push('/')
-        }else console.log('deletion failed')
+        } else console.log('deletion failed')
 
     }
 
@@ -52,8 +52,14 @@ function ShowDetails() {
                     </div>
                     <div className='description-card'>
                         <div>
-                            <h3>Home Hosted By {spotDetail.firstName}</h3>
-                            <p>{spotDetail.description}</p>
+                            <div>
+                                <h3>Home Hosted By {spotDetail.firstName}</h3>
+                                <p>{spotDetail.description}</p>
+                            </div>
+                            <div>
+                                <h3>Self check-in</h3>
+                                <p>Check yourself in with the lockbox.</p>
+                            </div>
                             <h2>Reviews</h2>
                             <ul>
                                 <li>Abel put the reviews here</li>
@@ -61,10 +67,11 @@ function ShowDetails() {
 
                         </div>
                         <fieldset>
-                            <div>
+                            <div className='priceReview'>
                                 <h2>${spotDetail.price} night</h2>
                                 <p>⭐{spotDetail.avgStarRating} .{spotDetail.numReviews} reviews</p>
                             </div>
+                            <h3>Free cancellation</h3>
                             <button className='buttonGroup'>Add a Review</button>
                             <button className='buttonGroup'>Edit Spot</button>
                             <button onClick={onDelete} className='buttonGroup'>Delete Spot</button>

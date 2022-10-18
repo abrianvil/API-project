@@ -47,3 +47,9 @@ fieldset{
     background-color:#e51d57;
     color: white;
 }
+
+
+.priceReview{
+    display: flex;
+    justify-content: space-between;
+}
