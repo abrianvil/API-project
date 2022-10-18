@@ -20,12 +20,8 @@ function LoginForm() {
     );
   };
 
-  const userLogin=(e)=>{
-    e.preventDefault()
-    setCredential('')
-    setPassword('')
-    setCredential('demoUser1')
-    setPassword('password')
+  const userLogin=async(e)=>{
+    await dispatch(sessionActions.login({credential:'Demo-lition',password:'password'}))
   }
 
   return (
@@ -41,7 +37,7 @@ function LoginForm() {
           type="text"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
-          required
+          // required
         />
       </label>
       <label>
@@ -50,11 +46,11 @@ function LoginForm() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
+          // required
         />
       </label>
       <button type="submit">Log In</button>
-      <button type="submit" onSubmit={userLogin}>demoUser</button>
+      <button  onClick={userLogin}>demoUser</button>
     </form>
   );
 }

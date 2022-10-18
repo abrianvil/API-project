@@ -24,19 +24,33 @@ function ShowDetails() {
     return (
         <>
             {spotDetail &&
-                <div>
+                <div className='detailsMainDiv'>
 
                     <div>
                         <h2>{spotDetail.name} </h2>
-                        {/* <h4></h4> */}
                     </div>
                     <div className='image'>
                         <img src={spotDetail.imgUrl} alt={spotDetail.name} />
                     </div>
-                    <div>
+                    <div className='description-card'>
+                        <div>
+                            <h3>Home Hosted By {spotDetail.firstName}</h3>
+                            <p>{spotDetail.description}</p>
+                            <h2>Reviews</h2>
+                            <ul>
+                                <li>Abel put the reviews here</li>
+                            </ul>
 
-                        <h3>Home Hosted By {spotDetail.firstName}</h3>
-                        <p>{spotDetail.description}</p>
+                        </div>
+                        <fieldset>
+                            <div>
+                                <h2>${spotDetail.price} night</h2>
+                                <p>⭐{spotDetail.avgStarRating} .{spotDetail.numReviews} reviews</p>
+                            </div>
+                            <button className='buttonGroup'>Add a Review</button>
+                            <button className='buttonGroup'>Edit Spot</button>
+                            <button className='buttonGroup'>Delete Spot</button>
+                        </fieldset>
                     </div>
                 </div>}
         </>

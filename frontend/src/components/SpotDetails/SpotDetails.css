@@ -8,3 +8,42 @@
     border-bottom-left-radius: 3%;
     object-fit: cover;
 }
+
+fieldset{
+    border-radius: 7%;
+    height: auto;
+    width: 25%;
+
+}
+
+
+.detailsMainDiv{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+    margin-left: 10%;
+    margin-right: 10%;
+
+}
+
+
+.description-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.buttonGroup{
+    margin-top: 10px;
+    width: 100%;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color:#e51d57;
+    color: white;
+}

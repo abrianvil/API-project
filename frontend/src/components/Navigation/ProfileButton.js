@@ -30,40 +30,41 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
-  if (user) {
-    return (
-      <>
-        <button onClick={openMenu}>
-          <i className="fas fa-user-circle" />
-        </button>
-        {showMenu && (
-          <ul className="profile-dropdown">
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
-          </ul>
-        )}
-      </>
-    );
-  } else {
-    return (
-      <>
-        <button onClick={openMenu}>
-          <i className="fas fa-user-circle" />
-        </button>
-        {showMenu && (
-          <ul className="profile-dropdown">
-            <LoginFormModal />
-            <NavLink to="/signup">
-              <button>Sign Up</button>
-            </NavLink>
-          </ul>
-        )}
-      </>
-    )
-  }
+  // if (user) {
+  return (
+    <>
+      <button onClick={openMenu}>
+        <i className="fas fa-user-circle" />
+      </button>
+      {showMenu && (
+        <ul className="profile-dropdown">
+          <li>{user.username}</li>
+          <li>{user.email}</li>
+          <li>
+            <button onClick={logout}>Log Out</button>
+          </li>
+        </ul>
+      )}
+    </>
+  );
+  // }
+  //  else {
+  // return (
+  //   <>
+  //     <button onClick={openMenu}>
+  //       <i className="fas fa-user-circle" />
+  //     </button>
+  //     {showMenu && (
+  //       <ul className="profile-dropdown">
+  //         <LoginFormModal />
+  //         <NavLink to="/signup">
+  //           <button>Sign Up</button>
+  //         </NavLink>
+  //       </ul>
+  //     )}
+  //   </>
+  // )
+  // }
 }
 
 export default ProfileButton;
