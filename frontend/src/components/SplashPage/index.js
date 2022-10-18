@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllSpots } from "../../store/spots";
@@ -7,8 +7,18 @@ import './splashPage.css'
 
 
 function SplashPage() {
-    const spotsObj = useSelector(state => state.spots)
-    const spots = Object.values(spotsObj)
+    const spotsObj = useSelector(state =>state.spots.all)
+
+    console.log("spotObj splashPage===>",spotsObj)
+    console.log('1')
+    let spots=[]
+    if(spotsObj){
+         spots = Object.values(spotsObj)
+    }
+    console.log('2')
+    console.log("spots splashPage===>", spots)
+    console.log('3')
+
     const dispatch = useDispatch()
 
     useEffect(() => {

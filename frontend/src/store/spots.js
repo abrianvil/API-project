@@ -4,7 +4,7 @@ import { csrfFetch } from './csrf';
 /***************************TYPE*******************/
 
 const GET_ALL_SPOTS = 'spots/getSpots';
-// const GET_A_SPOTS = 'spots/getSpot';
+const GET_A_SPOT = 'spots/getSpot';
 // const ADD_A_SPOT = 'spots/addSpot';
 // const DELETE_A_SPOT = 'spot/removeSpot';
 
@@ -15,6 +15,13 @@ const Spots = (data) => {
     return {
         type: GET_ALL_SPOTS,
         data
+    }
+}
+
+const Spot = (spot) => {
+    return {
+        type: GET_A_SPOT,
+        spot
     }
 }
 
@@ -29,15 +36,28 @@ export const getAllSpots = () => async (dispatch) => {
 
     if (res) {
         const data = await res.json()
-        console.log('data from thunk===>', data)
+        // console.log('data from thunk===>', data)
         dispatch(Spots(data))
         // return res
     }
 }
 
 
+export const getASpot = (id) => async (dispatch) => {
+    const res = await fetch(`/api/Spots/${id}`)
+    console.log('res===>', res)
+    if (res) {
+        const data = await res.json()
+        console.log('spotThunk===>', data)
+        dispatch(Spot(data))
+        return res
+    }
+}
 
-const initialState = {}
+
+/***************************REDUCER*******************/
+
+const initialState = {all:{}, one:{}}
 
 export const SpotsReducer = (state = initialState, action) => {
     let newState;
@@ -47,12 +67,25 @@ export const SpotsReducer = (state = initialState, action) => {
         //     newState = action.data
         //     return newState
         case GET_ALL_SPOTS:
-            const allSpots={...state}
+            const allSpots = { ...state}
+            let all={}
             action.data.Spots.forEach(spot => {
-                allSpots[spot.id]=spot
+                all[spot.id] = spot
             });
-            console.log('allSpots====>',allSpots)
+            allSpots.all=all
             return allSpots
+        case GET_A_SPOT:
+            newState={ ...state}
+            let one={...action.spot}
+            const Owner1Name=one.Owner.firstName
+            const Owner2Name=one.Owner.lastName
+            const imgUrl=one.SpotImages[0].url
+            // console.log('ownerName===>', Owner1Name)
+            one['firstName']=Owner1Name
+            one['lastName']=Owner2Name
+            one['imgUrl']=imgUrl
+            newState.one=one
+            return newState
         default:
             return state
     }

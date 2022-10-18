@@ -20,6 +20,14 @@ function LoginForm() {
     );
   };
 
+  const userLogin=(e)=>{
+    e.preventDefault()
+    setCredential('')
+    setPassword('')
+    setCredential('demoUser1')
+    setPassword('password')
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <ul>
@@ -46,6 +54,7 @@ function LoginForm() {
         />
       </label>
       <button type="submit">Log In</button>
+      <button type="submit" onSubmit={userLogin}>demoUser</button>
     </form>
   );
 }

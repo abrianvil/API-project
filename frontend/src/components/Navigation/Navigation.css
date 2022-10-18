@@ -1,0 +1,9 @@
+#navList{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid grey 0.1px;
+    margin-left: 50px;
+    margin-right: 100px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}

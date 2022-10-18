@@ -1,0 +1,10 @@
+
+
+.image img{
+    height: 45%;
+    width: 45%;
+    border-radius: none;
+    border-top-left-radius: 3%;
+    border-bottom-left-radius: 3%;
+    object-fit: cover;
+}
