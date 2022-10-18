@@ -31,9 +31,9 @@ function SplashPage() {
         <div className="spotBox" >
             {spots.map(spot => {
                 return (
-                    <div className="pictureCard">
+                    <div className="pictureCard" key={spot.name}>
                         <nav >
-                            <NavLink className="navEdit" key={spot.name} to={`/Spots/${spot.id}`}>
+                            <NavLink className="navEdit"  to={`/Spots/${spot.id}`}>
                                 <div className="imgDiv">
                                     <img src={`${spot.previewImage}`} alt={spot.name}></img>
                                 </div>

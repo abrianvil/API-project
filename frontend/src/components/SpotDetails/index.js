@@ -1,15 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
 import { getASpot } from '../../store/spots'
+import { deleteASpot } from '../../store/spots'
 import './SpotDetails.css'
 
 
 
 function ShowDetails() {
     const spotDetail = useSelector(state => state.spots.one)
+    const [errors,setErrors]= useState()
     const { id } = useParams()
     const dispatch = useDispatch()
+    const history=useHistory()
 
     // console.log('useSelector=====>',spotDetail)
     // console.log("single spot====>", id)
@@ -18,6 +21,21 @@ function ShowDetails() {
         dispatch(getASpot(id))
     }, [dispatch, id]);
 
+
+    const onDelete=async (e)=>{
+        e.preventDefault()
+        const test= dispatch(deleteASpot(parseInt(id))).catch(
+            async (res) => {
+              const data = await res.json();
+              if (data && data.errors) setErrors(data.errors);
+              console.log(res)
+            }
+          );
+        if(test){
+            history.push('/')
+        }else console.log('deletion failed')
+
+    }
 
 
     //DISPATCH TO GET REVIEWS NEEDED
@@ -49,7 +67,7 @@ function ShowDetails() {
                             </div>
                             <button className='buttonGroup'>Add a Review</button>
                             <button className='buttonGroup'>Edit Spot</button>
-                            <button className='buttonGroup'>Delete Spot</button>
+                            <button onClick={onDelete} className='buttonGroup'>Delete Spot</button>
                         </fieldset>
                     </div>
                 </div>}

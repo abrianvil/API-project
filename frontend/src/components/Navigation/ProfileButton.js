@@ -47,24 +47,6 @@ function ProfileButton({ user }) {
       )}
     </>
   );
-  // }
-  //  else {
-  // return (
-  //   <>
-  //     <button onClick={openMenu}>
-  //       <i className="fas fa-user-circle" />
-  //     </button>
-  //     {showMenu && (
-  //       <ul className="profile-dropdown">
-  //         <LoginFormModal />
-  //         <NavLink to="/signup">
-  //           <button>Sign Up</button>
-  //         </NavLink>
-  //       </ul>
-  //     )}
-  //   </>
-  // )
-  // }
 }
 
 export default ProfileButton;

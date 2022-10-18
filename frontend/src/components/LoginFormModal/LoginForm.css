@@ -1,5 +1,5 @@
-form{
-    height: 520px;
+.Loginform{
+    height: auto;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -19,9 +19,9 @@ form *{
     letter-spacing: 0.5px;
     outline: none;
     /* border: none; */
-}
+ }
 
-label{
+.Loginlabel{
     display: block;
     margin-top: 30px;
     font-size: 16px;
@@ -30,7 +30,7 @@ label{
 
 }
 
-input{
+.Logininput{
     display: block;
     height: 50px;
     width: 94%;
@@ -42,11 +42,11 @@ input{
     font-weight: 300;
 }
 
-button{
+.Loginbutton{
     margin-top: 50px;
     width: 100%;
-    background-color: #ffffff;
-    color: #080710;
+    background-color:#e51d57;
+    color: white;
     padding: 15px 0;
     font-size: 18px;
     font-weight: 600;
