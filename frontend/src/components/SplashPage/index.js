@@ -9,15 +9,15 @@ import './splashPage.css'
 function SplashPage() {
     const spotsObj = useSelector(state =>state.spots.all)
 
-    console.log("spotObj splashPage===>",spotsObj)
-    console.log('1')
+    // console.log("spotObj splashPage===>",spotsObj)
+    // console.log('1')
     let spots=[]
     if(spotsObj){
          spots = Object.values(spotsObj)
     }
-    console.log('2')
-    console.log("spots splashPage===>", spots)
-    console.log('3')
+    // console.log('2')
+    // console.log("spots splashPage===>", spots)
+    // console.log('3')
 
     const dispatch = useDispatch()
 

@@ -9,18 +9,24 @@ import './SpotDetails.css'
 
 function ShowDetails() {
     const spotDetail = useSelector(state => state.spots.one)
+    const user = useSelector(state => state.session)
     const [errors, setErrors] = useState()
     const { id } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
 
-    // console.log('useSelector=====>',spotDetail)
-    // console.log("single spot====>", id)
+    // console.log('useSelector=====>', spotDetail)
+    // console.log("user====>", user)
 
     useEffect(() => {
-        dispatch(getASpot(id))
+        dispatch(getASpot(+id))
     }, [dispatch, id]);
 
+
+    const onEdit = async (e) => {
+        e.preventDefault()
+
+    }
 
     const onDelete = async (e) => {
         e.preventDefault()
@@ -73,8 +79,15 @@ function ShowDetails() {
                             </div>
                             <h3>Free cancellation</h3>
                             <button className='buttonGroup'>Add a Review</button>
-                            <button className='buttonGroup'>Edit Spot</button>
-                            <button onClick={onDelete} className='buttonGroup'>Delete Spot</button>
+
+                            <button hidden={(user.id === spotDetail.ownerId ? false : true)}
+                                onClick={onEdit}
+                                className='buttonGroup'>Edit Spot
+                            </button>
+
+                            <button hidden={(user.id === spotDetail.ownerId ? false : true)}
+                                onClick={onDelete} className='buttonGroup'>Delete Spot
+                            </button>
                         </fieldset>
                     </div>
                 </div>}

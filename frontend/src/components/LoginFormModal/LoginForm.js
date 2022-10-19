@@ -21,40 +21,53 @@ function LoginForm() {
     );
   };
 
-  const userLogin=async(e)=>{
-    await dispatch(sessionActions.login({credential:'Demo-lition',password:'password'}))
+  const userLogin = async (e) => {
+    await dispatch(sessionActions.login({ credential: 'Demo-lition', password: 'password' }))
   }
 
   return (
-    <form className="LoginForm" onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => (
-          <li key={idx}>{error}</li>
-        ))}
-      </ul>
-      <label className="Loginlabel">
-        Username or Email
-        <input
-          type="text"
-          value={credential}
-          onChange={(e) => setCredential(e.target.value)}
-          required
-          className="Logininput"
-        />
-      </label>
-      <label className="Loginlabel">
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="Logininput"
-        />
-      </label>
-      <button className="Loginbutton" type="submit">Log In</button>
-      <button  className="Loginbutton" onClick={userLogin}>demoUser</button>
-    </form>
+    <div className="boxContainer">
+      <form className="LoginForm" onSubmit={handleSubmit}>
+        <div>
+          <div className="errors">
+            <ul>
+              {errors.map((error, idx) => (
+                <li key={idx}>{error}</li>
+              ))}
+            </ul>
+          </div>
+
+          <label className="Loginlabel">
+            Username or Email
+            <input
+              type="text"
+              value={credential}
+              onChange={(e) => setCredential(e.target.value)}
+              required
+              className="Logininput"
+            />
+          </label>
+
+          <label className="Loginlabel">
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="Logininput"
+            />
+          </label>
+
+        </div>
+
+        <div className="buttons">
+          <button className="Loginbutton" type="submit">Log In</button>
+          <button className="Loginbutton" onClick={userLogin}>demoUser</button>
+        </div>
+
+      </form>
+    </div>
   );
 }
 

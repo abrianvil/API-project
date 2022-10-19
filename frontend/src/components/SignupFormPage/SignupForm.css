@@ -14,21 +14,21 @@
     font-family: 'Poppins',sans-serif;
 }
 
-form *{
+ form *{
     color: #353030;
     letter-spacing: 0.5px;
     outline: none;
     /* border: none; */
 }
 
-label{
+/* label{
     display: block;
     margin-top: 30px;
     font-size: 16px;
     /* font-weight: 500; */
-    font-weight: bold;
+    /* font-weight: bold; */
 
-}
+/* }  */
 
 .signUp input{
     display: block;

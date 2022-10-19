@@ -7,3 +7,14 @@
     margin-bottom: 50px;
     margin-top: 50px;
 }
+
+.topRight{
+    display: flex;
+    justify-content: space-between;
+    width: 15%;
+}
+
+.topRight a{
+    text-decoration: none;
+    color: black;
+}

@@ -33,6 +33,12 @@ const Del = (data) => {
     }
 }
 
+// const createSpot = (spot) => {
+//     return {
+//         type: ADD_A_SPOT,
+//         spot
+//     }
+// }
 
 
 /***************************THUNK*******************/
@@ -49,7 +55,7 @@ export const getAllSpots = () => async (dispatch) => {
     }
 }
 
-
+//get a single spot
 export const getASpot = (id) => async (dispatch) => {
     const res = await fetch(`/api/spots/${id}`)
     // console.log('res===>', res)
@@ -61,12 +67,12 @@ export const getASpot = (id) => async (dispatch) => {
     }
 }
 
-
+//delete a spot
 export const deleteASpot = (id) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${id}`, {
         method: 'DELETE'
     })
-    console.log("did it delete===>",res)
+    console.log("did it delete===>", res)
     if (res.ok) {
         const res = await fetch('api/spots')
         if (res.ok) {
@@ -77,6 +83,53 @@ export const deleteASpot = (id) => async (dispatch) => {
     }
 }
 
+//create a spot thunk
+export const createASpot = (payload) => async (dispatch) => {
+    const { address, city, state, country, lat, lng, name, description,
+        price, image } = payload
+    const res = await csrfFetch('/api/spots', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            address, city,
+            state, country,
+            lat, lng,
+            name, description,
+            price
+        })
+    })
+    if (res.ok) {
+        const data = await res.json()
+        console.log('data from create spots===>', data)
+        const sender = {
+            id: data.id,
+            url: image
+        }
+        console.log('before dispatch add image')
+       await dispatch(addImageToSpot(sender))
+       console.log('after dispatch add image')
+
+        return data
+    }
+}
+
+export const addImageToSpot = (payload) => async (dispatch) => {
+    const { url, id } = payload
+    console.log('inside add image')
+    const imageFetch = await csrfFetch(`/api/spots/${id}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            url,
+            preview: true
+        })
+    })
+    console.log('imageAdded===>', imageFetch)
+    if (imageFetch.ok) {
+        dispatch(getASpot(id))
+    }
+}
+
 /***************************REDUCER*******************/
 
 const initialState = { all: {}, one: {} }
@@ -84,6 +137,7 @@ const initialState = { all: {}, one: {} }
 export const SpotsReducer = (state = initialState, action) => {
     let newState;
     let all;
+    let one;
     switch (action.type) {
         // case GET_ALL_SPOTS:
         //     newState = Object.assign({}, state);
@@ -99,10 +153,10 @@ export const SpotsReducer = (state = initialState, action) => {
             return allSpots
         case GET_A_SPOT:
             newState = { ...state }
-            let one = { ...action.spot }
-            const Owner1Name = one.Owner.firstName
-            const Owner2Name = one.Owner.lastName
-            const imgUrl = one.SpotImages[0].url
+            one = { ...action.spot }
+            let Owner1Name = one.Owner.firstName
+            let Owner2Name = one.Owner.lastName
+            let imgUrl = one.SpotImages[0].url
             // console.log('ownerName===>', Owner1Name)
             one['firstName'] = Owner1Name
             one['lastName'] = Owner2Name
