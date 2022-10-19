@@ -7,6 +7,7 @@ const GET_ALL_SPOTS = 'spots/getSpots';
 const GET_A_SPOT = 'spots/getSpot';
 // const ADD_A_SPOT = 'spots/addSpot';
 const DELETE_A_SPOT = 'spot/removeSpot';
+const UPDATE_A_SPOT = 'spot/updateSpot';
 
 
 /***************************ACTION CREATOR*******************/
@@ -33,15 +34,16 @@ const Del = (data) => {
     }
 }
 
-// const createSpot = (spot) => {
-//     return {
-//         type: ADD_A_SPOT,
-//         spot
-//     }
-// }
+const editSpot = (spot) => {
+    return {
+        type: UPDATE_A_SPOT,
+        spot
+    }
+}
 
 
 /***************************THUNK*******************/
+//get all spot
 export const getAllSpots = () => async (dispatch) => {
     // const res = await csrfFetch('api/Spots')
     const res = await fetch('api/spots')
@@ -106,13 +108,32 @@ export const createASpot = (payload) => async (dispatch) => {
             url: image
         }
         console.log('before dispatch add image')
-       await dispatch(addImageToSpot(sender))
-       console.log('after dispatch add image')
+        await dispatch(addImageToSpot(sender))
+        console.log('after dispatch add image')
 
         return data
     }
 }
 
+//edit a spot
+export const editASpot = (payload) => async (dispatch) => {
+    const { address, city, state, country, lat, lng, name,
+        description, price, id } = payload
+    const res = await csrfFetch(`/api/spots/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            address, city,
+            state, country,
+            lat, lng,
+            name, description,
+            price
+        })
+    })
+}
+
+
+//add image to spot
 export const addImageToSpot = (payload) => async (dispatch) => {
     const { url, id } = payload
     console.log('inside add image')

@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
+import UpdateSpotForm from '../UpdateForm'
 import { getASpot } from '../../store/spots'
 import { deleteASpot } from '../../store/spots'
 import './SpotDetails.css'
@@ -24,9 +25,11 @@ function ShowDetails() {
 
 
     const onEdit = async (e) => {
-        e.preventDefault()
+        // e.preventDefault()
+        history.push(`/spots/${spotDetail.id}/edit`)
 
     }
+
 
     const onDelete = async (e) => {
         e.preventDefault()
@@ -66,10 +69,13 @@ function ShowDetails() {
                                 <h3>Self check-in</h3>
                                 <p>Check yourself in with the lockbox.</p>
                             </div>
-                            <h2>Reviews</h2>
-                            <ul>
-                                <li>Abel put the reviews here</li>
-                            </ul>
+                            <div>
+                                <h2>Reviews</h2>
+                                <ul>
+                                    <li>Abel put the reviews here</li>
+                                </ul>
+                            </div>
+
 
                         </div>
                         <fieldset>
