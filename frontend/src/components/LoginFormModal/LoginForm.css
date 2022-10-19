@@ -1,8 +1,8 @@
-form{
-    height: 520px;
+.Loginform{
+    height: auto;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
-    position: absolute;
+    position: relative;
     transform: translate(-50%,-50%);
     top: 50%;
     left: 50%;
@@ -21,7 +21,7 @@ form *{
     /* border: none; */
 }
 
-label{
+.Loginlabel{
     display: block;
     margin-top: 30px;
     font-size: 16px;
@@ -30,10 +30,13 @@ label{
 
 }
 
-input{
-    display: block;
+.Logininput{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
     height: 50px;
-    width: 94%;
+    width: 78%;
     background-color: rgba(255,255,255,0.07);
     border-radius: 3px;
     padding: 0 10px;
@@ -42,14 +45,22 @@ input{
     font-weight: 300;
 }
 
-button{
+.Loginbutton{
     margin-top: 50px;
-    width: 100%;
-    background-color: #ffffff;
-    color: #080710;
+    width: 90%;
+    background-color:#e51d57;
+    color: white;
     padding: 15px 0;
     font-size: 18px;
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
+}
+
+
+.boxContainer{
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 35px;
+    padding-bottom: 35px;
 }

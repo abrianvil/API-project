@@ -1,7 +1,7 @@
 .spotBox {
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     border: red solid 3px;
     /* overflow-y: scroll; */
  }
@@ -27,7 +27,7 @@
     width: 200vh;
 } */
 
-img {
+.imgDiv img {
     /* height: 250px;
     width: 250px; */
     height: 100%;

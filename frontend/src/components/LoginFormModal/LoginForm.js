@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
+import './LoginForm.css'
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -15,38 +16,58 @@ function LoginForm() {
       async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
-        console.log(res)
+        // console.log(res)
       }
     );
   };
 
+  const userLogin = async (e) => {
+    await dispatch(sessionActions.login({ credential: 'Demo-lition', password: 'password' }))
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => (
-          <li key={idx}>{error}</li>
-        ))}
-      </ul>
-      <label>
-        Username or Email
-        <input
-          type="text"
-          value={credential}
-          onChange={(e) => setCredential(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit">Log In</button>
-    </form>
+    <div className="boxContainer">
+      <form className="LoginForm" onSubmit={handleSubmit}>
+        <div>
+          <div className="errors">
+            <ul>
+              {errors.map((error, idx) => (
+                <li key={idx}>{error}</li>
+              ))}
+            </ul>
+          </div>
+
+          <label className="Loginlabel">
+            Username or Email
+            <input
+              type="text"
+              value={credential}
+              onChange={(e) => setCredential(e.target.value)}
+              required
+              className="Logininput"
+            />
+          </label>
+
+          <label className="Loginlabel">
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="Logininput"
+            />
+          </label>
+
+        </div>
+
+        <div className="buttons">
+          <button className="Loginbutton" type="submit">Log In</button>
+          <button className="Loginbutton" onClick={userLogin}>demoUser</button>
+        </div>
+
+      </form>
+    </div>
   );
 }
 

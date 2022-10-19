@@ -1,0 +1,20 @@
+#navList{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid grey 0.1px;
+    margin-left: 50px;
+    margin-right: 100px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.topRight{
+    display: flex;
+    justify-content: space-between;
+    width: 15%;
+}
+
+.topRight a{
+    text-decoration: none;
+    color: black;
+}

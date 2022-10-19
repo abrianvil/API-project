@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
+import LoginFormModal from "../LoginFormModal";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -28,6 +30,7 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
+  // if (user) {
   return (
     <>
       <button onClick={openMenu}>

@@ -1,0 +1,44 @@
+.create{
+    display: flex;
+    flex-direction: column;
+    padding: 50px 35px;
+    top: 50%;
+    left: 50%;
+    font-family: 'Poppins',sans-serif;
+    width: 50%;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    border-radius: 10px;
+
+}
+
+#createButton{
+    background-color: #e51d57;
+    color: white;
+    margin-top: 50px;
+    width: 78%;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.create input{
+    display: block;
+    height: 50px;
+    width: 74%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    /* width: 100%; */
+}

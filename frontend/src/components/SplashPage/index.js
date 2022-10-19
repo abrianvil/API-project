@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllSpots } from "../../store/spots";
@@ -7,8 +7,18 @@ import './splashPage.css'
 
 
 function SplashPage() {
-    const spotsObj = useSelector(state => state.spots)
-    const spots = Object.values(spotsObj)
+    const spotsObj = useSelector(state =>state.spots.all)
+
+    // console.log("spotObj splashPage===>",spotsObj)
+    // console.log('1')
+    let spots=[]
+    if(spotsObj){
+         spots = Object.values(spotsObj)
+    }
+    // console.log('2')
+    // console.log("spots splashPage===>", spots)
+    // console.log('3')
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -21,9 +31,9 @@ function SplashPage() {
         <div className="spotBox" >
             {spots.map(spot => {
                 return (
-                    <div className="pictureCard">
+                    <div className="pictureCard" key={spot.name}>
                         <nav >
-                            <NavLink className="navEdit" key={spot.name} to={`/Spots/${spot.id}`}>
+                            <NavLink className="navEdit"  to={`/Spots/${spot.id}`}>
                                 <div className="imgDiv">
                                     <img src={`${spot.previewImage}`} alt={spot.name}></img>
                                 </div>
