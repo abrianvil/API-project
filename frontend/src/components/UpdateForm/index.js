@@ -1,48 +1,51 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom'
-import { createASpot } from "../../store/spots";
-import './createSpotForm.css'
+import { editASpot } from "../../store/spots";
 
 
 
 
-function CreateSpotForm() {
+
+function UpdateSpotForm() {
     const user = useSelector(state => state.session)
+    const spotToEdit = useSelector(state => state.spots.one)
+    // console.log('toedit====>', spotToEdit)
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [address, setAddress] = useState('')
-    const [city, setCity] = useState('')
-    const [state, setState] = useState('')
-    const [country, setCountry] = useState('')
-    const [lat, setLat] = useState(0)
-    const [lng, setLng] = useState(0)
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [price, setPrice] = useState(0)
-    const [image, setImage] = useState('')
+    const [address, setAddress] = useState(spotToEdit.address)
+    const [city, setCity] = useState(spotToEdit.city)
+    const [state, setState] = useState(spotToEdit.state)
+    const [country, setCountry] = useState(spotToEdit.country)
+    const [lat, setLat] = useState(spotToEdit.lat)
+    const [lng, setLng] = useState(spotToEdit.lng)
+    const [name, setName] = useState(spotToEdit.name)
+    const [description, setDescription] = useState(spotToEdit.description)
+    const [price, setPrice] = useState(spotToEdit.price)
+    // const [image, setImage] = useState(spotToEdit.imgUrl)
 
-    const onsubmit = async(e) => {
+
+    const onsubmit = async (e) => {
         e.preventDefault()
+        const id = spotToEdit.id
         const payload = {
             address, city,
             state, country,
             lat, lng,
             name, description,
-            price, image
+            price, id
         }
-        const newSpot=await dispatch(createASpot(payload))
-        history.push(`/Spots/${newSpot.id}`)
+        const updateSpot = await dispatch(editASpot(payload))
+
+        history.push(`/Spots/${id}`)
+
     }
 
 
     return (
         <div className="container">
             <form className="create" onSubmit={onsubmit}>
-                <ul>
-                    {/* {errors.map((error, idx) => <li key={idx}>{error}</li>)} */}
-                </ul>
                 <label>
                     Address
                     <input
@@ -133,7 +136,7 @@ function CreateSpotForm() {
                     />
                 </label>
 
-                <label>
+                {/* <label>
                     Image Url
                     <input
                         type="text"
@@ -141,14 +144,13 @@ function CreateSpotForm() {
                         onChange={(e) => setImage(e.target.value)}
                         required
                     />
-                </label>
+                </label> */}
 
-                <button disabled={user ? false : true} id="createButton" type="submit">Create Spot</button>
+                <button disabled={user ? false : true} id="createButton" type="submit">EditSpot</button>
             </form>
         </div>
     )
-
 }
 
 
-export default CreateSpotForm
+export default UpdateSpotForm

@@ -37,6 +37,18 @@ module.exports = {
         stars: 3
       },
       {
+        spotId: 1,
+        userId: 2,
+        review: ' When we first stumbled upon this flat on AirBnB, it seemed almost too good to be true. There must be a catch! But everything was as perfect as it seemed online. (Host Name) is the most thoughtful, gracious host.',
+        stars: 3
+      },
+      {
+        spotId: 1,
+        userId: 2,
+        review: 'The apartment is very nice and comfortable! Location is very convenient, near shops and public transport. (Host Name) was very helpful and friendly, he’s a super host!',
+        stars: 3
+      },
+      {
         spotId: 2,
         userId: 1,
         review: 'i mean really, this hurricane sucked!',

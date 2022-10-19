@@ -53,3 +53,13 @@ fieldset{
     display: flex;
     justify-content: space-between;
 }
+
+
+.review-box{
+    width: 60%;
+}
+
+.indiv-review{
+    border-bottom: black solid 1px;
+    margin-bottom: 10px;
+}

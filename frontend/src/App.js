@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import SplashPage from "./components/SplashPage";
 import ShowDetails from "./components/SpotDetails";
 import CreateSpotForm from "./components/CreateSpotForm";
+import UpdateSpotForm from "./components/UpdateForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,15 +24,23 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+
           <Route exact path='/'>
             <SplashPage />
           </Route>
+
+          <Route exact path='/spots/:id/edit'>
+            <UpdateSpotForm />
+          </Route>
+
           <Route path='/Spots/:id'>
             <ShowDetails />
           </Route>
+
           <Route path='/spots'>
             <CreateSpotForm />
           </Route>
+
         </Switch>
       )}
     </>
