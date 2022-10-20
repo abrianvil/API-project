@@ -33,7 +33,7 @@ function ShowDetails() {
 
     const onEdit = async (e) => {
         e.preventDefault()
-
+        history.push(`/spots/${spotDetail.id}/edit`)
     }
 
     const onDelete = async (e) => {
