@@ -19,7 +19,7 @@ function LoginForm() {
   },[password, credential])
 
 
-  console.log('outside handle submit==>',errorArr)
+  // console.log('outside handle submit==>',errorArr)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,12 +29,12 @@ function LoginForm() {
         const data = await res.json();
         if (data && data.message) {
           setErrors([data.message])
-          console.log(data)
+          // console.log(data)
         }
       });
       console.log('inside handle submit==>',errorArr)
   }
-  console.log('======>', errors)
+  // console.log('======>', errors)
 
   const userLogin = async (e) => {
     await dispatch(sessionActions.login({ credential: 'Demo-lition', password: 'password' }))
