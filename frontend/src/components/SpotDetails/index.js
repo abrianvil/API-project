@@ -7,6 +7,7 @@ import { deleteASpot } from '../../store/spots'
 import { clearState } from '../../store/spots'
 import { reset } from '../../store/reviews'
 import { deleteReview } from '../../store/reviews'
+import { getAllSpotReviews } from '../../store/reviews'
 import ReviewFormModal from '../reviewFormModal'
 import './SpotDetails.css'
 
@@ -14,8 +15,11 @@ import './SpotDetails.css'
 
 function ShowDetails() {
     const [showForm, setShowForm] = useState(false)
-    const [toDelRev, setToDelRev]=useState()
+    const [toDelRev, setToDelRev] = useState(null)
+
     const review= useSelector(state=>state.reviews.spotReviews)
+    const reviewsArr=Object.values(review)
+    console.log(review)
     const spotDetail = useSelector(state => state.spots.one)
     const user = useSelector(state => state.session)
     const [errors, setErrors] = useState()
@@ -36,11 +40,17 @@ function ShowDetails() {
 
     useEffect(() => {
         dispatch(getAllSpotReviews(+id))
-        return(
-            ()=>dispatch(reset())
+        return (
+            () => dispatch(reset())
         )
     }, [dispatch, id]);
 
+
+    useEffect(() => {
+        if (toDelRev !== null) dispatch(deleteReview(toDelRev, id))
+        setToDelRev(null)
+
+    }, [dispatch, toDelRev]);
 
     const onEdit = async (e) => {
         e.preventDefault()
@@ -63,18 +73,18 @@ function ShowDetails() {
     }
 
 
-    const reviewhandler=(review)=>async(e)=>{
-        e.preventDefault()
-        dispatch(deleteRev(review.id, id))
+    // const reviewhandler = (review) => async (e) => {
+    //     e.preventDefault()
+    //     dispatch(deleteRev(review.id, id))
 
-    }
+    // }
 
-    const deleteRev=async(e)=>{
-        e.preventDefault()
-        console.log('********',id)
-       await dispatch(deleteReview(toDelRev,id))``
-    }
-    console.log('======>',toDelRev)
+    // const deleteRev = async (e) => {
+    //     e.preventDefault()
+    //     console.log('********', id)
+    //     await dispatch(deleteReview(toDelRev, id))``
+    // }
+    // console.log('======>', toDelRev)
 
 
 
@@ -111,10 +121,8 @@ function ShowDetails() {
                                                 <li>
                                                     {review.review}
                                                     <button
-                                                    type='submit'
-                                                    hidden={user&&user.id===review.userId?false:true}
-                                                    onClick={()=>setToDelRev(review.id)}
-                                                    onSubmit={deleteRev}
+                                                        hidden={user && user.id === review.userId ? false : true}
+                                                        onClick={() => setToDelRev(review.id)}
                                                     >
                                                         delete
                                                     </button>
@@ -138,12 +146,12 @@ function ShowDetails() {
                             {showForm && (<Modal onClose={() => setShowForm(false)} id='review-form'>
                                 <ReviewFormModal setShowForm={setShowForm} />
                             </Modal>)}
-                            <button hidden={(user&&user.id === spotDetail.ownerId ? false : true)}
+                            <button hidden={(user && user.id === spotDetail.ownerId ? false : true)}
                                 onClick={onEdit}
                                 className='buttonGroup'>Edit Spot
                             </button>
 
-                            <button hidden={(user&&user.id === spotDetail.ownerId ? false : true)}
+                            <button hidden={(user && user.id === spotDetail.ownerId ? false : true)}
                                 onClick={onDelete} className='buttonGroup'>Delete Spot
                             </button>
                         </fieldset>
