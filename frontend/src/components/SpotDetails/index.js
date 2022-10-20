@@ -12,7 +12,7 @@ import './SpotDetails.css'
 
 function ShowDetails() {
     const [showForm, setShowForm] = useState(false)
-
+    const review= useSelector(state=>state.reviews.spotReviews)
     const spotDetail = useSelector(state => state.spots.one)
     const user = useSelector(state => state.session)
     const [errors, setErrors] = useState()
