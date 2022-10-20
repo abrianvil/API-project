@@ -1,15 +1,20 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import UpdateSpotForm from '../UpdateForm'
+// import UpdateSpotForm from '../UpdateForm'
+import { Modal } from '../../context/Modal'
 import { getASpot } from '../../store/spots'
 import { getAllSpotReviews } from '../../store/reviews'
 import { deleteASpot } from '../../store/spots'
+import { clearState } from '../../store/spots'
+import ReviewFormModal from '../reviewFormModal'
 import './SpotDetails.css'
 
 
 
 function ShowDetails() {
+    const [showForm, setShowForm] = useState(false)
+
     const spotDetail = useSelector(state => state.spots.one)
     const reviews = useSelector(state => state.reviews.spotReviews)
     // console.log('this is the incominge reviews', reviews)
@@ -30,6 +35,9 @@ function ShowDetails() {
 
     useEffect(() => {
         dispatch(getASpot(+id))
+        return (
+            () => dispatch(clearState())
+        )
     }, [dispatch, id]);
 
     useEffect(() => {
@@ -74,7 +82,7 @@ function ShowDetails() {
                         <img src={spotDetail.imgUrl} alt={spotDetail.name} />
                     </div>
                     <div className='description-card'>
-                        <div>
+                        <div className='info-box'>
                             <div>
                                 <h3>Home Hosted By {spotDetail.firstName}</h3>
                                 <p>{spotDetail.description}</p>
@@ -109,8 +117,10 @@ function ShowDetails() {
                                 <p>⭐{spotDetail.avgStarRating} .{spotDetail.numReviews} reviews</p>
                             </div>
                             <h3>Free cancellation</h3>
-                            <button className='buttonGroup'>Add a Review</button>
-
+                            <button className='buttonGroup' onClick={() => setShowForm(true)}>Add a Review</button>
+                           {showForm && ( <Modal onClose={() => setShowForm(false)} id='review-form'>
+                                <ReviewFormModal />
+                            </Modal>)}
                             <button hidden={(user.id === spotDetail.ownerId ? false : true)}
                                 onClick={onEdit}
                                 className='buttonGroup'>Edit Spot

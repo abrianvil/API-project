@@ -2,6 +2,7 @@ import { csrfFetch } from './csrf';
 
 /***************************TYPE*******************/
 const SPOT_REVIEWS = '/reviews/spot'
+// const ADD_A_REVIEW= '/review/spot'
 
 
 /***************************ACTION CREATOR*******************/
@@ -22,6 +23,19 @@ export const getAllSpotReviews = (id) => async (dispatch) => {
         // console.log('data in reviews thunk', data)
         dispatch(loadSpotReviews(data))
     }
+}
+
+export const addReview=(payload)=>async(dispatch)=>{
+    const{review,stars,id}=payload
+    const res= await csrfFetch(`/api/spots/${id}/reviews`,{
+        method:'POST',
+        headers:{ 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            review,
+            stars
+        })
+    })
+    return res
 }
 
 

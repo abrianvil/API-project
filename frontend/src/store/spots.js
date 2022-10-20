@@ -8,6 +8,7 @@ const GET_A_SPOT = 'spots/getSpot';
 // const ADD_A_SPOT = 'spots/addSpot';
 const DELETE_A_SPOT = 'spot/removeSpot';
 const UPDATE_A_SPOT = 'spot/updateSpot';
+const CLEAR_STATE = 'spot/clearState'
 
 
 /***************************ACTION CREATOR*******************/
@@ -41,6 +42,13 @@ const editSpot = (spot) => {
     }
 }
 
+
+export const clearState = () => {
+    return {
+        type: CLEAR_STATE,
+        data: {}
+    }
+}
 
 /***************************THUNK*******************/
 //get all spot
@@ -151,6 +159,8 @@ export const addImageToSpot = (payload) => async (dispatch) => {
     }
 }
 
+
+
 /***************************REDUCER*******************/
 
 const initialState = { all: {}, one: {} }
@@ -191,6 +201,11 @@ export const SpotsReducer = (state = initialState, action) => {
                 all[spot.id] = spot
             });
             newState.all = all
+            return newState
+        case CLEAR_STATE:
+            newState={...state}
+            one={...action.data}
+            newState.one=one
             return newState
         default:
             return state
