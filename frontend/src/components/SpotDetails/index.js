@@ -8,6 +8,7 @@ import { getAllSpotReviews } from '../../store/reviews'
 import { deleteASpot } from '../../store/spots'
 import { clearState } from '../../store/spots'
 import { reset } from '../../store/reviews'
+import { deleteReview } from '../../store/reviews'
 import ReviewFormModal from '../reviewFormModal'
 import './SpotDetails.css'
 
@@ -15,6 +16,7 @@ import './SpotDetails.css'
 
 function ShowDetails() {
     const [showForm, setShowForm] = useState(false)
+    const [toDelRev, setToDelRev]=useState()
 
     const spotDetail = useSelector(state => state.spots.one)
     const reviews = useSelector(state => state.reviews.spotReviews)
@@ -71,6 +73,19 @@ function ShowDetails() {
     }
 
 
+    const reviewhandler=(review)=>async(e)=>{
+        e.preventDefault()
+        dispatch(deleteRev(review.id, id))
+
+    }
+
+    const deleteRev=async(e)=>{
+        e.preventDefault()
+        console.log('********',id)
+       await dispatch(deleteReview(toDelRev,id))``
+    }
+    console.log('======>',toDelRev)
+
 
 
     //DISPATCH TO GET REVIEWS NEEDED
@@ -106,7 +121,10 @@ function ShowDetails() {
                                                 <li>
                                                     {review.review}
                                                     <button
+                                                    type='submit'
                                                     hidden={user&&user.id===review.userId?false:true}
+                                                    onClick={()=>setToDelRev(review.id)}
+                                                    onSubmit={deleteRev}
                                                     >
                                                         delete
                                                     </button>

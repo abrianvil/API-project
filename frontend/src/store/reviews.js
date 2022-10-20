@@ -49,6 +49,14 @@ export const addReview = (payload) => async (dispatch) => {
     return res
 }
 
+export const deleteReview=(id, id2)=>async(dispatch)=>{
+    const res= await csrfFetch(`/api/reviews/${id}`, {
+        method:'DELETE'
+    })
+    if(res.ok){
+        dispatch(getAllSpotReviews(id2))
+    }
+}
 
 /***************************REDUCER*******************/
 const initialState = { spotReviews: {}, userReviews: {} }
