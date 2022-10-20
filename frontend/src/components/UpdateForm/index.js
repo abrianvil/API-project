@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { editASpot } from "../../store/spots";
 
 
@@ -8,8 +8,11 @@ import { editASpot } from "../../store/spots";
 
 
 function UpdateSpotForm() {
+    const {id}=useParams()
     const user = useSelector(state => state.session)
     const spotToEdit = useSelector(state => state.spots.one)
+    // const spotlist = useSelector(state => state.spots.all)
+
     // console.log('toedit====>', spotToEdit)
     const dispatch = useDispatch()
     const history = useHistory()
@@ -28,7 +31,7 @@ function UpdateSpotForm() {
 
     const onsubmit = async (e) => {
         e.preventDefault()
-        const id = spotToEdit.id
+        // const id = spotToEdit.id
         const payload = {
             address, city,
             state, country,
@@ -38,7 +41,7 @@ function UpdateSpotForm() {
         }
         const updateSpot = await dispatch(editASpot(payload))
 
-        history.push(`/Spots/${id}`)
+        history.push(`/Spots/${+id}`)
 
     }
 
