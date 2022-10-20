@@ -1,9 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import UpdateSpotForm from '../UpdateForm'
 import { getASpot } from '../../store/spots'
-import { getAllSpotReviews } from '../../store/reviews'
 import { deleteASpot } from '../../store/spots'
 import './SpotDetails.css'
 
@@ -11,8 +9,6 @@ import './SpotDetails.css'
 
 function ShowDetails() {
     const spotDetail = useSelector(state => state.spots.one)
-    const reviews = useSelector(state => state.reviews.spotReviews)
-    // console.log('this is the incominge reviews', reviews)
     const user = useSelector(state => state.session)
     const [errors, setErrors] = useState()
     const { id } = useParams()
@@ -22,26 +18,15 @@ function ShowDetails() {
     // console.log('useSelector=====>', spotDetail)
     // console.log("user====>", user)
 
-    let reviewsArr = [];
-    if (reviews) {
-        reviewsArr = Object.values(reviews)
-    }
-
-
     useEffect(() => {
         dispatch(getASpot(+id))
     }, [dispatch, id]);
 
-    useEffect(() => {
-        dispatch(getAllSpotReviews(+id))
-    }, [dispatch, id]);
 
     const onEdit = async (e) => {
-        // e.preventDefault()
-        history.push(`/spots/${spotDetail.id}/edit`)
+        e.preventDefault()
 
     }
-
 
     const onDelete = async (e) => {
         e.preventDefault()
@@ -59,8 +44,6 @@ function ShowDetails() {
     }
 
 
-
-
     //DISPATCH TO GET REVIEWS NEEDED
     return (
         <>
@@ -74,8 +57,8 @@ function ShowDetails() {
                         <img src={spotDetail.imgUrl} alt={spotDetail.name} />
                     </div>
                     <div className='description-card'>
-                        <div>
-                            <div>
+                        <div className='describe-div'>
+                            <div >
                                 <h3>Home Hosted By {spotDetail.firstName}</h3>
                                 <p>{spotDetail.description}</p>
                             </div>
@@ -83,24 +66,10 @@ function ShowDetails() {
                                 <h3>Self check-in</h3>
                                 <p>Check yourself in with the lockbox.</p>
                             </div>
-                            <div className='review-box'>
-                                <h2>Reviews</h2>
-                                <ul>
-
-                                    {reviewsArr.map(review => {
-
-                                        return (
-                                            <div key={review.id} className='indiv-review'>
-                                                <li>
-                                                    {review.review}
-                                                </li>
-                                            </div>
-                                        )
-                                    })}
-                                </ul>
-
-                            </div>
-
+                            <h2>Reviews</h2>
+                            <ul>
+                                <li>Abel put the reviews here</li>
+                            </ul>
 
                         </div>
                         <fieldset>

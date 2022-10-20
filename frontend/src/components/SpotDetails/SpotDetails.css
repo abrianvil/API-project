@@ -63,3 +63,8 @@ fieldset{
     border-bottom: black solid 1px;
     margin-bottom: 10px;
 }
+
+
+.describe-div{
+    width: 60%;
+}
