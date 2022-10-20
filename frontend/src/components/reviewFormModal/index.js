@@ -20,7 +20,7 @@ function ReviewFormModal() {
 
     useEffect(() => {
         const errors = []
-        if (review.length > 250) errors.push('Can not exceed 250 characters');
+        if (review.length > 200) errors.push('Can not exceed 250 characters');
         if (review.length <= 0) errors.push('Can not submit an empty review');
         setValidationErrors(errors)
     }, [review])
