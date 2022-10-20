@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import './LoginForm.css'
@@ -9,17 +9,32 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const handleSubmit = (e) => {
+
+
+  let errorArr=[]
+  useEffect(()=>{
+    if(credential.length<=0)errorArr.push('Please Provide a credential')
+    if(password.length<=0)errorArr.push('Please Provide a password')
+    setErrors(errorArr)
+  },[password, credential])
+
+
+  // console.log('outside handle submit==>',errorArr)
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential, password })).catch(
+     await dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-        // console.log(res)
-      }
-    );
-  };
+        if (data && data.message) {
+          setErrors([data.message])
+          // console.log(data)
+        }
+      });
+      console.log('inside handle submit==>',errorArr)
+  }
+  // console.log('======>', errors)
 
   const userLogin = async (e) => {
     await dispatch(sessionActions.login({ credential: 'Demo-lition', password: 'password' }))
@@ -43,7 +58,7 @@ function LoginForm() {
               type="text"
               value={credential}
               onChange={(e) => setCredential(e.target.value)}
-              required
+              // required
               className="Logininput"
             />
           </label>
@@ -54,7 +69,7 @@ function LoginForm() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
+              // required
               className="Logininput"
             />
           </label>
@@ -62,7 +77,9 @@ function LoginForm() {
         </div>
 
         <div className="buttons">
-          <button className="Loginbutton" type="submit">Log In</button>
+          <button className="Loginbutton" type="submit"
+          disabled={errors.length?true:false}
+          >Log In</button>
           <button className="Loginbutton" onClick={userLogin}>demoUser</button>
         </div>
 

@@ -2,12 +2,24 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { getASpot } from '../../store/spots'
+import { Modal } from '../../context/Modal'
 import { deleteASpot } from '../../store/spots'
+import { clearState } from '../../store/spots'
+import { reset } from '../../store/reviews'
+import { deleteReview } from '../../store/reviews'
+import { getAllSpotReviews } from '../../store/reviews'
+import ReviewFormModal from '../reviewFormModal'
 import './SpotDetails.css'
 
 
 
 function ShowDetails() {
+    const [showForm, setShowForm] = useState(false)
+    const [toDelRev, setToDelRev] = useState(null)
+
+    const review= useSelector(state=>state.reviews.spotReviews)
+    const reviewsArr=Object.values(review)
+    console.log(review)
     const spotDetail = useSelector(state => state.spots.one)
     const user = useSelector(state => state.session)
     const [errors, setErrors] = useState()
@@ -20,12 +32,29 @@ function ShowDetails() {
 
     useEffect(() => {
         dispatch(getASpot(+id))
+        return (
+            () => dispatch(clearState())
+        )
     }, [dispatch, id]);
 
 
+    useEffect(() => {
+        dispatch(getAllSpotReviews(+id))
+        return (
+            () => dispatch(reset())
+        )
+    }, [dispatch, id]);
+
+
+    useEffect(() => {
+        if (toDelRev !== null) dispatch(deleteReview(toDelRev, id))
+        setToDelRev(null)
+
+    }, [dispatch, toDelRev]);
+
     const onEdit = async (e) => {
         e.preventDefault()
-
+        history.push(`/spots/${spotDetail.id}/edit`)
     }
 
     const onDelete = async (e) => {
@@ -44,8 +73,23 @@ function ShowDetails() {
     }
 
 
+    // const reviewhandler = (review) => async (e) => {
+    //     e.preventDefault()
+    //     dispatch(deleteRev(review.id, id))
+
+    // }
+
+    // const deleteRev = async (e) => {
+    //     e.preventDefault()
+    //     console.log('********', id)
+    //     await dispatch(deleteReview(toDelRev, id))``
+    // }
+    // console.log('======>', toDelRev)
+
+
+
     //DISPATCH TO GET REVIEWS NEEDED
-    return (
+   return (
         <>
             {spotDetail &&
                 <div className='detailsMainDiv'>
@@ -57,8 +101,8 @@ function ShowDetails() {
                         <img src={spotDetail.imgUrl} alt={spotDetail.name} />
                     </div>
                     <div className='description-card'>
-                        <div className='describe-div'>
-                            <div >
+                        <div className='info-box'>
+                            <div>
                                 <h3>Home Hosted By {spotDetail.firstName}</h3>
                                 <p>{spotDetail.description}</p>
                             </div>
@@ -66,10 +110,30 @@ function ShowDetails() {
                                 <h3>Self check-in</h3>
                                 <p>Check yourself in with the lockbox.</p>
                             </div>
-                            <h2>Reviews</h2>
-                            <ul>
-                                <li>Abel put the reviews here</li>
-                            </ul>
+                            <div className='review-box'>
+                                <h2>Reviews</h2>
+                                <ul>
+
+                                    {reviewsArr.map(review => {
+
+                                        return (
+                                            <div key={review.id} className='indiv-review'>
+                                                <li>
+                                                    {review.review}
+                                                    <button
+                                                        hidden={user && user.id === review.userId ? false : true}
+                                                        onClick={() => setToDelRev(review.id)}
+                                                    >
+                                                        delete
+                                                    </button>
+                                                </li>
+                                            </div>
+                                        )
+                                    })}
+                                </ul>
+
+                            </div>
+
 
                         </div>
                         <fieldset>
@@ -78,14 +142,16 @@ function ShowDetails() {
                                 <p>⭐{spotDetail.avgStarRating} .{spotDetail.numReviews} reviews</p>
                             </div>
                             <h3>Free cancellation</h3>
-                            <button className='buttonGroup'>Add a Review</button>
-
-                            <button hidden={(user.id === spotDetail.ownerId ? false : true)}
+                            <button className='buttonGroup' onClick={() => setShowForm(true)}>Add a Review</button>
+                            {showForm && (<Modal onClose={() => setShowForm(false)} id='review-form'>
+                                <ReviewFormModal setShowForm={setShowForm} />
+                            </Modal>)}
+                            <button hidden={(user && user.id === spotDetail.ownerId ? false : true)}
                                 onClick={onEdit}
                                 className='buttonGroup'>Edit Spot
                             </button>
 
-                            <button hidden={(user.id === spotDetail.ownerId ? false : true)}
+                            <button hidden={(user && user.id === spotDetail.ownerId ? false : true)}
                                 onClick={onDelete} className='buttonGroup'>Delete Spot
                             </button>
                         </fieldset>
@@ -94,6 +160,7 @@ function ShowDetails() {
         </>
 
     )
+
 }
 
 

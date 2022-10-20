@@ -22,17 +22,30 @@ function CreateSpotForm() {
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState(0)
     const [image, setImage] = useState('')
+    const [validationErrors, setValidationErrors] = useState([]);
 
-    const onsubmit = async(e) => {
+
+
+
+    const onsubmit = async (e) => {
         e.preventDefault()
         const payload = {
             address, city,
             state, country,
-            lat, lng,
+            lat: 10,
+            lng: 20,
             name, description,
             price, image
         }
-        const newSpot=await dispatch(createASpot(payload))
+        const newSpot = await dispatch(createASpot(payload)).catch(
+            async (res) => {
+                const data = await res.json();
+                if (data && data.errors) {
+                    setValidationErrors([data.errors])
+                    // console.log('====>', data.errors)
+                }
+            });
+
         history.push(`/Spots/${newSpot.id}`)
     }
 
@@ -41,7 +54,9 @@ function CreateSpotForm() {
         <div className="container">
             <form className="create" onSubmit={onsubmit}>
                 <ul>
-                    {/* {errors.map((error, idx) => <li key={idx}>{error}</li>)} */}
+                    {validationErrors.map((error) => (
+                        <li key=''>{error}</li>
+                    ))}
                 </ul>
                 <label>
                     Address
@@ -49,7 +64,7 @@ function CreateSpotForm() {
                         type="text"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
 
@@ -59,7 +74,7 @@ function CreateSpotForm() {
                         type="text"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
 
@@ -69,7 +84,7 @@ function CreateSpotForm() {
                         type="text"
                         value={state}
                         onChange={(e) => setState(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
 
@@ -79,11 +94,11 @@ function CreateSpotForm() {
                         type="text"
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
 
-                <label>
+                {/* <label>
                     Latitude
                     <input
                         type="number"
@@ -101,7 +116,7 @@ function CreateSpotForm() {
                         onChange={(e) => setLng(e.target.value)}
                         required
                     />
-                </label>
+                </label> */}
 
                 <label>
                     Name
@@ -109,7 +124,7 @@ function CreateSpotForm() {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
 
@@ -119,7 +134,7 @@ function CreateSpotForm() {
                         type="text"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
 
@@ -129,7 +144,7 @@ function CreateSpotForm() {
                         type="number"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
 
@@ -139,7 +154,7 @@ function CreateSpotForm() {
                         type="text"
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
-                        required
+                    // required
                     />
                 </label>
 
