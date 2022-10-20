@@ -62,7 +62,7 @@ function ShowDetails() {
                         <h2>{spotDetail.name} </h2>
                     </div>
                     <div className='image'>
-                        <img src={spotDetail.imgUrl} alt={spotDetail.name} />
+                         <img src={spotDetail.imgUrl} alt={spotDetail.name} />
                     </div>
                     <div className='description-card'>
                         <div className='info-box'>
