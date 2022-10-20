@@ -7,6 +7,7 @@ import { getASpot } from '../../store/spots'
 import { getAllSpotReviews } from '../../store/reviews'
 import { deleteASpot } from '../../store/spots'
 import { clearState } from '../../store/spots'
+import { reset } from '../../store/reviews'
 import ReviewFormModal from '../reviewFormModal'
 import './SpotDetails.css'
 
@@ -42,6 +43,9 @@ function ShowDetails() {
 
     useEffect(() => {
         dispatch(getAllSpotReviews(+id))
+        return(
+            ()=>dispatch(reset())
+        )
     }, [dispatch, id]);
 
     const onEdit = async (e) => {
@@ -101,6 +105,11 @@ function ShowDetails() {
                                             <div key={review.id} className='indiv-review'>
                                                 <li>
                                                     {review.review}
+                                                    <button
+                                                    hidden={user&&user.id===review.userId?false:true}
+                                                    >
+                                                        delete
+                                                    </button>
                                                 </li>
                                             </div>
                                         )
@@ -118,15 +127,15 @@ function ShowDetails() {
                             </div>
                             <h3>Free cancellation</h3>
                             <button className='buttonGroup' onClick={() => setShowForm(true)}>Add a Review</button>
-                           {showForm && ( <Modal onClose={() => setShowForm(false)} id='review-form'>
-                                <ReviewFormModal />
+                            {showForm && (<Modal onClose={() => setShowForm(false)} id='review-form'>
+                                <ReviewFormModal setShowForm={setShowForm} />
                             </Modal>)}
-                            <button hidden={(user.id === spotDetail.ownerId ? false : true)}
+                            <button hidden={(user&&user.id === spotDetail.ownerId ? false : true)}
                                 onClick={onEdit}
                                 className='buttonGroup'>Edit Spot
                             </button>
 
-                            <button hidden={(user.id === spotDetail.ownerId ? false : true)}
+                            <button hidden={(user&&user.id === spotDetail.ownerId ? false : true)}
                                 onClick={onDelete} className='buttonGroup'>Delete Spot
                             </button>
                         </fieldset>
