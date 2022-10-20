@@ -1,14 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-// import UpdateSpotForm from '../UpdateForm'
-import { Modal } from '../../context/Modal'
 import { getASpot } from '../../store/spots'
-import { getAllSpotReviews } from '../../store/reviews'
+import { Modal } from '../../context/Modal'
 import { deleteASpot } from '../../store/spots'
 import { clearState } from '../../store/spots'
 import { reset } from '../../store/reviews'
 import { deleteReview } from '../../store/reviews'
+import { getAllSpotReviews } from '../../store/reviews'
 import ReviewFormModal from '../reviewFormModal'
 import './SpotDetails.css'
 
@@ -18,9 +17,10 @@ function ShowDetails() {
     const [showForm, setShowForm] = useState(false)
     const [toDelRev, setToDelRev] = useState(null)
 
+    const review= useSelector(state=>state.reviews.spotReviews)
+    const reviewsArr=Object.values(review)
+    console.log(review)
     const spotDetail = useSelector(state => state.spots.one)
-    const reviews = useSelector(state => state.reviews.spotReviews)
-    // console.log('this is the incominge reviews', reviews)
     const user = useSelector(state => state.session)
     const [errors, setErrors] = useState()
     const { id } = useParams()
@@ -30,18 +30,13 @@ function ShowDetails() {
     // console.log('useSelector=====>', spotDetail)
     // console.log("user====>", user)
 
-    let reviewsArr = [];
-    if (reviews) {
-        reviewsArr = Object.values(reviews)
-    }
-
-
     useEffect(() => {
         dispatch(getASpot(+id))
         return (
             () => dispatch(clearState())
         )
     }, [dispatch, id]);
+
 
     useEffect(() => {
         dispatch(getAllSpotReviews(+id))
@@ -58,11 +53,9 @@ function ShowDetails() {
     }, [dispatch, toDelRev]);
 
     const onEdit = async (e) => {
-        // e.preventDefault()
+        e.preventDefault()
         history.push(`/spots/${spotDetail.id}/edit`)
-
     }
-
 
     const onDelete = async (e) => {
         e.preventDefault()
@@ -96,7 +89,7 @@ function ShowDetails() {
 
 
     //DISPATCH TO GET REVIEWS NEEDED
-    return (
+   return (
         <>
             {spotDetail &&
                 <div className='detailsMainDiv'>
@@ -167,6 +160,7 @@ function ShowDetails() {
         </>
 
     )
+
 }
 
 

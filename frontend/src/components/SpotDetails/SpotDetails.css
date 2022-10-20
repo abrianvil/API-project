@@ -1,12 +1,20 @@
 
-
+.image{
+    height: 70%;
+    width: 70%;
+}
 .image img{
-    height: 45%;
-    width: 45%;
+    height:100%;
+    width: 100%;
     border-radius: none;
     border-top-left-radius: 3%;
     border-bottom-left-radius: 3%;
     object-fit: cover;
+}
+
+.info-box{
+    display: flex;
+    justify-content: space-between;
 }
 
 fieldset{
@@ -18,10 +26,10 @@ fieldset{
 
 
 .detailsMainDiv{
-    /* display: flex;
+    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center; */
+    /* justify-content: center; */
+    /* align-items: center; */
     margin-left: 10%;
     margin-right: 10%;
 
@@ -32,6 +40,7 @@ fieldset{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
 }
 
 
@@ -65,8 +74,6 @@ fieldset{
 }
 
 
-.info-box{
+.describe-div{
     width: 60%;
 }
-
-
