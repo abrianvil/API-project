@@ -1,6 +1,6 @@
 .Loginform{
-    height: auto;
-    width: 400px;
+    /* height: 800px;
+    width: 800px;
     background-color: rgba(255,255,255,0.13);
     position: relative;
     transform: translate(-50%,-50%);
@@ -10,7 +10,8 @@
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
-    padding: 50px 35px;
+     padding: 50px 35px; */
+
 }
 
 form *{
@@ -63,6 +64,10 @@ form *{
     padding-right: 35px;
     padding-top: 35px;
     padding-bottom: 35px;
+    height: 500px;
+    width: 300px;
+    /* border: red solid 3px; */
+    /* border-radius: 10px; */
 }
 
 .loginButton{
@@ -72,3 +77,5 @@ form *{
     border-radius: 10px;
     width: 70px;
 }
+
+

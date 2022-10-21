@@ -14,12 +14,14 @@
 
 .info-box{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
 fieldset{
     border-radius: 7%;
     height: auto;
+    max-height: 350px;
     width: 25%;
 
 }
@@ -32,7 +34,7 @@ fieldset{
     /* align-items: center; */
     margin-left: 10%;
     margin-right: 10%;
-
+    height: auto;
 }
 
 

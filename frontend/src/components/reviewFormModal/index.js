@@ -8,16 +8,13 @@ import './reviewForm.css'
 
 
 function ReviewFormModal({setShowForm}) {
-    console.log('======>', setShowForm)
+
     const { id } = useParams()
     const dispatch = useDispatch()
-    // const history = useHistory()
     const [review, setReview] = useState('')
     const [stars, setStars] = useState(0)
     const [validationErrors, setValidationErrors] = useState([]);
-    // const [showForm, setShowForm]= useState(true)
-    // console.log(review)
-    // console.log('======>', id)
+
 
     useEffect(() => {
         const errors = []
@@ -44,7 +41,7 @@ function ReviewFormModal({setShowForm}) {
             });
 
            if(!validationErrors.length) setShowForm(false)
-            console.log('222======>', setShowForm)
+            // console.log('222======>', setShowForm)
 
 
 

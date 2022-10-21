@@ -49,11 +49,11 @@ export const addReview = (payload) => async (dispatch) => {
     return res
 }
 
-export const deleteReview=(id, id2)=>async(dispatch)=>{
-    const res= await csrfFetch(`/api/reviews/${id}`, {
-        method:'DELETE'
+export const deleteReview = (id, id2) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reviews/${id}`, {
+        method: 'DELETE'
     })
-    if(res.ok){
+    if (res.ok) {
         dispatch(getAllSpotReviews(id2))
     }
 }
@@ -67,15 +67,16 @@ export const ReviewsReducer = (state = initialState, action) => {
         case SPOT_REVIEWS:
             newState = { ...state }
             spotReviews = {}
+
             action.data.Reviews.forEach(review => {
                 spotReviews[review.id] = review
             });
             newState.spotReviews = spotReviews
             return newState
         case RESET_REVIEWS:
-            newState={...state}
-            spotReviews={...action.data}
-            newState.spotReviews=spotReviews
+            newState = { ...state }
+            spotReviews = { ...action.data }
+            newState.spotReviews = spotReviews
             return newState
         default:
             return state

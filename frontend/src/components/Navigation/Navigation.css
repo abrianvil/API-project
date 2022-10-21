@@ -11,9 +11,9 @@
 
 .topRight {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    width: 20%;
+    width: 15%;
 }
 
 .topRight a {
@@ -32,4 +32,22 @@
 
 #navList>a>img {
     height: 100px;
+}
+
+#profile-button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 100%;
+    background-color: #e51d57;
+    color: white;
+}
+
+
+.profile-dropdown {
+    position: relative;
+    border: solid gray 1px;
+    border-radius: 5px;
 }

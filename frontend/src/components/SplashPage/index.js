@@ -39,7 +39,10 @@ function SplashPage() {
                                 </div>
                                 <div className="namePrice">
                                     <h4>{spot.name}</h4>
-                                    <h4>⭐{spot.avgRating}</h4>
+                                    <h4>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        {spot.avgRating}
+                                    </h4>
                                 </div>
                                 <p>{spot.city}, {spot.state}</p>
                                 <h4>${spot.price} night</h4>
