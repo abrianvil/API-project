@@ -1,6 +1,7 @@
-#navList{
+#navList {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: solid grey 0.1px;
     margin-left: 50px;
     margin-right: 100px;
@@ -8,13 +9,27 @@
     margin-top: 50px;
 }
 
-.topRight{
+.topRight {
     display: flex;
     justify-content: space-between;
-    width: 15%;
+    align-items: center;
+    width: 20%;
 }
 
-.topRight a{
+.topRight a {
     text-decoration: none;
     color: black;
+}
+
+.signUpButton {
+    background-color: #e51d57;
+    color: white;
+    height: 30px;
+    border-radius: 10px;
+    width: 70px;
+}
+
+
+#navList>a>img {
+    height: 100px;
 }
