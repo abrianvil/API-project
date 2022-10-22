@@ -30,6 +30,8 @@ function ShowDetails() {
     // console.log('useSelector=====>', spotDetail)
     // console.log("user====>", user)
 
+    const alreadyReviewed=reviewsArr.find(review=>review.User.id===user.id)
+
     useEffect(() => {
         dispatch(getASpot(+id))
         return (
@@ -121,7 +123,7 @@ function ShowDetails() {
                                                 <h5>By:{review.User.firstName}</h5>
                                                 {review.review}
                                                 <button
-                                                className='del-rev'
+                                                    className='del-rev'
                                                     hidden={user && user.id === review.userId ? false : true}
                                                     onClick={() => setToDelRev(review.id)}
                                                 >
@@ -136,34 +138,39 @@ function ShowDetails() {
 
 
                         </div>
-                        <fieldset>
-                            <div className='priceReview'>
-                                <h2>${spotDetail.price} night</h2>
-                                <p>
-                                    <i className="fa fa-star" aria-hidden="true"></i>
-                                    {spotDetail.avgStarRating} .{spotDetail.numReviews} reviews
-                                </p>
-                            </div>
-                            <h3>Free cancellation</h3>
-                            <button
-                                className='buttonGroup'
-                                hidden={user ? false : true}
-                                onClick={() => setShowForm(true)}
-                            >Add a Review</button>
-                            {showForm && (<Modal onClose={() => setShowForm(false)} id='review-form'>
-                                <ReviewFormModal setShowForm={setShowForm} />
-                            </Modal>)}
-                            <button
-                                hidden={(user && user.id === spotDetail.ownerId ? false : true)}
-                                onClick={onEdit}
-                                className='buttonGroup'>Edit Spot
-                            </button>
+                        <div >
 
-                            <button
-                                hidden={(user && user.id === spotDetail.ownerId ? false : true)}
-                                onClick={onDelete} className='buttonGroup'>Delete Spot
-                            </button>
-                        </fieldset>
+                            <fieldset>
+                                <div className='priceReview'>
+                                    <h2>${spotDetail.price} night</h2>
+                                    <p>
+                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                        {spotDetail.avgStarRating} .{spotDetail.numReviews} reviews
+                                    </p>
+                                </div>
+                                <h3>Free cancellation</h3>
+                                <button
+                                    className='buttonGroup'
+                                    hidden={( !alreadyReviewed && user) ? false : true}
+                                    onClick={() => setShowForm(true)}
+                                >Add a Review</button>
+                                {showForm && (<Modal onClose={() => setShowForm(false)} id='review-form'>
+                                    <ReviewFormModal setShowForm={setShowForm} />
+                                </Modal>)}
+
+                                <button
+                                    hidden={(user && user.id === spotDetail.ownerId ? false : true)}
+                                    onClick={onEdit}
+                                    className='buttonGroup'>Edit Spot
+                                </button>
+
+                                <button
+                                    hidden={(user && user.id === spotDetail.ownerId ? false : true)}
+                                    onClick={onDelete} className='buttonGroup'>Delete Spot
+                                </button>
+
+                            </fieldset>
+                        </div>
                     </div>
                 </div>}
         </>
