@@ -28,19 +28,19 @@ function SplashPage() {
 
 
     return (
-        <div className="spotBox" >
+        <div className="spot-Box" >
             {spots.map(spot => {
                 return (
-                    <div className="pictureCard" key={spot.name}>
+                    <div className="picture-Card" key={spot.name}>
                         <nav >
                             <NavLink className="navEdit" to={`/Spots/${spot.id}`}>
-                                <div className="imgDiv">
-                                    <img src={`${spot.previewImage}`} alt={spot.name}></img>
+                                <div >
+                                    <img className="imgDiv" src={`${spot.previewImage}`} alt={spot.name}></img>
                                 </div>
                                 <div className="namePrice">
                                     <h4>{spot.name}</h4>
                                     <h4>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i className="fa fa-star" aria-hidden="true"></i>
                                         {spot.avgRating}
                                     </h4>
                                 </div>

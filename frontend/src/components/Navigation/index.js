@@ -34,16 +34,12 @@ function Navigation({ isLoaded }) {
 
     <div id='navList'>
       <NavLink exact to="/">
-        <img src={image}></img>
+        <img id='home-image' src={image}></img>
       </NavLink>
       <div className='topRight'>
         <NavLink to='/spots'>
           <h3>Become a Host</h3>
         </NavLink>
-        {/* <h3 onClick={() => setShow(!show)}>
-          Become a Host
-          {show && <CreateSpotForm />}
-        </h3> */}
 
         {isLoaded && sessionLinks}
       </div>

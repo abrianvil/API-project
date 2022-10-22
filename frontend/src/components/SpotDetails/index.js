@@ -106,32 +106,31 @@ function ShowDetails() {
                                 <h3>Home Hosted By {spotDetail.firstName}</h3>
                                 <p>{spotDetail.description}</p>
                             </div>
-                            <div>
+                            <div className='amenities-box'>
                                 <h3>Self check-in</h3>
                                 <p>Check yourself in with the lockbox.</p>
                             </div>
                             <div className='review-box'>
                                 <h2>Reviews</h2>
-                                <ul>
+                                <div className='review-container'>
 
                                     {reviewsArr.map(review => {
 
                                         return (
                                             <div key={review.id} className='indiv-review'>
-                                                <li>
-                                                    <h5>By:{review.User.firstName}</h5>
-                                                    {review.review}
-                                                    <button
-                                                        hidden={user && user.id === review.userId ? false : true}
-                                                        onClick={() => setToDelRev(review.id)}
-                                                    >
-                                                        delete
-                                                    </button>
-                                                </li>
+                                                <h5>By:{review.User.firstName}</h5>
+                                                {review.review}
+                                                <button
+                                                className='del-rev'
+                                                    hidden={user && user.id === review.userId ? false : true}
+                                                    onClick={() => setToDelRev(review.id)}
+                                                >
+                                                    delete
+                                                </button>
                                             </div>
                                         )
                                     })}
-                                </ul>
+                                </div>
 
                             </div>
 
@@ -141,14 +140,14 @@ function ShowDetails() {
                             <div className='priceReview'>
                                 <h2>${spotDetail.price} night</h2>
                                 <p>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i className="fa fa-star" aria-hidden="true"></i>
                                     {spotDetail.avgStarRating} .{spotDetail.numReviews} reviews
                                 </p>
                             </div>
                             <h3>Free cancellation</h3>
                             <button
                                 className='buttonGroup'
-                                hidden={user?false:true}
+                                hidden={user ? false : true}
                                 onClick={() => setShowForm(true)}
                             >Add a Review</button>
                             {showForm && (<Modal onClose={() => setShowForm(false)} id='review-form'>

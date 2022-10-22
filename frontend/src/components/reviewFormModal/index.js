@@ -7,7 +7,7 @@ import './reviewForm.css'
 
 
 
-function ReviewFormModal({setShowForm}) {
+function ReviewFormModal({ setShowForm }) {
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -23,6 +23,8 @@ function ReviewFormModal({setShowForm}) {
         setValidationErrors(errors)
     }, [review])
 
+
+    let newReview
     const onsubmit = async (e) => {
 
         e.preventDefault()
@@ -31,7 +33,7 @@ function ReviewFormModal({setShowForm}) {
             stars,
             id
         }
-        const newReview = await dispatch(addReview(payload)).catch(
+        newReview = await dispatch(addReview(payload)).catch(
             async (res) => {
                 const data = await res.json();
                 if (data && data.errors) {
@@ -40,13 +42,13 @@ function ReviewFormModal({setShowForm}) {
                 }
             });
 
-           if(!validationErrors.length) setShowForm(false)
-            // console.log('222======>', setShowForm)
-
-
-
+        if (!validationErrors.length) setShowForm(false)
+        // console.log('222======>', setShowForm)
 
     }
+
+
+
 
     return (
         <>
