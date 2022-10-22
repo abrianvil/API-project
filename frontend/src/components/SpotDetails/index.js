@@ -17,8 +17,8 @@ function ShowDetails() {
     const [showForm, setShowForm] = useState(false)
     const [toDelRev, setToDelRev] = useState(null)
 
-    const review= useSelector(state=>state.reviews.spotReviews)
-    const reviewsArr=Object.values(review)
+    const review = useSelector(state => state.reviews.spotReviews)
+    const reviewsArr = Object.values(review)
     console.log(review)
     const spotDetail = useSelector(state => state.spots.one)
     const user = useSelector(state => state.session)
@@ -63,7 +63,7 @@ function ShowDetails() {
             async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
-                console.log(res)
+                // console.log(res)
             }
         );
         if (test) {
@@ -89,7 +89,7 @@ function ShowDetails() {
 
 
     //DISPATCH TO GET REVIEWS NEEDED
-   return (
+    return (
         <>
             {spotDetail &&
                 <div className='detailsMainDiv'>
@@ -106,31 +106,31 @@ function ShowDetails() {
                                 <h3>Home Hosted By {spotDetail.firstName}</h3>
                                 <p>{spotDetail.description}</p>
                             </div>
-                            <div>
+                            <div className='amenities-box'>
                                 <h3>Self check-in</h3>
                                 <p>Check yourself in with the lockbox.</p>
                             </div>
                             <div className='review-box'>
                                 <h2>Reviews</h2>
-                                <ul>
+                                <div className='review-container'>
 
                                     {reviewsArr.map(review => {
 
                                         return (
                                             <div key={review.id} className='indiv-review'>
-                                                <li>
-                                                    {review.review}
-                                                    <button
-                                                        hidden={user && user.id === review.userId ? false : true}
-                                                        onClick={() => setToDelRev(review.id)}
-                                                    >
-                                                        delete
-                                                    </button>
-                                                </li>
+                                                <h5>By:{review.User.firstName}</h5>
+                                                {review.review}
+                                                <button
+                                                className='del-rev'
+                                                    hidden={user && user.id === review.userId ? false : true}
+                                                    onClick={() => setToDelRev(review.id)}
+                                                >
+                                                    delete
+                                                </button>
                                             </div>
                                         )
                                     })}
-                                </ul>
+                                </div>
 
                             </div>
 
@@ -139,19 +139,28 @@ function ShowDetails() {
                         <fieldset>
                             <div className='priceReview'>
                                 <h2>${spotDetail.price} night</h2>
-                                <p>⭐{spotDetail.avgStarRating} .{spotDetail.numReviews} reviews</p>
+                                <p>
+                                    <i className="fa fa-star" aria-hidden="true"></i>
+                                    {spotDetail.avgStarRating} .{spotDetail.numReviews} reviews
+                                </p>
                             </div>
                             <h3>Free cancellation</h3>
-                            <button className='buttonGroup' onClick={() => setShowForm(true)}>Add a Review</button>
+                            <button
+                                className='buttonGroup'
+                                hidden={user ? false : true}
+                                onClick={() => setShowForm(true)}
+                            >Add a Review</button>
                             {showForm && (<Modal onClose={() => setShowForm(false)} id='review-form'>
                                 <ReviewFormModal setShowForm={setShowForm} />
                             </Modal>)}
-                            <button hidden={(user && user.id === spotDetail.ownerId ? false : true)}
+                            <button
+                                hidden={(user && user.id === spotDetail.ownerId ? false : true)}
                                 onClick={onEdit}
                                 className='buttonGroup'>Edit Spot
                             </button>
 
-                            <button hidden={(user && user.id === spotDetail.ownerId ? false : true)}
+                            <button
+                                hidden={(user && user.id === spotDetail.ownerId ? false : true)}
                                 onClick={onDelete} className='buttonGroup'>Delete Spot
                             </button>
                         </fieldset>

@@ -1,46 +1,35 @@
-.spotBox {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    border: red solid 3px;
-    /* overflow-y: scroll; */
- }
+.spot-Box {
+    display: grid;
+    /* grid-gap: 100px 100px; */
+    justify-items: center;
+    padding: 50px 100px;
+
+    grid-template-columns: repeat(5, 1fr);
+
+}
 
 .namePrice {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
-    width: 200px;
-}
-
-.pictureCard {
-    height: 300px;
-    width: 300px;
-    margin-left: 40px;
-    margin-right: 40px;
-    /* margin-bottom: 40px; */
-}
-
-/* .spotBox{
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    width: 200vh;
-} */
-
-.imgDiv img {
-    /* height: 250px;
-    width: 250px; */
-    height: 100%;
     width: 100%;
-    object-fit: cover;
-    border-radius: 5%;
+    height: 30px;
+}
+
+.picture-Card {
+    display: flex;
+    flex-direction: column;
 }
 
 
 .imgDiv {
-    height: 250px;
-    width: 250px;
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+    border-radius: 5%;
 }
+
 
 .navEdit {
     text-decoration: none;

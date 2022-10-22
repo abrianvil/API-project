@@ -7,17 +7,14 @@ import './reviewForm.css'
 
 
 
-function ReviewFormModal({setShowForm}) {
-    console.log('======>', setShowForm)
+function ReviewFormModal({ setShowForm }) {
+
     const { id } = useParams()
     const dispatch = useDispatch()
-    // const history = useHistory()
     const [review, setReview] = useState('')
     const [stars, setStars] = useState(0)
     const [validationErrors, setValidationErrors] = useState([]);
-    // const [showForm, setShowForm]= useState(true)
-    // console.log(review)
-    // console.log('======>', id)
+
 
     useEffect(() => {
         const errors = []
@@ -26,6 +23,8 @@ function ReviewFormModal({setShowForm}) {
         setValidationErrors(errors)
     }, [review])
 
+
+    let newReview
     const onsubmit = async (e) => {
 
         e.preventDefault()
@@ -34,7 +33,7 @@ function ReviewFormModal({setShowForm}) {
             stars,
             id
         }
-        const newReview = await dispatch(addReview(payload)).catch(
+        newReview = await dispatch(addReview(payload)).catch(
             async (res) => {
                 const data = await res.json();
                 if (data && data.errors) {
@@ -43,13 +42,13 @@ function ReviewFormModal({setShowForm}) {
                 }
             });
 
-           if(!validationErrors.length) setShowForm(false)
-            console.log('222======>', setShowForm)
-
-
-
+        if (!validationErrors.length) setShowForm(false)
+        // console.log('222======>', setShowForm)
 
     }
+
+
+
 
     return (
         <>
