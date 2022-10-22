@@ -14,7 +14,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 15%;
+    width: 20%;
 }
 
 .topRight a {
@@ -33,6 +33,7 @@
 
 #navList>a>img {
     height: 100px;
+
 }
 
 #profile-button {

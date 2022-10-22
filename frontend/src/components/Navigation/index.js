@@ -15,8 +15,9 @@ function Navigation({ isLoaded }) {
   if (sessionUser) {
     sessionLinks = (
       <ProfileButton user={sessionUser} />
-    );
-  } else {
+      );
+    } else {
+
     sessionLinks = (
       // <ProfileButton user={null} />
       // <ul className="profile-dropdown">
@@ -37,9 +38,9 @@ function Navigation({ isLoaded }) {
         <img id='home-image' src={image}></img>
       </NavLink>
       <div className='topRight'>
-        <NavLink to='/spots'>
+       {sessionUser && (<NavLink  to='/spots'>
           <h3>Become a Host</h3>
-        </NavLink>
+        </NavLink>)}
 
         {isLoaded && sessionLinks}
       </div>
