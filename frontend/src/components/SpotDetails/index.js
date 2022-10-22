@@ -29,8 +29,8 @@ function ShowDetails() {
 
     // console.log('useSelector=====>', spotDetail)
     // console.log("user====>", user)
-
-    const alreadyReviewed=reviewsArr.find(review=>review.User.id===user.id)
+    let alreadyReviewed
+    if (user) alreadyReviewed = reviewsArr.find(review => review.User.id === user.id)
 
     useEffect(() => {
         dispatch(getASpot(+id))
@@ -151,7 +151,7 @@ function ShowDetails() {
                                 <h3>Free cancellation</h3>
                                 <button
                                     className='buttonGroup'
-                                    hidden={( !alreadyReviewed && user) ? false : true}
+                                    hidden={(!alreadyReviewed && user) ? false : true}
                                     onClick={() => setShowForm(true)}
                                 >Add a Review</button>
                                 {showForm && (<Modal onClose={() => setShowForm(false)} id='review-form'>
