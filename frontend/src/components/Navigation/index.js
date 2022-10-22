@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 import CreateSpotForm from '../CreateSpotForm';
+import image from '../../image/logo.png'
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session);
@@ -22,7 +23,7 @@ function Navigation({ isLoaded }) {
       <>
         <LoginFormModal />
         <NavLink to="/signup">
-          <button>Sign Up</button>
+          <button className='signUpButton'>Sign Up</button>
         </NavLink>
       </>
       // </ul>
@@ -32,15 +33,13 @@ function Navigation({ isLoaded }) {
   return (
 
     <div id='navList'>
-      <NavLink exact to="/">Home</NavLink>
+      <NavLink exact to="/">
+        <img id='home-image' src={image}></img>
+      </NavLink>
       <div className='topRight'>
         <NavLink to='/spots'>
           <h3>Become a Host</h3>
         </NavLink>
-        {/* <h3 onClick={() => setShow(!show)}>
-          Become a Host
-          {show && <CreateSpotForm />}
-        </h3> */}
 
         {isLoaded && sessionLinks}
       </div>

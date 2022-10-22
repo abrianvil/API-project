@@ -1,20 +1,62 @@
-#navList{
+#navList {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: solid grey 0.1px;
-    margin-left: 50px;
-    margin-right: 100px;
+    margin-left: 131px;
+    margin-right: 130px;
     margin-bottom: 50px;
     margin-top: 50px;
+
 }
 
-.topRight{
+.topRight {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
     width: 15%;
 }
 
-.topRight a{
+.topRight a {
     text-decoration: none;
     color: black;
+}
+
+.signUpButton {
+    background-color: #e51d57;
+    color: white;
+    height: 30px;
+    border-radius: 10px;
+    width: 70px;
+}
+
+
+#navList>a>img {
+    height: 100px;
+}
+
+#profile-button {
+    width: 50px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* border-radius: 100%; */
+    border-radius: 5px;
+    background-color: #e51d57;
+    color: white;
+}
+
+
+.profile-dropdown {
+    position: relative;
+    border: solid gray 1px;
+    border-radius: 5px;
+}
+
+i{
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+
 }

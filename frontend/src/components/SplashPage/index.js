@@ -7,13 +7,13 @@ import './splashPage.css'
 
 
 function SplashPage() {
-    const spotsObj = useSelector(state =>state.spots.all)
+    const spotsObj = useSelector(state => state.spots.all)
 
     // console.log("spotObj splashPage===>",spotsObj)
     // console.log('1')
-    let spots=[]
-    if(spotsObj){
-         spots = Object.values(spotsObj)
+    let spots = []
+    if (spotsObj) {
+        spots = Object.values(spotsObj)
     }
     // console.log('2')
     // console.log("spots splashPage===>", spots)
@@ -28,21 +28,23 @@ function SplashPage() {
 
 
     return (
-        <div className="spotBox" >
+        <div className="spot-Box" >
             {spots.map(spot => {
                 return (
-                    <div className="pictureCard" key={spot.name}>
+                    <div className="picture-Card" key={spot.name}>
                         <nav >
-                            <NavLink className="navEdit"  to={`/Spots/${spot.id}`}>
-                                <div className="imgDiv">
-                                    <img src={`${spot.previewImage}`} alt={spot.name}></img>
+                            <NavLink className="navEdit" to={`/Spots/${spot.id}`}>
+                                <div >
+                                    <img className="imgDiv" src={`${spot.previewImage}`} alt={spot.name}></img>
                                 </div>
                                 <div className="namePrice">
-                                    <h3>{spot.name}</h3>
-                                    <h3>⭐{spot.avgRating}</h3>
+                                    <h4>{spot.name}</h4>
+                                    <h4>
+                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                        {spot.avgRating}
+                                    </h4>
                                 </div>
-
-                                <h4>{spot.city}, {spot.state}</h4>
+                                <p>{spot.city}, {spot.state}</p>
                                 <h4>${spot.price} night</h4>
 
                             </NavLink>
@@ -50,7 +52,7 @@ function SplashPage() {
                     </div>
                 )
             })}
-        </div>
+        </div >
     )
 }
 

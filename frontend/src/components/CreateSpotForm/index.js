@@ -41,7 +41,7 @@ function CreateSpotForm() {
             async (res) => {
                 const data = await res.json();
                 if (data && data.errors) {
-                    setValidationErrors([data.errors])
+                    setValidationErrors(data.errors)
                     // console.log('====>', data.errors)
                 }
             });
