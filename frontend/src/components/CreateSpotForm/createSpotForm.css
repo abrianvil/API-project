@@ -5,7 +5,7 @@
     top: 50%;
     left: 50%;
     font-family: 'Poppins',sans-serif;
-    width: 50%;
+    width: 30%;
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     border-radius: 10px;
@@ -16,7 +16,7 @@
     background-color: #e51d57;
     color: white;
     margin-top: 50px;
-    width: 78%;
+    width: 99%;
     padding: 15px 0;
     font-size: 18px;
     font-weight: 600;
@@ -28,7 +28,7 @@
 .create input{
     display: block;
     height: 50px;
-    width: 74%;
+    width: 95%;
     background-color: rgba(255,255,255,0.07);
     border-radius: 3px;
     padding: 0 10px;

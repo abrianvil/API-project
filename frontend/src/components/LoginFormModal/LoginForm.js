@@ -11,12 +11,12 @@ function LoginForm() {
 
 
 
-  let errorArr=[]
-  useEffect(()=>{
-    if(credential.length<=0)errorArr.push('Please Provide a credential')
-    if(password.length<=0)errorArr.push('Please Provide a password')
+  let errorArr = []
+  useEffect(() => {
+    if (credential.length <= 0) errorArr.push('Please Provide a credential')
+    if (password.length <= 0) errorArr.push('Please Provide a password')
     setErrors(errorArr)
-  },[password, credential])
+  }, [password, credential])
 
 
   // console.log('outside handle submit==>',errorArr)
@@ -24,15 +24,15 @@ function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
-     await dispatch(sessionActions.login({ credential, password })).catch(
+    await dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
-        if (data && data.message) {
-          setErrors([data.message])
+        if (data && data.errors) {
+          setErrors([data.errors])
           // console.log(data)
         }
       });
-      console.log('inside handle submit==>',errorArr)
+    console.log('inside handle submit==>', errorArr)
   }
   // console.log('======>', errors)
 
@@ -78,7 +78,7 @@ function LoginForm() {
 
         <div className="buttons">
           <button className="Loginbutton" type="submit"
-          disabled={errors.length?true:false}
+            disabled={errors.length ? true : false}
           >Log In</button>
           <button className="Loginbutton" onClick={userLogin}>demoUser</button>
         </div>
