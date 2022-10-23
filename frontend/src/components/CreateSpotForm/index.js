@@ -20,7 +20,7 @@ function CreateSpotForm() {
     const [lng, setLng] = useState(0)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [price, setPrice] = useState()
+    const [price, setPrice] = useState(0)
     const [image, setImage] = useState('')
     const [validationErrors, setValidationErrors] = useState([]);
 
@@ -28,8 +28,11 @@ function CreateSpotForm() {
 useEffect(()=>{
     let errors=[]
     if(price<=0)errors.push('Price can not be less than 1')
+    if(image.length<0)errors.push('image required')
+    if(city.length>40)errors.push('City exceeded 40 character limit')
+    if(state.length>40)errors.push('State exceeded 40 character limit')
     setValidationErrors(errors)
-},[price])
+},[price,image,city,state])
 
     const onsubmit = async (e) => {
         e.preventDefault()
@@ -93,7 +96,7 @@ useEffect(()=>{
                 </label>
 
                 <label>
-                    County
+                    Country
                     <input
                         type="text"
                         value={country}
@@ -162,7 +165,7 @@ useEffect(()=>{
                     />
                 </label>
 
-                <button disabled={user ? false : true} id="createButton" type="submit">Create Spot</button>
+                <button disabled={validationErrors.length<=0? false : true} id="createButton" type="submit">Create Spot</button>
             </form>
         </div>
     )

@@ -16,8 +16,8 @@ const validateSignup = [
         .withMessage('Please provide a valid email.'),
     check('username')
         .exists({ checkFalsy: true })
-        .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
+        .isLength({ min: 4, max:30 })
+        .withMessage('Username can not be less than 4 or more than 30 characters.'),
     check('username')
         .not()
         .isEmail()
@@ -50,18 +50,22 @@ router.post('/', validateSignup, async (req, res) => {
         res.json({
             message: "User already exists",
             statusCode: 403,
-            errors: {
-                email: "User with that email already exists"
-            }
+            // errors: {
+            //     email: "User with that email already exists"
+            // }
+            errors: "User with that email already exists"
+
         })
     } else if (existedUserName) {
         res.status(403)
         res.json({
             message: "User already exists",
             statusCode: 403,
-            errors: {
-                "username": "User with that username already exists"
-            }
+            // errors: {
+            //     "username": "User with that username already exists"
+            // }
+            errors: "User with that username already exists"
+
         })
     } else {
 
