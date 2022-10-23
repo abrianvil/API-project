@@ -117,18 +117,26 @@ fieldset {
 }
 
 
-.fieldset-icon> i{
+.fieldset-icon>i {
     font-size: 18px;
 }
 
 
-.fieldset-icon{
+.fieldset-icon {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 5px;
 }
 
-fieldset>button{
+fieldset>button {
     border: none;
+}
+
+
+#reviewName {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
 }
