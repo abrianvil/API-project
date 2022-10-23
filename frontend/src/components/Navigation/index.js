@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
+import SignUpFormModal from '../SignupFormPage';
 import './Navigation.css';
 import CreateSpotForm from '../CreateSpotForm';
 import image from '../../image/logo.png'
@@ -23,9 +24,7 @@ function Navigation({ isLoaded }) {
       // <ul className="profile-dropdown">
       <>
         <LoginFormModal />
-        <NavLink to="/signup">
-          <button className='signUpButton'>Sign Up</button>
-        </NavLink>
+        <SignUpFormModal />
       </>
       // </ul>
     );
