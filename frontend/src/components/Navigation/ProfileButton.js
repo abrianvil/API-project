@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import LoginFormModal from "../LoginFormModal";
 
@@ -33,19 +33,31 @@ function ProfileButton({ user }) {
   // if (user) {
   return (
     <>
-      <button id='profile-button' onClick={openMenu}>
-        <i className="fa fa-bars" aria-hidden='true'/>
-        <i className="fas fa-user-circle" aria-hidden='true' />
-      </button>
-      {showMenu && (
-        <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
-      )}
+      <div className="dropdown">
+        <button id='profile-button' onClick={openMenu}>
+          <i className="fa fa-bars" aria-hidden='true' />
+          <i id="userMan" className="fas fa-user-circle" aria-hidden='true' />
+        </button>
+
+        {user && showMenu && (
+          <div className="profile-dropdown">
+
+            <NavLink to='/spots'>
+              <h3>Become a Host</h3>
+            </NavLink>
+
+            <ul >
+              <li>{user.username}</li>
+              <li>{user.email}</li>
+              <li>
+                <button id="logoutButton" onClick={logout}>Log Out</button>
+              </li>
+            </ul>
+          </div>
+
+        )}
+
+      </div>
     </>
   );
 }
