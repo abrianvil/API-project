@@ -25,10 +25,15 @@ function CreateSpotForm() {
     const [validationErrors, setValidationErrors] = useState([]);
 
 
+    const urlValidation = str => {
+        return /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/.test(str);
+    }
+
 useEffect(()=>{
     let errors=[]
     if(price<=0)errors.push('Price can not be less than 1')
     if(image.length<0)errors.push('image required')
+    if(!urlValidation(image)) errors.push('Invalid url')
     if(city.length>40)errors.push('City exceeded 40 character limit')
     if(state.length>40)errors.push('State exceeded 40 character limit')
     setValidationErrors(errors)
@@ -61,8 +66,8 @@ useEffect(()=>{
         <div className="container">
             <form className="create" onSubmit={onsubmit}>
                 <ul>
-                    {validationErrors.map((error) => (
-                        <li key=''>{error}</li>
+                    {validationErrors.map((error, idx) => (
+                        <li key={idx}>{error}</li>
                     ))}
                 </ul>
                 <label>
