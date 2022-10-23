@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom'
 import { createASpot } from "../../store/spots";
@@ -20,12 +20,16 @@ function CreateSpotForm() {
     const [lng, setLng] = useState(0)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [price, setPrice] = useState(0)
+    const [price, setPrice] = useState()
     const [image, setImage] = useState('')
     const [validationErrors, setValidationErrors] = useState([]);
 
 
-
+useEffect(()=>{
+    let errors=[]
+    if(price<=0)errors.push('Price can not be less than 1')
+    setValidationErrors(errors)
+},[price])
 
     const onsubmit = async (e) => {
         e.preventDefault()

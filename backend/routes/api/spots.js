@@ -30,7 +30,8 @@ const validateSpotData = [
     //     .withMessage("Longitude is not valid"),
     check('name')
         .exists({ checkFalsy: true })
-        .withMessage("Name must be less than 50 characters"),
+        .isLength({min:4, max:50})
+        .withMessage("Name must be greater than 3 and less than 50 characters"),
     check('description')
         .exists({ checkFalsy: true })
         .withMessage("Description is required"),
