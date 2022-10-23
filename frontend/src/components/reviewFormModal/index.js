@@ -20,8 +20,9 @@ function ReviewFormModal({ setShowForm }) {
         const errors = []
         if (review.length > 200) errors.push('Can not exceed 250 characters');
         if (review.length <= 0) errors.push('Can not submit an empty review');
+        if (stars<0)errors.push('Stars can not be less than 0')
         setValidationErrors(errors)
-    }, [review])
+    }, [review,stars])
 
 
     let newReview
