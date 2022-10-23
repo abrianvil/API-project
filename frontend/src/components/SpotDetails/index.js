@@ -120,7 +120,10 @@ function ShowDetails() {
 
                                         return (
                                             <div key={review.id} className='indiv-review'>
-                                                <h5>By:{review.User.firstName}</h5>
+                                                <div id='reviewName'>
+                                                <i className="fa fa-user-circle" aria-hidden="true"></i>
+                                                <h5>{review.User.firstName}</h5>
+                                                </div>
                                                 {review.review}
                                                 <button
                                                     className='del-rev'
@@ -160,7 +163,7 @@ function ShowDetails() {
 
                                 <div className='fieldset-icon'>
                                 <i className="fa fa-wheelchair" aria-hidden="true"></i>
-                                    <h5>wheelchair accessible</h5>
+                                    <h5>Wheelchair accessible</h5>
                                 </div>
 
                                 <button
