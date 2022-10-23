@@ -114,7 +114,7 @@ function ShowDetails() {
                             </div>
                             <div className='review-box'>
                                 <h2>Reviews</h2>
-                                <div className='review-container'>
+                                {reviewsArr.length > 0 && (<div className='review-container'>
 
                                     {reviewsArr.map(review => {
 
@@ -132,7 +132,7 @@ function ShowDetails() {
                                             </div>
                                         )
                                     })}
-                                </div>
+                                </div>)}
 
                             </div>
 
@@ -148,7 +148,21 @@ function ShowDetails() {
                                         {spotDetail.avgStarRating} .{spotDetail.numReviews} reviews
                                     </p>
                                 </div>
-                                <h3>Free cancellation</h3>
+                                <div className='fieldset-icon'>
+                                    <i className="fa fa-wifi" aria-hidden="true"></i>
+                                    <h5>Free wifi</h5>
+                                </div>
+
+                                <div className='fieldset-icon'>
+                                    <i className="fa fa-calendar" aria-hidden="true"></i>
+                                    <h5>Free cancellation</h5>
+                                </div>
+
+                                <div className='fieldset-icon'>
+                                <i className="fa fa-wheelchair" aria-hidden="true"></i>
+                                    <h5>wheelchair accessible</h5>
+                                </div>
+
                                 <button
                                     className='buttonGroup'
                                     hidden={(!alreadyReviewed && user) ? false : true}

@@ -1,36 +1,35 @@
-
-.image{
+.image {
     height: 60%;
     width: 60%;
     padding-left: 200px;
     padding-bottom: 40px;
 }
-.image img{
-    height:100%;
+
+.image img {
+    height: 100%;
     width: 100%;
-    border-radius: none;
-    border-top-left-radius: 3%;
-    border-bottom-left-radius: 3%;
+    border-radius: 3%;
     object-fit: cover;
 }
 
-.info-box{
+.info-box {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 75%;
+    width: 70%;
 }
 
-fieldset{
+fieldset {
     border-radius: 7%;
     height: auto;
-    max-height: 350px;
+    max-height: 650px;
     width: 100%;
-
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
+    border: none;
 }
 
 
-.detailsMainDiv{
+.detailsMainDiv {
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
@@ -41,15 +40,16 @@ fieldset{
 }
 
 
-.description-card{
+.description-card {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    gap: 50px;
     width: 100%;
 }
 
 
-.buttonGroup{
+.buttonGroup {
     margin-top: 10px;
     width: 100%;
     color: #080710;
@@ -58,11 +58,11 @@ fieldset{
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
-    background-color:#e51d57;
+    background-color: #e51d57;
     color: white;
 }
 
-.del-rev{
+.del-rev {
     margin-top: 10px;
     width: 50%;
     /* height: 20%; */
@@ -72,23 +72,23 @@ fieldset{
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
-    background-color:#e51d57;
+    background-color: #e51d57;
     color: white;
     border: none;
 }
 
 
-.priceReview{
+.priceReview {
     display: flex;
     justify-content: space-between;
 }
 
 
-.review-box{
-    width: 60%;
+.review-box {
+    width: 80%;
 }
 
-.indiv-review{
+.indiv-review {
     /* border-bottom: black solid 1px; */
     border-radius: 5px;
     margin-bottom: 10px;
@@ -98,15 +98,15 @@ fieldset{
 }
 
 
-.describe-div{
+.describe-div {
     width: 60%;
 }
 
 
-.review-container{
+.review-container {
     /* border: solid black .8px; */
     border-radius: 15px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0, .1);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
     padding-left: 13px;
     padding-right: 13px;
     padding-bottom: 13px;
@@ -117,4 +117,18 @@ fieldset{
 }
 
 
+.fieldset-icon> i{
+    font-size: 18px;
+}
 
+
+.fieldset-icon{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+fieldset>button{
+    border: none;
+}
