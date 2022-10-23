@@ -12,13 +12,13 @@ function LoginForm() {
 
 
   let errorArr = []
+
+
   useEffect(() => {
     if (credential.length <= 0) errorArr.push('Please Provide a credential')
     if (password.length <= 0) errorArr.push('Please Provide a password')
     setErrors(errorArr)
   }, [password, credential])
-
-
   // console.log('outside handle submit==>',errorArr)
 
   const handleSubmit = async (e) => {
