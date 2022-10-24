@@ -147,3 +147,7 @@ fieldset>button {
     align-items: center;
     gap: 5px;
 }
+
+.info-box div{
+    word-break: break-all;
+}

@@ -28,6 +28,7 @@ function SplashPage() {
 
 
     return (
+
         <div className="spot-Box" >
             {spots.map(spot => {
                 return (
@@ -53,6 +54,7 @@ function SplashPage() {
                 )
             })}
         </div >
+
     )
 }
 
