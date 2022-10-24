@@ -14,39 +14,68 @@ function ReviewFormModal({ setShowForm }) {
     const [review, setReview] = useState('')
     const [stars, setStars] = useState(0)
     const [validationErrors, setValidationErrors] = useState([]);
-
+    const [frontErrors, setFrontErrors] = useState([])
+    const [test, setTest] = useState(false)
 
     useEffect(() => {
         const errors = []
-        if (review.length > 200) errors.push('Can not exceed 250 characters');
-        if (review.length <= 0) errors.push('Can not submit an empty review');
-        if (stars<0)errors.push('Stars can not be less than 0')
-        setValidationErrors(errors)
-    }, [review,stars])
+        if (review.length > 250) errors.push('Can not exceed 250 characters');
+        if (review.length === 0) errors.push("Can not submit and empty Review")
+        // setValidationErrors(errors)
+        setFrontErrors(errors)
+        if (stars > 5 || stars < 1) errors.push('Stars must be a number between 1 and 5')
+    }, [review, stars])
+
 
 
     let newReview
     const onsubmit = async (e) => {
-
         e.preventDefault()
+
+        // const errors = []
+        // if (review.length > 250) errors.push('Can not exceed 250 characters');
+        // setValidationErrors(errors)
+
+
         const payload = {
             review,
             stars,
             id
         }
+        // if (!frontErrors) {
+
         newReview = await dispatch(addReview(payload)).catch(
             async (res) => {
                 const data = await res.json();
                 if (data && data.errors) {
-                    setValidationErrors([data.errors])
+                    setValidationErrors(frontErrors)
+                    setValidationErrors(data.errors)
+
                     // console.log('====>', data.errors)
-                }
-            });
-
-        if (!validationErrors.length) setShowForm(false)
-        // console.log('222======>', setShowForm)
-
+                }else setTest(true)
+            }
+        )
+        // setShowForm(false)
+        // }else{
+        //     setShowForm(true)
+        //     setValidationErrors(frontErrors)
+        //     console.log('222======>', validationErrors)
+        // }
+        // } else (setShowForm(false))
     }
+
+    useEffect(() => {
+        console.log('========>', validationErrors)
+        if (!test){
+            setShowForm(true)
+        } else{
+            console.log('this ran', test)
+            setShowForm(false)
+        }
+    }, [test])
+
+
+
 
 
 
@@ -65,27 +94,41 @@ function ReviewFormModal({ setShowForm }) {
                 </label>
                 <button
                     type="submit"
-                    disabled={validationErrors.length > 0 ? true : false}
+                // disabled={validationErrors.length > 0 ? true : false}
                 >submit Review</button>
                 <label>
-                    Stars
-                    <input
+
+                    {/* <input
                         type='number'
                         value={stars}
                         onChange={(e) => setStars(e.target.value)}
                     >
-                    </input>
-                </label>
+                    </input> */}
 
-                <ul>
-                    {validationErrors.length > 0 && (
-                        <>
-                            {validationErrors.map((error) => (
-                                <li key={error}>{error}</li>
-                            ))}
-                        </>
-                    )}
-                </ul>
+                    <select
+                        value={stars}
+                        onChange={(e) => setStars(e.target.value)}
+                    >
+                        <option></option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    Stars
+                </label>
+                <div className="errors">
+                    <ul>
+                        {validationErrors.length > 0 && (
+                            <>
+                                {validationErrors.map((error) => (
+                                    <li key={error}>{error}</li>
+                                ))}
+                            </>
+                        )}
+                    </ul>
+                </div>
             </form>}
         </>
     )

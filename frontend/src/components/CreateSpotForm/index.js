@@ -23,21 +23,24 @@ function CreateSpotForm() {
     const [price, setPrice] = useState(0)
     const [image, setImage] = useState('')
     const [validationErrors, setValidationErrors] = useState([]);
+    const [frontErrors, setFrontErrors] = useState([])
 
 
     const urlValidation = str => {
         return /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/.test(str);
     }
 
-useEffect(()=>{
-    let errors=[]
-    if(price<=0)errors.push('Price can not be less than 1')
-    if(image.length<0)errors.push('image required')
-    if(!urlValidation(image)) errors.push('Invalid url')
-    if(city.length>40)errors.push('City exceeded 40 character limit')
-    if(state.length>40)errors.push('State exceeded 40 character limit')
-    setValidationErrors(errors)
-},[price,image,city,state])
+    useEffect(() => {
+        let errors = []
+        if (price <= 0) errors.push('Price can not be less than 1')
+        if (image.length < 0) errors.push('image required')
+        if (!urlValidation(image)) errors.push('Invalid url')
+        if (city.length > 40) errors.push('City exceeded 40 character limit')
+        if (state.length > 40) errors.push('State exceeded 40 character limit')
+        if (address.length > 100) errors.push('Address exceeded 100 character limit')
+
+        setFrontErrors(errors)
+    }, [price, image, city, state])
 
     const onsubmit = async (e) => {
         e.preventDefault()
@@ -49,27 +52,34 @@ useEffect(()=>{
             name, description,
             price, image
         }
+
         const newSpot = await dispatch(createASpot(payload)).catch(
             async (res) => {
                 const data = await res.json();
                 if (data && data.errors) {
-                    setValidationErrors(data.errors)
+                    // setValidationErrors(frontErrors)
+                    setValidationErrors(data.errors, frontErrors)
                     // console.log('====>', data.errors)
                 }
             });
 
         history.push(`/Spots/${newSpot.id}`)
+
+
     }
 
 
     return (
         <div className="container">
             <form className="create" onSubmit={onsubmit}>
-                <ul>
-                    {validationErrors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
+                <div className="errors">
+
+                    <ul>
+                        {validationErrors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                </div>
                 <label>
                     Address
                     <input
@@ -170,12 +180,12 @@ useEffect(()=>{
                     />
                 </label>
 
-                <button disabled={validationErrors.length<=0? false : true} id="createButton" type="submit">Create Spot</button>
+                <button id="createButton" type="submit">Create Spot</button>
             </form>
         </div>
     )
 
 }
-
+// disabled={validationErrors.length <= 0 ? false : true}
 
 export default CreateSpotForm

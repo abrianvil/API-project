@@ -8,6 +8,7 @@ function LoginForm() {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [frontEnd, setFrontEnd]=useState([])
 
 
 
@@ -17,7 +18,8 @@ function LoginForm() {
   useEffect(() => {
     if (credential.length <= 0) errorArr.push('Please Provide a credential')
     if (password.length <= 0) errorArr.push('Please Provide a password')
-    setErrors(errorArr)
+    setFrontEnd(errorArr)
+    // setErrors(errorArr)
   }, [password, credential])
   // console.log('outside handle submit==>',errorArr)
 
@@ -28,11 +30,12 @@ function LoginForm() {
       async (res) => {
         const data = await res.json();
         if (data && data.errors) {
-          setErrors([data.errors])
+          setErrors(frontEnd)
+          setErrors(data.errors)
           // console.log(data)
         }
       });
-    console.log('inside handle submit==>', errorArr)
+
   }
   // console.log('======>', errors)
 
@@ -45,11 +48,11 @@ function LoginForm() {
       <form className="LoginForm" onSubmit={handleSubmit}>
         <div>
           <div className="errors">
-            <ul>
+            {/* <ul> */}
               {errors.map((error, idx) => (
-                <li key={idx}>{error}</li>
+               <li key={idx}>{error}<br/></li>
               ))}
-            </ul>
+            {/* </ul> */}
           </div>
 
           <label className="Loginlabel">
@@ -78,7 +81,7 @@ function LoginForm() {
 
         <div className="buttons">
           <button className="Loginbutton" type="submit"
-            disabled={errors.length ? true : false}
+            // disabled={errors.length ? true : false}
           >Log In</button>
           <button className="Loginbutton" onClick={userLogin}>demoUser</button>
         </div>
