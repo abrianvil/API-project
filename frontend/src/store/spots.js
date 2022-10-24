@@ -110,14 +110,14 @@ export const createASpot = (payload) => async (dispatch) => {
     })
     if (res.ok) {
         const data = await res.json()
-        console.log('data from create spots===>', data)
+        // console.log('data from create spots===>', data)
         const sender = {
             id: data.id,
             url: image
         }
-        console.log('before dispatch add image')
+        // console.log('before dispatch add image')
         await dispatch(addImageToSpot(sender))
-        console.log('after dispatch add image')
+        // console.log('after dispatch add image')
 
         return data
     }
@@ -138,13 +138,14 @@ export const editASpot = (payload) => async (dispatch) => {
             price
         })
     })
+    return res
 }
 
 
 //add image to spot
 export const addImageToSpot = (payload) => async (dispatch) => {
     const { url, id } = payload
-    console.log('inside add image')
+    // console.log('inside add image')
     const imageFetch = await csrfFetch(`/api/spots/${id}/images`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -153,7 +154,7 @@ export const addImageToSpot = (payload) => async (dispatch) => {
             preview: true
         })
     })
-    console.log('imageAdded===>', imageFetch)
+    // console.log('imageAdded===>', imageFetch)
     if (imageFetch.ok) {
         dispatch(getASpot(id))
     }

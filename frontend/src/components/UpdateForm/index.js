@@ -8,7 +8,7 @@ import { editASpot } from "../../store/spots";
 
 
 function UpdateSpotForm() {
-    const {id}=useParams()
+    const { id } = useParams()
     const user = useSelector(state => state.session)
     const spotToEdit = useSelector(state => state.spots.one)
     // const spotlist = useSelector(state => state.spots.all)
@@ -26,7 +26,9 @@ function UpdateSpotForm() {
     const [name, setName] = useState(spotToEdit.name)
     const [description, setDescription] = useState(spotToEdit.description)
     const [price, setPrice] = useState(spotToEdit.price)
-    // const [image, setImage] = useState(spotToEdit.imgUrl)
+    const [errors, setErrors] = useState([]);
+
+
 
 
     const onsubmit = async (e) => {
@@ -39,9 +41,16 @@ function UpdateSpotForm() {
             name, description,
             price, id
         }
-        const updateSpot = await dispatch(editASpot(payload))
+        const updateSpot = await dispatch(editASpot(payload)).catch(
+            async (res) => {
+                const data = await res.json();
+                if (data && data.errors) {
+                    setErrors(data.errors)
+                    // console.log(data)
+                }
+            });
 
-        history.push(`/Spots/${+id}`)
+       if(updateSpot) history.push(`/Spots/${+id}`)
 
     }
 
@@ -49,6 +58,15 @@ function UpdateSpotForm() {
     return (
         <div className="container">
             <form className="create" onSubmit={onsubmit}>
+
+                <div className="errors">
+                    {/* <ul> */}
+                    {errors.map((error, idx) => (
+                        <li key={idx}>{error}<br /></li>
+                    ))}
+                    {/* </ul> */}
+                </div>
+
                 <label>
                     Address
                     <input
@@ -138,17 +156,6 @@ function UpdateSpotForm() {
                         required
                     />
                 </label>
-
-                {/* <label>
-                    Image Url
-                    <input
-                        type="text"
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                        required
-                    />
-                </label> */}
-
                 <button disabled={user ? false : true} id="createButton" type="submit">EditSpot</button>
             </form>
         </div>
