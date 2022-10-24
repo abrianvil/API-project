@@ -8,7 +8,7 @@ function LoginForm() {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
-  const [frontEnd, setFrontEnd]=useState([])
+  const [frontEnd, setFrontEnd] = useState([])
 
 
 
@@ -40,6 +40,8 @@ function LoginForm() {
   // console.log('======>', errors)
 
   const userLogin = async (e) => {
+    setCredential('Demo-lition')
+    setPassword('password')
     await dispatch(sessionActions.login({ credential: 'Demo-lition', password: 'password' }))
   }
 
@@ -49,9 +51,9 @@ function LoginForm() {
         <div>
           <div className="errors">
             {/* <ul> */}
-              {errors.map((error, idx) => (
-               <li key={idx}>{error}<br/></li>
-              ))}
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}<br /></li>
+            ))}
             {/* </ul> */}
           </div>
 
@@ -81,7 +83,7 @@ function LoginForm() {
 
         <div className="buttons">
           <button className="Loginbutton" type="submit"
-            // disabled={errors.length ? true : false}
+          // disabled={errors.length ? true : false}
           >Log In</button>
           <button className="Loginbutton" onClick={userLogin}>demoUser</button>
         </div>
