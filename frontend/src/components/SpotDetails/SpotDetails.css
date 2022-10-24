@@ -1,7 +1,14 @@
 .image {
-    height: 60%;
+    height: 50%;
     width: 60%;
-    padding-left: 200px;
+    /* padding-left: 200px;
+    padding-bottom: 40px; */
+}
+
+.image-cont{
+    width: 100%;
+    display: flex;
+    justify-content: center;
     padding-bottom: 40px;
 }
 

@@ -101,9 +101,12 @@ function ShowDetails() {
                     <div>
                         <h2>{spotDetail.name} </h2>
                     </div>
-                    <div className='image'>
+                    <div className='image-cont'>
+                        <div className='image'>
                         <img src={spotDetail.imgUrl} alt={spotDetail.name} />
                     </div>
+                    </div>
+
                     <div className='description-card'>
                         <div className='info-box'>
                             <div>
