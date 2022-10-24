@@ -85,7 +85,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             }
         })
         if (!spot.previewImage) {
-            spot.previewImage = 'no preview image found'
+            spot.previewImage = 'New'
         }
         delete spot.SpotImages
 
@@ -98,7 +98,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             sum += review.stars
         })
         if (count === 0) {
-            spot.avgRating = 'spot has no reviews'
+            spot.avgRating = 'New'
         } else {
             spot.avgRating = sum / count
         }
@@ -390,7 +390,7 @@ router.get('/:spotId', async (req, res, next) => {
 
         result.numReviews = count
         if (count === 0) {
-            result.avgStarRating = 'spot has no reviews'
+            result.avgStarRating = 'New'
         } else {
 
             result.avgStarRating = sum / count
@@ -484,7 +484,7 @@ router.get('/', async (req, res, next) => {
             sum += review.stars
         })
         if (count === 0) {
-            spot.avgRating = 'spot has no reviews'
+            spot.avgRating = 'New'
         } else {
 
             spot.avgRating = sum / count
