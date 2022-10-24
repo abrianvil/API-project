@@ -52,27 +52,23 @@ function ReviewFormModal({ setShowForm }) {
                     setValidationErrors(data.errors)
 
                     // console.log('====>', data.errors)
-                }else setTest(true)
+                }
             }
         )
-        // setShowForm(false)
-        // }else{
-        //     setShowForm(true)
-        //     setValidationErrors(frontErrors)
-        //     console.log('222======>', validationErrors)
-        // }
-        // } else (setShowForm(false))
+
+        setShowForm(false)
     }
 
-    useEffect(() => {
-        console.log('========>', validationErrors)
-        if (!test){
-            setShowForm(true)
-        } else{
-            console.log('this ran', test)
-            setShowForm(false)
-        }
-    }, [test])
+
+    // useEffect(() => {
+    //     console.log('========>', validationErrors)
+    //     if (!test){
+    //         setShowForm(true)
+    //     } else{
+    //         console.log('this ran', test)
+    //         setShowForm(false)
+    //     }
+    // }, [test])
 
 
 
@@ -89,6 +85,7 @@ function ReviewFormModal({ setShowForm }) {
                         type='text'
                         value={review}
                         onChange={e => setReview(e.target.value)}
+                        required
                     >
                     </textarea>
                 </label>
@@ -108,6 +105,7 @@ function ReviewFormModal({ setShowForm }) {
                     <select
                         value={stars}
                         onChange={(e) => setStars(e.target.value)}
+                        required
                     >
                         <option></option>
                         <option>1</option>

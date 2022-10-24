@@ -17,7 +17,7 @@ function CreateSpotForm() {
     const [state, setState] = useState('')
     const [country, setCountry] = useState('')
     const [lat, setLat] = useState(0)
-    const [lng, setLng] = useState(0)
+    const [dis, setDis] = useState(false)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState(0)
@@ -38,7 +38,7 @@ function CreateSpotForm() {
         if (city.length > 40) errors.push('City exceeded 40 character limit')
         if (state.length > 40) errors.push('State exceeded 40 character limit')
         if (address.length > 100) errors.push('Address exceeded 100 character limit')
-
+        setDis(true)
         setFrontErrors(errors)
     }, [price, image, city, state])
 
@@ -176,7 +176,7 @@ function CreateSpotForm() {
                         type="text"
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
-                    // required
+                    required
                     />
                 </label>
 
