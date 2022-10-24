@@ -1,6 +1,13 @@
 # About AbelBnB
 
-### AbelBnB is a web application inspired by Airbnb -[click here to view AbelBnB](https://abelbnb.herokuapp.com/)
+### AbelBnB is a web application inspired by Airbnb, that allows a user to list a rental property, delete a rental property, and review other rental properties -[click here to view AbelBnB](https://abelbnb.herokuapp.com/)
+
+
+![alt text](./frontend/image/abelbnb.png)
+
+![alt text](./frontend/image/abelbnb2.png)
+
+![alt text](./frontend/image/abelbnb4.png)
 
 ### Links to Project wiki
 
