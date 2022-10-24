@@ -12,16 +12,20 @@ router.use(express.json());
 const validateSpotData = [
     check('address')
         .exists({ checkFalsy: true })
-        .withMessage("Street address is required"),
+        .isLength({min:4, max:50})
+        .withMessage("Address must be greater than 3 and less than 50 characters"),
     check('city')
         .exists({ checkFalsy: true })
-        .withMessage("City is required"),
+        .isLength({min:4, max:50})
+        .withMessage("City must be greater than 3 and less than 50 characters"),
     check('state')
         .exists({ checkFalsy: true })
-        .withMessage("State is required"),
+        .isLength({min:4, max:50})
+        .withMessage("State must be greater than 3 and less than 50 characters"),
     check('country')
         .exists({ checkFalsy: true })
-        .withMessage("Country is required"),
+        .isLength({min:4, max:50})
+        .withMessage("Country must be greater than 3 and less than 50 characters"),
     // check('lat')
     //     .exists({ checkFalsy: true })
     //     .withMessage("Latitude is not valid"),
