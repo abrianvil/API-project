@@ -1,6 +1,7 @@
 import { csrfFetch } from './csrf';
 import { getASpot } from './spots';
 
+
 /***************************TYPE*******************/
 const SPOT_REVIEWS = '/reviews/spot'
 // const ADD_A_REVIEW= '/review/spot'
@@ -57,6 +58,7 @@ export const deleteReview = (id, id2) => async (dispatch) => {
     })
     if (res.ok) {
         dispatch(getAllSpotReviews(id2))
+        dispatch(getASpot(id2))
     }
 }
 
