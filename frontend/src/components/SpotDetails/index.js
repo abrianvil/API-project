@@ -19,7 +19,7 @@ function ShowDetails() {
 
     const review = useSelector(state => state.reviews.spotReviews)
     const reviewsArr = Object.values(review)
-    console.log(review)
+    // console.log(review)
     const spotDetail = useSelector(state => state.spots.one)
     const user = useSelector(state => state.session)
     const [errors, setErrors] = useState()

@@ -41,18 +41,18 @@ function ProfileButton({ user }) {
 
         {user && showMenu && (
           <div className="profile-dropdown">
+            <div className="host">
+              <NavLink to='/spots'>
+                <button id="logoutButton">Become a Host</button>
+              </NavLink>
+            </div>
+            <div className="user-inf">
+              <div>{user.username}</div>
+              <div>{user.email}</div>
 
-            <NavLink to='/spots'>
-              <h3>Become a Host</h3>
-            </NavLink>
+              <button id="logoutButton" onClick={logout}>Log Out</button>
 
-            <ul >
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
-                <button id="logoutButton" onClick={logout}>Log Out</button>
-              </li>
-            </ul>
+            </div>
           </div>
 
         )}
