@@ -15,9 +15,7 @@ function SplashPage() {
     if (spotsObj) {
         spots = Object.values(spotsObj)
     }
-    // console.log('2')
-    console.log("spots splashPage===>", spots)
-    // console.log('3')
+  
 
     const dispatch = useDispatch()
 

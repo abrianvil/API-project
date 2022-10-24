@@ -108,26 +108,6 @@ function UpdateSpotForm() {
                 </label>
 
                 <label>
-                    Latitude
-                    <input
-                        type="number"
-                        value={lat}
-                        onChange={(e) => setLat(e.target.value)}
-                        required
-                    />
-                </label>
-
-                <label>
-                    longitude
-                    <input
-                        type="number"
-                        value={lng}
-                        onChange={(e) => setLng(e.target.value)}
-                        required
-                    />
-                </label>
-
-                <label>
                     Name
                     <input
                         type="text"

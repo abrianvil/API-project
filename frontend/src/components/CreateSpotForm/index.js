@@ -120,26 +120,6 @@ function CreateSpotForm() {
                     />
                 </label>
 
-                {/* <label>
-                    Latitude
-                    <input
-                        type="number"
-                        value={lat}
-                        onChange={(e) => setLat(e.target.value)}
-                        required
-                    />
-                </label>
-
-                <label>
-                    longitude
-                    <input
-                        type="number"
-                        value={lng}
-                        onChange={(e) => setLng(e.target.value)}
-                        required
-                    />
-                </label> */}
-
                 <label>
                     Name
                     <input
@@ -156,6 +136,7 @@ function CreateSpotForm() {
                         type="text"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        max={120}
                     // required
                     />
                 </label>
