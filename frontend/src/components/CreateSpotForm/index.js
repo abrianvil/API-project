@@ -166,7 +166,8 @@ function CreateSpotForm() {
                         type="number"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
-                    // required
+                        required
+                        min={1}
                     />
                 </label>
 
@@ -176,7 +177,7 @@ function CreateSpotForm() {
                         type="text"
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
-                    required
+                        required
                     />
                 </label>
 

@@ -20,8 +20,8 @@ const validateSpotData = [
         .withMessage("City must be greater than 3 and less than 50 characters"),
     check('state')
         .exists({ checkFalsy: true })
-        .isLength({min:4, max:50})
-        .withMessage("State must be greater than 3 and less than 50 characters"),
+        .isLength({min:2, max:50})
+        .withMessage("State must be greater than 1 and less than 50 characters"),
     check('country')
         .exists({ checkFalsy: true })
         .isLength({min:4, max:50})
