@@ -91,16 +91,8 @@ function ReviewFormModal({ setShowForm }) {
                 </label>
                 <button
                     type="submit"
-                // disabled={validationErrors.length > 0 ? true : false}
                 >submit Review</button>
                 <label>
-
-                    {/* <input
-                        type='number'
-                        value={stars}
-                        onChange={(e) => setStars(e.target.value)}
-                    >
-                    </input> */}
 
                     <select
                         value={stars}
