@@ -29,8 +29,10 @@ function ShowDetails() {
 
     // console.log('useSelector=====>', spotDetail)
     // console.log("user====>", user)
-    let alreadyReviewed
+    let alreadyReviewed;
     if (user) alreadyReviewed = reviewsArr.find(review => review.User.id === user.id)
+    let spotOwner;
+    if(user) spotOwner= spotDetail.ownerId===user.id
 
     useEffect(() => {
         dispatch(getASpot(+id))
@@ -168,7 +170,7 @@ function ShowDetails() {
 
                                 <button
                                     className='buttonGroup'
-                                    hidden={(!alreadyReviewed && user) ? false : true}
+                                    hidden={(!spotOwner && !alreadyReviewed && user) ? false : true}
                                     onClick={() => setShowForm(true)}
                                 >Add a Review</button>
                                 {showForm && (<Modal onClose={() => setShowForm(false)} id='review-form'>
