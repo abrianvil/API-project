@@ -141,6 +141,7 @@ function ShowDetails() {
                                         )
                                     })}
                                 </div>)}
+                                {reviewsArr.length===0 && (<div> There are no Reviews for this spot</div>)}
 
                             </div>
 
