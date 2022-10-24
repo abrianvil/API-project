@@ -9,8 +9,8 @@ function SignupFormPage() {
   const sessionUser = useSelector((state) => state.session);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [firstName, setFirstName]=useState("")
-  const [lastName, setLastName]=useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -20,14 +20,18 @@ function SignupFormPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      let incomingErr=[];
+      let incomingErr = [];
       return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
         .catch(async (res) => {
           const data = await res.json();
-          
           if (data && data.errors) {
-            incomingErr.push(data.errors)
-            setErrors(incomingErr)
+            if (Array.isArray(data.errors)) {
+              incomingErr.push(data.errors)
+              setErrors(...incomingErr)
+            } else {
+              incomingErr.push(data.errors)
+              setErrors(incomingErr)
+            }
 
           }
         });
@@ -37,16 +41,18 @@ function SignupFormPage() {
 
   return (
     <form className="signUp" onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
+      <div className="errors">
+        <ul>
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        </ul>
+      </div>
       <label>
         Email
         <input
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          // required
+        // required
         />
       </label>
       <label>
@@ -55,7 +61,7 @@ function SignupFormPage() {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          // required
+        // required
         />
       </label>
       <label>
@@ -64,7 +70,7 @@ function SignupFormPage() {
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          // required
+        // required
         />
       </label>
       <label>
@@ -73,7 +79,7 @@ function SignupFormPage() {
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          // required
+        // required
         />
       </label>
       <label>
@@ -82,7 +88,7 @@ function SignupFormPage() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          // required
+        // required
         />
       </label>
       <label>
@@ -91,10 +97,10 @@ function SignupFormPage() {
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          // required
+        // required
         />
       </label>
-      <button  id="submit" type="submit">Sign Up</button>
+      <button id="submit" type="submit">Sign Up</button>
     </form>
   );
 }
