@@ -172,6 +172,8 @@ function ShowDetails() {
                                     <h5>Wheelchair accessible</h5>
                                 </div>
 
+                                <button className='buttonGroup'>Book Spot</button>
+
                                 <button
                                     className='buttonGroup'
                                     hidden={(!spotOwner && !alreadyReviewed && user) ? false : true}
