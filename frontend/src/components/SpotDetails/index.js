@@ -8,6 +8,7 @@ import { clearState } from '../../store/spots'
 import { reset } from '../../store/reviews'
 import { deleteReview } from '../../store/reviews'
 import { getAllSpotReviews } from '../../store/reviews'
+import { getAllBookings } from '../../store/bookings'
 import ReviewFormModal from '../reviewFormModal'
 import './SpotDetails.css'
 
@@ -19,7 +20,8 @@ function ShowDetails() {
 
     const review = useSelector(state => state.reviews.spotReviews)
     const reviewsArr = Object.values(review)
-    // console.log(review)
+    const bookings= useSelector(state=>state.bookings)
+    console.log('this is bookings', bookings)
     const spotDetail = useSelector(state => state.spots.one)
     const user = useSelector(state => state.session)
     const [errors, setErrors] = useState()
@@ -36,6 +38,7 @@ function ShowDetails() {
 
     useEffect(() => {
         dispatch(getASpot(+id))
+        dispatch(getAllBookings(+id))
         return (
             () => dispatch(clearState())
         )

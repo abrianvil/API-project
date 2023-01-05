@@ -1,4 +1,3 @@
-import booking from '../../../backend/db/models/booking';
 import { csrfFetch } from './csrf';
 
 
@@ -16,34 +15,36 @@ const CLEAR_STATE = 'booking/clearState'
 
 const loadBookings = (bookings) => {
     return {
-        type: GET_ALL_SPOTS,
+        type: GET_ALL_BOOKINGS,
         bookings
     }
 }
 
 const loadOneBooking = (booking) => {
     return {
-        type: GET_A_SPOT,
+        type: GET_A_BOOKING,
         booking
     }
 }
 
 const addBooking = (booking) => {
-    Type: CREATE_BOOKING,
+    return {
+        Type: CREATE_BOOKING,
         booking
+    }
 }
 
 
 const delBooking = (bookingId) => {
     return {
-        type: DELETE_A_SPOT,
+        type: DELETE_A_BOOKING,
         bookingId
     }
 }
 
 const editBooking = (booking) => {
     return {
-        type: UPDATE_A_SPOT,
+        type: UPDATE_A_BOOKING,
         booking
     }
 }
@@ -59,12 +60,13 @@ export const clearState = () => {
 
 /***************************THUNK*******************/
 
-export const getallBookings = () => async (dispatch) => {
-    const response = await csrfFetch('/api/bookings/current')
+//SECTION -GET ALL THE BOOKINGS OF A SPOT
+export const getAllBookings = (id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${id}/bookings`)
 
     if (response.ok) {
         const data = await response.json()
-        dispatch(getallBookings(data))
+        dispatch(loadBookings(data.Bookings))
     }
 }
 
@@ -73,42 +75,42 @@ export const getallBookings = () => async (dispatch) => {
 //     const response = await csrfFetch()
 // }
 
-export const createBooking= (payload) => async dispatch=>{
-    const {spotId, booking}= payload
-    const response= await csrfFetch(`/api/spots/${spotId}`,{
-        method:'POST',
+export const createBooking = (payload) => async dispatch => {
+    const { spotId, booking } = payload
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(booking)
     })
 
-    if(response.ok){
-        const data= response.json()
+    if (response.ok) {
+        const data = response.json()
         await dispatch(addBooking(data))
     }
 }
 
 
-export const updateBooking =(booking) => async dispatch =>{
-    const response= await csrfFetch(`/api/bookings/${booking.id}`,{
+export const updateBooking = (booking) => async dispatch => {
+    const response = await csrfFetch(`/api/bookings/${booking.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(booking)
     })
 
-    if (response.ok){
-        const data= response.json()
+    if (response.ok) {
+        const data = response.json()
         await dispatch(editBooking(data))
     }
 }
 
 
-export const deleteBooking =(bookingId) => async dispatch =>{
-    const response = await csrfFetch(`/api/bookings/${bookingId}`,{
-        method:'DELETE'
+export const deleteBooking = (bookingId) => async dispatch => {
+    const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+        method: 'DELETE'
     })
 
-    if(response.ok){
-        const data=response.json()
+    if (response.ok) {
+        const data = response.json()
         await dispatch(delBooking(bookingId))
     }
 }
@@ -117,17 +119,17 @@ export const deleteBooking =(bookingId) => async dispatch =>{
 /***************************REDUCER*******************/
 
 
-const initialState= {all:{}, one:{}}
+const initialState = { all: {}, one: {} }
 
-const bookingReducer = (state=initialState, action) =>{
-    let newState={}
+const bookingReducer = (state = initialState, action) => {
+    let newState = {}
 
     switch (action.type) {
         case GET_ALL_BOOKINGS:
-            newState={...state}
-            newState.all={}
+            newState = { ...state }
+            newState.all = {}
             action.bookings.forEach(booking => {
-                newState.all[booking.id]=booking
+                newState.all[booking.id] = booking
             });
             return newState
 
@@ -135,3 +137,7 @@ const bookingReducer = (state=initialState, action) =>{
             return state;
     }
 }
+
+
+
+export default bookingReducer
