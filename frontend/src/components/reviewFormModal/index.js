@@ -60,19 +60,6 @@ function ReviewFormModal({ setShowForm }) {
     }
 
 
-    // useEffect(() => {
-    //     console.log('========>', validationErrors)
-    //     if (!test){
-    //         setShowForm(true)
-    //     } else{
-    //         console.log('this ran', test)
-    //         setShowForm(false)
-    //     }
-    // }, [test])
-
-
-
-
 
 
 

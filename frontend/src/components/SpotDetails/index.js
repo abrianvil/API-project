@@ -3,23 +3,24 @@ import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { getASpot } from '../../store/spots'
 import { Modal } from '../../context/Modal'
-import { deleteASpot } from '../../store/spots'
-import { clearState } from '../../store/spots'
-import { reset } from '../../store/reviews'
-import { deleteReview } from '../../store/reviews'
-import { getAllSpotReviews } from '../../store/reviews'
+import { deleteASpot,clearState } from '../../store/spots'
+import { deleteReview, reset, getAllSpotReviews } from '../../store/reviews'
+import { getAllBookings } from '../../store/bookings'
 import ReviewFormModal from '../reviewFormModal'
+import BookingForm from '../bookingModal'
 import './SpotDetails.css'
 
 
 
 function ShowDetails() {
     const [showForm, setShowForm] = useState(false)
+    const [showBookingForm, setShowBookingForm] = useState(false)
     const [toDelRev, setToDelRev] = useState(null)
 
     const review = useSelector(state => state.reviews.spotReviews)
     const reviewsArr = Object.values(review)
-    // console.log(review)
+    const bookings = useSelector(state => state.bookings)
+    // console.log('this is bookings', bookings)
     const spotDetail = useSelector(state => state.spots.one)
     const user = useSelector(state => state.session)
     const [errors, setErrors] = useState()
@@ -32,10 +33,11 @@ function ShowDetails() {
     let alreadyReviewed;
     if (user) alreadyReviewed = reviewsArr.find(review => review.User.id === user.id)
     let spotOwner;
-    if(user) spotOwner= spotDetail.ownerId===user.id
+    if (user) spotOwner = spotDetail.ownerId === user.id
 
     useEffect(() => {
         dispatch(getASpot(+id))
+        dispatch(getAllBookings(+id))
         return (
             () => dispatch(clearState())
         )
@@ -103,8 +105,8 @@ function ShowDetails() {
                     </div>
                     <div className='image-cont'>
                         <div className='image'>
-                        <img src={spotDetail.imgUrl} alt={spotDetail.name} />
-                    </div>
+                            <img src={spotDetail.imgUrl} alt={spotDetail.name} />
+                        </div>
                     </div>
 
                     <div className='description-card'>
@@ -126,8 +128,8 @@ function ShowDetails() {
                                         return (
                                             <div key={review.id} className='indiv-review'>
                                                 <div id='reviewName'>
-                                                <i className="fa fa-user-circle" aria-hidden="true"></i>
-                                                <h5>{review.User.firstName}</h5>
+                                                    <i className="fa fa-user-circle" aria-hidden="true"></i>
+                                                    <h5>{review.User.firstName}</h5>
                                                 </div>
                                                 {review.review}
                                                 <button
@@ -141,7 +143,7 @@ function ShowDetails() {
                                         )
                                     })}
                                 </div>)}
-                                {reviewsArr.length===0 && (<div> There are no Reviews for this spot</div>)}
+                                {reviewsArr.length === 0 && (<div> There are no Reviews for this spot</div>)}
 
                             </div>
 
@@ -168,9 +170,19 @@ function ShowDetails() {
                                 </div>
 
                                 <div className='fieldset-icon'>
-                                <i className="fa fa-wheelchair" aria-hidden="true"></i>
+                                    <i className="fa fa-wheelchair" aria-hidden="true"></i>
                                     <h5>Wheelchair accessible</h5>
                                 </div>
+
+                                <button
+                                    className='buttonGroup'
+                                    onClick={() => setShowBookingForm(true)}
+                                >Book Spot</button>
+                                {showBookingForm && (
+                                    <Modal onClose={()=>setShowBookingForm(false)}>
+                                        <BookingForm setShowBookingForm={setShowBookingForm} spot={spotDetail} />
+                                    </Modal>
+                                )}
 
                                 <button
                                     className='buttonGroup'
