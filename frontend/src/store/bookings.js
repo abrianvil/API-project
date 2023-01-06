@@ -133,6 +133,29 @@ const bookingReducer = (state = initialState, action) => {
             });
             return newState
 
+        case GET_A_BOOKING:
+            newState = { ...state }
+            newState.one = { ...action.booking }
+            return newState
+
+        case CREATE_BOOKING:
+            newState.all = { ...state.all, [action.booking.id]: action.booking }
+            return newState
+
+        case UPDATE_A_BOOKING:
+            newState = { ...state, [action.booking.id]: action.booking }
+            return newState
+
+        case DELETE_A_BOOKING:
+            newState = { ...state }
+            delete newState[action.bookingId]
+            return newState
+
+        case CLEAR_STATE:
+            newState = { ...state }
+            newState.all = {}
+            return newState
+
         default:
             return state;
     }
