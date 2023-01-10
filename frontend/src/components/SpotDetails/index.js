@@ -174,10 +174,10 @@ function ShowDetails() {
                                     <h5>Wheelchair accessible</h5>
                                 </div>
 
-                                <button
+                                {user && (<button
                                     className='buttonGroup'
                                     onClick={() => setShowBookingForm(true)}
-                                >Book Spot</button>
+                                >Book Spot</button>)}
                                 {showBookingForm && (
                                     <Modal onClose={()=>setShowBookingForm(false)}>
                                         <BookingForm setShowBookingForm={setShowBookingForm} spot={spotDetail} />

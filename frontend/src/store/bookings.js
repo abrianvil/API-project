@@ -3,7 +3,7 @@ import { csrfFetch } from './csrf';
 
 /***************************TYPE*******************/
 
-const GET_ALL_BOOKINGS = 'bookings/getSpots';
+const GET_ALL_BOOKINGS = 'bookings/getBookings';
 const GET_A_BOOKING = 'booking/getBooking';
 const CREATE_BOOKING = 'booking/addBooking';
 const DELETE_A_BOOKING = 'booking/removeBooking';
@@ -29,7 +29,7 @@ const loadOneBooking = (booking) => {
 
 const addBooking = (booking) => {
     return {
-        Type: CREATE_BOOKING,
+        type: CREATE_BOOKING,
         booking
     }
 }
@@ -67,6 +67,7 @@ export const getAllBookings = (id) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json()
         dispatch(loadBookings(data.Bookings))
+        return data
     }
 }
 
@@ -77,16 +78,29 @@ export const getAllBookings = (id) => async (dispatch) => {
 
 export const createBooking = (payload) => async dispatch => {
     const { spotId, booking } = payload
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
+    const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(booking)
     })
 
     if (response.ok) {
-        const data = response.json()
-        await dispatch(addBooking(data))
+        const data = await response.json()
+        // console.log('this is response in the create booking thunk', data)
+        if (data.errors) {
+            return data
+        } else {
+            dispatch(addBooking(data))
+            return data
+        }
     }
+    // } else if (response.status < 500) {
+    //     const data = await response.json();
+    //     console.log('this is response in the create booking thunk', data)
+    //     if (data.errors) {
+    //         return data
+    //     }
+    // }
 }
 
 
@@ -99,7 +113,7 @@ export const updateBooking = (booking) => async dispatch => {
 
     if (response.ok) {
         const data = response.json()
-        await dispatch(editBooking(data))
+        dispatch(editBooking(data))
     }
 }
 
@@ -111,7 +125,7 @@ export const deleteBooking = (bookingId) => async dispatch => {
 
     if (response.ok) {
         const data = response.json()
-        await dispatch(delBooking(bookingId))
+        dispatch(delBooking(bookingId))
     }
 }
 
