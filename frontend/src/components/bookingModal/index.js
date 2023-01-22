@@ -37,6 +37,7 @@ const BookingForm = ({ setShowBookingForm, spot }) => {
         const data= await dispatch(createBooking(payload))
         if (data.errors){
             console.log(data.message)
+            console.log(data.errors)
             setShowBookingForm(true)
         }else{
             setShowBookingForm(false)
