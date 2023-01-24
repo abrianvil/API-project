@@ -45,7 +45,12 @@ function ProfileButton({ user }) {
               <NavLink to='/spots'>
                 <button id="logoutButton">Become a Host</button>
               </NavLink>
+              <NavLink to='/@me'>
+                <button id='logoutButton'>Your Home</button>
+              </NavLink>
             </div>
+
+
             <div className="user-inf">
               <div>{user.username}</div>
               <div>{user.email}</div>
