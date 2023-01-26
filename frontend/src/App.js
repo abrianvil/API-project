@@ -8,6 +8,7 @@ import SplashPage from "./components/SplashPage";
 import ShowDetails from "./components/SpotDetails";
 import CreateSpotForm from "./components/CreateSpotForm";
 import UpdateSpotForm from "./components/UpdateForm";
+import MyHome from "./components/yourHome";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ function App() {
 
           <Route path='/spots'>
             <CreateSpotForm />
+          </Route>
+
+          <Route path='/@me'>
+            <MyHome />
           </Route>
 
         </Switch>

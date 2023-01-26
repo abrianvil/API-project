@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 // Get all of the Current User's Bookings
-router.get('/current',requireAuth, async (req, res, next) => {
+router.get('/current', requireAuth, async (req, res, next) => {
     const userBookings = await Booking.findAll({
         where: { userId: req.user.id },
         include: { model: Spot }, //,{ model: User, attributes:["id","firstName","lastName","createdAt","updatedAt"]},
@@ -44,7 +44,7 @@ router.get('/current',requireAuth, async (req, res, next) => {
 })
 
 // Edit a Booking
-router.put('/:bookingId',requireAuth, async (req, res, next) => {
+router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const booking = await Booking.findByPk(req.params.bookingId)
     if (booking) {
         const { startDate, endDate } = req.body
@@ -76,7 +76,7 @@ router.put('/:bookingId',requireAuth, async (req, res, next) => {
 })
 
 // Delete a Booking
-router.delete('/:bookingId',requireAuth, async (req, res, next) => {
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const booking = await Booking.findByPk(req.params.bookingId)
     if (booking) {
         booking.destroy()
