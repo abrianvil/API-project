@@ -11,7 +11,8 @@ import image from '../../image/logo.png'
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session);
   const [show, setShow] = useState(false)
-
+  const [searchQuery, setSearchQuery]=useState('')
+console.log('thi is what', searchQuery)
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
@@ -36,6 +37,14 @@ function Navigation({ isLoaded }) {
       <NavLink exact to="/">
         <img id='home-image' src={image}></img>
       </NavLink>
+      <div>
+        <input
+        value={searchQuery}
+        onChange={(e)=>setSearchQuery(e.target.value)}
+        placeholder='Search'
+        ></input>
+        <button>Search</button>
+      </div>
       <div className='topRight'>
         {/* {sessionUser && (<NavLink to='/spots'>
           <h3>Become a Host</h3>

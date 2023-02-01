@@ -1,6 +1,6 @@
 # About AbelBnB
 
-### AbelBnB is a web application inspired by Airbnb, that allows a user to list a rental property, delete a rental property, edit said rental property and review other rental properties -[click here to view AbelBnB](https://abelbnb.herokuapp.com/)
+### A Full stack application inspired by Airbnb, built with JavaScript, React, Express, and Sequelize. React allows for a smooth and interactive user interface, while Express and Sequelize provide backend functionality and database management. This combination of technologies allows for a seamless experience for both the user and the developer.-[click here to view AbelBnB](https://abelbnb.herokuapp.com/)
 
 
 ![alt text](./frontend/image/abelbnb.png)

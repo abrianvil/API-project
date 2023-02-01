@@ -157,6 +157,17 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         })
     }
 
+    if (new Date(startDate) < new Date(Date.now())) {
+        // res.status(403)
+        return res.json({
+            message: "Validation error",
+            statusCode: 400,
+            errors: {
+                endDate: "startDate cannot be in the past"
+            }
+        })
+    }
+
     const reserved = await Booking.findOne({
         // where: { [Op.and]: [{ spotId: req.params.spotId }, { startDate: newStartDate }] }
         where: {
