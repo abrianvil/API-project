@@ -7,6 +7,8 @@ import './index.css'
 
 function MyHome() {
     const dispatch = useDispatch()
+    const [showDeleteBooking, setShowDeleteBooking] = useState(false)
+    const [bookingToCancel, setBookingToCancel] = useState()
 
     const bookings = useSelector(state => Object.values(state.portfolio.myBookings))
     const spots = useSelector(state => Object.values(state.portfolio.mySpots))
@@ -16,6 +18,11 @@ function MyHome() {
         dispatch(getAllMySpots())
     }, [dispatch])
 
+
+    const handleDeleteBooking = (booking) => {
+        setShowDeleteBooking(true)
+        setBookingToCancel(booking)
+    }
     return (
         <div className='main-container'>
             <div className="mySpots">
@@ -74,7 +81,7 @@ function MyHome() {
                                     <div>
                                         <div className="button">
                                             <button>Edit</button>
-                                            <button>Delete</button>
+                                            <button onClick={() => handleDeleteBooking(booking)}>Delete</button>
                                         </div>
                                     </div>
                                 </div>
