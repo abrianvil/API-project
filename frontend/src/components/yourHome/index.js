@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllMyBookings, getAllMySpots } from "../../store/myStuff";
+import CancelBookingForm from "./cancelBookingModal";
+import { Modal } from '../../context/Modal'
 import './index.css'
 
 
@@ -41,7 +43,12 @@ function MyHome() {
                                     </div>
                                     <div>{spot.description}</div>
                                     <div className="address">{spot.address},{spot.city} {spot.state}</div>
-                                    <div>Price: {spot.price}</div>
+                                    <div>Price: {spot.price.toLocaleString('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                    })
+                                    }
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,12 +83,15 @@ function MyHome() {
                                         <div className="address">{booking.Spot?.address},{booking.Spot?.city} {booking.Spot?.state}</div>
                                     </div>
                                     <div>
-                                        Total Cost: {booking.Spot?.price * (parseInt((+ booking.endDate.slice(8, 10))) - parseInt((+ booking.startDate.slice(8, 10))))}
+                                        Total Cost: {(booking.Spot?.price * (parseInt((+ booking.endDate.slice(8, 10))) - parseInt((+ booking.startDate.slice(8, 10))))).toLocaleString('en-US', {
+                                            style: 'currency',
+                                            currency: 'USD',
+                                        })}
                                     </div>
                                     <div>
                                         <div className="button">
                                             <button>Edit</button>
-                                            <button onClick={() => handleDeleteBooking(booking)}>Delete</button>
+                                            <button onClick={() => handleDeleteBooking(booking)}>Cancel</button>
                                         </div>
                                     </div>
                                 </div>
@@ -96,6 +106,11 @@ function MyHome() {
                     )
                 }
             </div >
+            {showDeleteBooking &&
+                (<Modal onClose={() => setShowDeleteBooking(false)}>
+                    <CancelBookingForm setShowDeleteBooking={setShowDeleteBooking} booking={bookingToCancel}></CancelBookingForm>
+                </Modal>)
+            }
         </div >
     )
 

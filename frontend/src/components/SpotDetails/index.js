@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { getASpot } from '../../store/spots'
 import { Modal } from '../../context/Modal'
-import { deleteASpot,clearState } from '../../store/spots'
+import { deleteASpot, clearState } from '../../store/spots'
 import { deleteReview, reset, getAllSpotReviews } from '../../store/reviews'
 import { getAllBookings } from '../../store/bookings'
 import ReviewFormModal from '../reviewFormModal'
@@ -153,7 +153,11 @@ function ShowDetails() {
 
                             <fieldset>
                                 <div className='priceReview'>
-                                    <h2>${spotDetail.price} night</h2>
+                                    <h2>{spotDetail.price?.toLocaleString('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                    })
+                                    } night</h2>
                                     <p>
                                         <i className="fa fa-star" aria-hidden="true"></i>
                                         {spotDetail.avgStarRating} .{spotDetail.numReviews} reviews
@@ -179,7 +183,7 @@ function ShowDetails() {
                                     onClick={() => setShowBookingForm(true)}
                                 >Book Spot</button>)}
                                 {showBookingForm && (
-                                    <Modal onClose={()=>setShowBookingForm(false)}>
+                                    <Modal onClose={() => setShowBookingForm(false)}>
                                         <BookingForm setShowBookingForm={setShowBookingForm} spot={spotDetail} />
                                     </Modal>
                                 )}
