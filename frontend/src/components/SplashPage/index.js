@@ -46,7 +46,11 @@ function SplashPage() {
                                     </h4>
                                 </div>
                                 <p>{spot.city}, {spot.state}</p>
-                                <h4>${spot.price} night</h4>
+                                <h4>{spot.price.toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                })
+                                } night</h4>
 
                             </NavLink>
                         </nav>
