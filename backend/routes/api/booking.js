@@ -17,28 +17,33 @@ router.get('/current', requireAuth, async (req, res, next) => {
         // attributes:['id','spotId']
     })
 
+
     let Bookings = []
     for (let booking of userBookings) {
-        const prev = await Spot.findByPk(booking.spotId, {
+        const prev = await Spot.findByPk(booking.dataValues.spotId, {
 
             attributes: [],
             include: { model: SpotImage, attributes: ['url'], where: { preview: true } }
         })
+        // console.log('====>PREV \n \n \n', prev.toJSON())
         let urlData = prev.toJSON()
         let img = urlData.SpotImages[0]
-        console.log(img.url)
-        userBookings.forEach(booking => {
-            Bookings.push(booking.toJSON())
-        })
-        Bookings.forEach(booking => {
-            booking.Spot.previewImage = img.url
+        // console.log('=======>',img)
+        // userBookings.forEach(booking => {
+        //     Bookings.push(booking.toJSON())
+        // })
+        // Bookings.forEach(booking => {
+        booking.Spot.dataValues.previewImage = img.url
+        // console.log('+++++++', booking.Spot.dataValues)
 
-            delete booking.Spot.createdAt
-            delete booking.Spot.updatedAt
-            delete booking.Spot.description
-
-        })
+        // console.log('*******', booking)
+        delete booking.Spot.createdAt
+        delete booking.Spot.updatedAt
+        delete booking.Spot.description
+        Bookings.push(booking)
+        // })
     }
+    // console.log(' \n \n \n', Bookings)
     res.status(200)
     res.json({ Bookings })
 })

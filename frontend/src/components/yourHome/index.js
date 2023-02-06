@@ -19,7 +19,7 @@ function MyHome() {
     const bookings = useSelector(state => Object.values(state.portfolio.myBookings))
     const spots = useSelector(state => Object.values(state.portfolio.mySpots))
     bookings.forEach(booking => booking['spotImage'] = booking.Spot.previewImage)
-    console.log('this is bookings', showEditBooking)
+    // console.log('this is bookings', showEditBooking)
 
 
     useEffect(() => {

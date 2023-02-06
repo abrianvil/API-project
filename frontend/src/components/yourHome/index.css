@@ -115,3 +115,15 @@
     height: 20px;
     width: 55px;
 }
+
+
+.button-box{
+    display: flex;
+    gap: 20px;
+}
+
+.one{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -93,14 +93,13 @@ export const createBooking = (payload) => async dispatch => {
             dispatch(addBooking(data))
             return data
         }
+    } else if (response.status < 500) {
+        const data = await response.json();
+        //     console.log('this is response in the create booking thunk', data)
+        if (data.errors) {
+            return data
+        }
     }
-    // } else if (response.status < 500) {
-    //     const data = await response.json();
-    //     console.log('this is response in the create booking thunk', data)
-    //     if (data.errors) {
-    //         return data
-    //     }
-    // }
 }
 
 
@@ -114,6 +113,13 @@ export const updateBooking = (booking) => async dispatch => {
     if (response.ok) {
         const data = response.json()
         dispatch(editBooking(data))
+        return data
+    } else if (response.status < 500) {
+        const data = await response.json();
+        //     console.log('this is response in the update booking thunk', data)
+        if (data.errors) {
+            return data
+        }
     }
 }
 

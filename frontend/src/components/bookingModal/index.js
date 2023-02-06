@@ -11,11 +11,12 @@ import './index.css'
 
 
 const BookingForm = ({ setShowBookingForm, spot }) => {
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
+    const history = useHistory()
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
-    const [startDateError, setStartDateError]= useState('')
+    const [startDateError, setStartDateError] = useState('')
     const [endDateError, setEndDateError] = useState('');
     const [renderErr, setRenderErr] = useState(false);
 
@@ -27,27 +28,28 @@ const BookingForm = ({ setShowBookingForm, spot }) => {
 
     let days = Math.abs(parseInt((+ startDate.toString().slice(8, 11))) - parseInt((+ endDate.toString().slice(8, 11))))
     // console.log('this is days', days)
-    if(startDate === endDate) days = 0
+    if (startDate === endDate) days = 0
 
 
-    const handleSubmit= async(e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setRenderErr(true)
-        const payload={spotId:spot.id, booking:{startDate, endDate}}
-        const data= await dispatch(createBooking(payload))
-        if (data.errors){
+        const payload = { spotId: spot.id, booking: { startDate, endDate } }
+        const data = await dispatch(createBooking(payload))
+        if (data.errors) {
             // console.log(data.message)
             // console.log(data.errors)
             setShowBookingForm(true)
-        }else{
+        } else {
             setShowBookingForm(false)
+            history.push('/@me')
         }
     }
 
     return (
         <form
-        onSubmit={handleSubmit}
-        className="booking-modal">
+            onSubmit={handleSubmit}
+            className="booking-modal">
             <div className="title">Book Spot</div>
             <div className="dates">
                 <label>From</label>
@@ -65,11 +67,11 @@ const BookingForm = ({ setShowBookingForm, spot }) => {
                 <label>Total for {days} Nights:</label>
                 <div className="price">
                     {
-                    (spot.price * (days === 0 ? 0 : days)).toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                    })
-                }
+                        (spot.price * (days === 0 ? 0 : days)).toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                        })
+                    }
                 </div>
 
             </div>
