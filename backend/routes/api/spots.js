@@ -12,19 +12,19 @@ router.use(express.json());
 const validateSpotData = [
     check('address')
         .exists({ checkFalsy: true })
-        .isLength({min:4, max:50})
+        .isLength({ min: 4, max: 50 })
         .withMessage("Address must be greater than 3 and less than 50 characters"),
     check('city')
         .exists({ checkFalsy: true })
-        .isLength({min:4, max:50})
+        .isLength({ min: 4, max: 50 })
         .withMessage("City must be greater than 3 and less than 50 characters"),
     check('state')
         .exists({ checkFalsy: true })
-        .isLength({min:2, max:50})
+        .isLength({ min: 2, max: 50 })
         .withMessage("State must be greater than 1 and less than 50 characters"),
     check('country')
         .exists({ checkFalsy: true })
-        .isLength({min:4, max:50})
+        .isLength({ min: 4, max: 50 })
         .withMessage("Country must be greater than 3 and less than 50 characters"),
     // check('lat')
     //     .exists({ checkFalsy: true })
@@ -34,7 +34,7 @@ const validateSpotData = [
     //     .withMessage("Longitude is not valid"),
     check('name')
         .exists({ checkFalsy: true })
-        .isLength({min:4, max:15})
+        .isLength({ min: 4, max: 15 })
         .withMessage("Name must be greater than 3 and less than 15 characters"),
     check('description')
         .exists({ checkFalsy: true })
@@ -143,13 +143,27 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId)
     const newStartDate = new Date(startDate)
     const newEndDate = new Date(endDate)
+    // console.log('\n \n this is startDate \n', new Date(startDate) >= new Date(endDate))
+    // console.log('\n \n this is enDate \n', newEndDate)
 
-    if (newStartDate >= newEndDate) {
+    if (new Date(startDate) >= new Date(endDate)) {
+        // res.status(403)
         return res.json({
             message: "Validation error",
             statusCode: 400,
             errors: {
                 endDate: "endDate cannot be on or before startDate"
+            }
+        })
+    }
+
+    if (new Date(startDate) < new Date(Date.now())) {
+        // res.status(403)
+        return res.json({
+            message: "Validation error",
+            statusCode: 400,
+            errors: {
+                endDate: "startDate cannot be in the past"
             }
         })
     }
@@ -160,7 +174,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             spotId: req.params.spotId, //[Op.and]: [
             [Op.or]: [
                 {
-                   startDate: {
+                    startDate: {
                         [Op.between]: [newStartDate, newEndDate]
                     },
                     endDate: {
@@ -171,11 +185,14 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     })
 
+    // console.log('\n \n this is reserved \n', reserved)
+
+
     // console.log(reserved)
-    for (let each of reserved){
-        if ((each.startDate<=newStartDate && each.endDate<=newEndDate)||(each.startDate<=newStartDate)||(each.endDate>=newEndDate)){
+    if (reserved) {
+        if ((reserved.startDate <= newStartDate && reserved.endDate <= newEndDate) || (reserved.startDate <= newStartDate) || (reserved.endDate >= newEndDate)) {
             res.status(403)
-           return res.json({
+            return res.json({
                 message: "Sorry, this spot is already booked for the specified dates",
                 statusCode: 403,
                 errors: {
@@ -188,14 +205,15 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     if (spot) {
         // if (!reserved) {
-            const booked = await Booking.create({
-                spotId: parseInt(spot.id),
-                userId: parseInt(req.user.id),
-                startDate,
-                endDate
-            })
-            res.status(200)
-            res.json(booked)
+        const booked = await Booking.create({
+            spotId: parseInt(spot.id),
+            userId: parseInt(req.user.id),
+            startDate,
+            endDate
+        })
+        // console.log('\n \n this is booked \n', booked)
+        res.status(200)
+        res.json(booked)
         // } else {
         //     res.status(403)
         //     res.json({

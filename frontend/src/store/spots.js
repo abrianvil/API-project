@@ -82,7 +82,7 @@ export const deleteASpot = (id) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${id}`, {
         method: 'DELETE'
     })
-    console.log("did it delete===>", res)
+    // console.log("did it delete===>", res)
     if (res.ok) {
         const res = await fetch('api/spots')
         if (res.ok) {

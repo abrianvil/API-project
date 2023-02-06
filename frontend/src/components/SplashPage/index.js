@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllSpots } from "../../store/spots";
+import { getAllMyBookings, getAllMySpots } from "../../store/myStuff";
 import './splashPage.css'
 
 
@@ -15,13 +16,14 @@ function SplashPage() {
     if (spotsObj) {
         spots = Object.values(spotsObj)
     }
-  
+
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getAllSpots())
-        // console.log("spots====>", spotsObj)
+        dispatch(getAllMyBookings())
+        dispatch(getAllMySpots())
     }, [dispatch]);
 
 
@@ -44,7 +46,11 @@ function SplashPage() {
                                     </h4>
                                 </div>
                                 <p>{spot.city}, {spot.state}</p>
-                                <h4>${spot.price} night</h4>
+                                <h4>{spot.price.toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                })
+                                } night</h4>
 
                             </NavLink>
                         </nav>
