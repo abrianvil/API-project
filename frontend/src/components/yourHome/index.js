@@ -3,23 +3,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllMyBookings, getAllMySpots } from "../../store/myStuff";
 import CancelBookingForm from "./cancelBookingModal";
+import EditBookingForm from "./editBookingModal";
 import { Modal } from '../../context/Modal'
 import './index.css'
+
 
 
 function MyHome() {
     const dispatch = useDispatch()
     const [showDeleteBooking, setShowDeleteBooking] = useState(false)
+    const [showEditBooking, setShowEditBooking]= useState(false)
+    const [bookingToEdit,setBookingToEdit]=useState()
     const [bookingToCancel, setBookingToCancel] = useState()
 
     const bookings = useSelector(state => Object.values(state.portfolio.myBookings))
     const spots = useSelector(state => Object.values(state.portfolio.mySpots))
+    bookings.forEach(booking => booking['spotImage'] = booking.Spot.previewImage)
+    // console.log('this is bookings', showEditBooking)
+
 
     useEffect(() => {
         dispatch(getAllMyBookings())
         dispatch(getAllMySpots())
     }, [dispatch])
 
+
+    const handleEditBooking=(booking)=>{
+        setShowEditBooking(true)
+        setBookingToEdit(booking)
+    }
 
     const handleDeleteBooking = (booking) => {
         setShowDeleteBooking(true)
@@ -70,7 +82,7 @@ function MyHome() {
                         <div className="ind-spot" key={booking.id}>
                             <div className="nav" >
                                 <NavLink to={`/Spots/${booking.Spot?.id}`}>
-                                    <img className="imgTag" src={booking.Spot?.previewImage} alt={booking.Spot?.state} />
+                                    <img className="imgTag" src={booking.spotImage} alt={booking.id} />
                                 </NavLink>
                                 <div className="info">
                                     <div className="name">
@@ -90,7 +102,7 @@ function MyHome() {
                                     </div>
                                     <div>
                                         <div className="button">
-                                            <button>Edit</button>
+                                            <button onClick={()=>handleEditBooking(booking)}>Edit</button>
                                             <button onClick={() => handleDeleteBooking(booking)}>Cancel</button>
                                         </div>
                                     </div>
@@ -110,6 +122,13 @@ function MyHome() {
                 (<Modal onClose={() => setShowDeleteBooking(false)}>
                     <CancelBookingForm setShowDeleteBooking={setShowDeleteBooking} booking={bookingToCancel}></CancelBookingForm>
                 </Modal>)
+            }
+            {showEditBooking && (
+                <Modal onClose={()=>setShowEditBooking(false)}>
+                    <EditBookingForm setShowEditBooking={setShowEditBooking} booking={bookingToEdit}></EditBookingForm>
+                </Modal>
+            )
+
             }
         </div >
     )

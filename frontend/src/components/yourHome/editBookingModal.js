@@ -1,20 +1,20 @@
 
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker"
-import { useHistory, useParams } from "react-router-dom";
+// import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createBooking } from "../../store/bookings";
+import { updateBooking } from "../../store/bookings";
+import { getAllMyBookings } from "../../store/myStuff";
 
 
 import "react-datepicker/dist/react-datepicker.css";
 import './index.css'
 
 
-const BookingForm = ({ setShowBookingForm, spot }) => {
+const EditBookingForm = ({ setShowEditBooking, booking }) => {
     const dispatch = useDispatch()
-    const history = useHistory()
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date(booking.startDate));
+    const [endDate, setEndDate] = useState(new Date(booking.endDate));
 
     const [startDateError, setStartDateError] = useState('')
     const [endDateError, setEndDateError] = useState('');
@@ -34,15 +34,16 @@ const BookingForm = ({ setShowBookingForm, spot }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setRenderErr(true)
-        const payload = { spotId: spot.id, booking: { startDate, endDate } }
-        const data = await dispatch(createBooking(payload))
+        const payload = { id: booking.id, startDate, endDate }
+        const data = await dispatch(updateBooking(payload))
+        await dispatch(getAllMyBookings())
+        // console.log('this is data in Modal', data)
         if (data.errors) {
             // console.log(data.message)
             // console.log(data.errors)
-            setShowBookingForm(true)
+            setShowEditBooking(true)
         } else {
-            setShowBookingForm(false)
-            history.push('/@me')
+            setShowEditBooking(false)
         }
     }
 
@@ -67,7 +68,7 @@ const BookingForm = ({ setShowBookingForm, spot }) => {
                 <label>Total for {days} Nights:</label>
                 <div className="price">
                     {
-                        (spot.price * (days === 0 ? 0 : days)).toLocaleString('en-US', {
+                        (booking.Spot.price * (days === 0 ? 0 : days)).toLocaleString('en-US', {
                             style: 'currency',
                             currency: 'USD',
                         })
@@ -76,11 +77,16 @@ const BookingForm = ({ setShowBookingForm, spot }) => {
 
             </div>
 
+            <div className="button-box">
+                <button className="book">Edit Booking</button>
+                <div className="book one"
+                onClick={()=>setShowEditBooking(false)}
+                >Cancel</div>
+            </div>
 
-            <button className="book">Book</button>
         </form>
     )
 }
 
 
-export default BookingForm
+export default EditBookingForm
