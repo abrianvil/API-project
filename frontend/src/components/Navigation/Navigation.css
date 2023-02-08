@@ -15,7 +15,7 @@
     justify-content: flex-end;
     gap: 35px;
     align-items: center;
-    width: 20%;
+    width: 15%;
 }
 
 .topRight a {
@@ -67,8 +67,8 @@
     /* border: solid gray 1px; */
     display: flex;
     flex-direction: column;
-     height: 200px;
-     min-width: 150px;
+    height: 200px;
+    min-width: 150px;
     gap: 40px;
     border-radius: 5px;
     right: 0px;
@@ -100,7 +100,7 @@ i {
     position: relative;
 }
 
-.host{
+.host {
     width: 100%;
     height: 70px;
     display: flex;
@@ -110,7 +110,55 @@ i {
 }
 
 
-.user-inf{
+.user-inf {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+
+.search-bar {
+    height: 30px;
+    width: 350px;
+    border-radius: 7px;
+    box-shadow: 1px 1px 10px 2px lightgray;
+}
+
+
+.search-results {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 130px;
+    /* left: 765px; */
+    width: 25%;
+    z-index: 5;
+    border: 1px solid lightgray;
+    background-color: #FFFFFF;
+
+}
+
+
+.search-name {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    /* border: 1px solid blue; */
+}
+
+
+.one-search {
+    padding: 20px 10px 20px 10px;
+    background-color: #FFFFFF;
+    font-size: 15px;
+    /* border: 1px solid red; */
+}
+
+
+.one-search:hover {
+    background-color: whitesmoke;
+}
+
+.search-city-state {
+    /* font-style: italic; */
+    font-weight: 600;
 }
