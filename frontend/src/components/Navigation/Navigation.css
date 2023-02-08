@@ -150,12 +150,14 @@ i {
     padding: 20px 10px 20px 10px;
     background-color: #FFFFFF;
     font-size: 15px;
-    /* border: 1px solid red; */
+    text-decoration: none;
+    color: black;
 }
 
 
 .one-search:hover {
     background-color: whitesmoke;
+
 }
 
 .search-city-state {
