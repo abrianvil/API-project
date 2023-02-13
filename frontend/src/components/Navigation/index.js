@@ -82,7 +82,7 @@ function Navigation({ isLoaded }) {
     return () => document.removeEventListener('click', clickAway);
   }, [showSearchContainer])
 
-  console.log(searchArr)
+  // console.log(searchArr)
 
   const handleChange=(e)=>{
     setSearchQuery(e.target.value)
